@@ -10,10 +10,11 @@ export const FooterWrapper = styled.div`
     }
     }
 `;
-export const Button = styled.button`
+export const Button = styled.div`
+    href="http://www.dribbble.com/chrisota";
     display: inline-block;
     position: relative;
-    padding: 20px 38px;
+    padding: 7px 46px;
     top: 0;
     font-size: 20px;
     font-family: "Open Sans", Helvetica;

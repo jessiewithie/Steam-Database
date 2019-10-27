@@ -4,6 +4,8 @@ import Footer from './common/footer/index.js';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Home from './pages/home';
 import Detail from './pages/detail';
+import Nav from './pages/nav';
+import Search from './pages/search';
 function App() {
   return (
     <div>
@@ -11,6 +13,8 @@ function App() {
       <BrowserRouter>
         <div>
           <Route path = '/' exact component = {Home}></Route>
+          <Route path = '/nav' exact component = {Nav}></Route>
+          <Route path = '/search' exact component = {Search}></Route>
           <Route path = '/detail' exact component={Detail}></Route>
         </div>
       </BrowserRouter>
