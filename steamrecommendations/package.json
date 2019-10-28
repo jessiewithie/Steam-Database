@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.5.1",
+    "downshift": "^3.4.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-starry-sky": "^1.0.0",
     "styled-components": "^4.4.0"
   },
   "scripts": {
