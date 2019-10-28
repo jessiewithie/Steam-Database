@@ -10,7 +10,9 @@ export const FooterWrapper = styled.div`
     }
     }
 `;
-export const Button = styled.div`
+export const Button = styled.a.attrs({
+    href:"/login"
+})`
     href="http://www.dribbble.com/chrisota";
     display: inline-block;
     position: relative;
@@ -45,6 +47,7 @@ export const Button = styled.div`
         top: 0px;
         box-shadow: 0px 0px 0px rgba( 15, 165, 60, 0.0 );
         background: rgba( 20, 224, 133, 1 );
+        
     }
 `;
 
