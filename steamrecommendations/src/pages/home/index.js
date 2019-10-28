@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import {HomeWrapper} from './style';
-// import mySkeleton from '././common/skeleton/index.js';
+import YouTube from './youtube';
+import content from './content';
+
 class Home extends Component {
     render() {
         return(
             <HomeWrapper>
-                Home
+                <content>
+                    <YouTube />
+                </content>
             </HomeWrapper>
         )
     }
