@@ -7,7 +7,7 @@ export default function FixedContainer() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container fluid>
+      <Container maxWidth="md">
         <Typography component="div" style={{ backgroundColor: '#cfe8fc' }} />
       </Container>
     </React.Fragment>

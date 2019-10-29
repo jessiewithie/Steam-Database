@@ -9,7 +9,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 const data = [
   {
     src:
-      "https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ",
+      "https://steamcdn-a.akamaihd.net/steam/apps/392110/header_alt_assets_1.jpg?t=1572279581",
     title: "Don Diablo @ Tomorrowland Main Stage 2019 | Official…",
     channel: "Don Diablo",
     views: "396 k views",
@@ -17,7 +17,7 @@ const data = [
   },
   {
     src:
-      "https://i.ytimg.com/vi/ycHr1G0Gffg/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLAS6ZJ5RYa2R3Ksp9d8cLzY_8DMOA",
+      "https://steamcdn-a.akamaihd.net/steam/subs/124923/header_ratio.jpg?t=1472603344",
     title: "Top Latino Songs 2019 - Luis Fonsi, Ozuna, Nicky Jam…",
     channel: "Dj Yanky Plus",
     views: "2.1 M views",
@@ -25,7 +25,7 @@ const data = [
   },
   {
     src:
-      "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
+      "https://steamcdn-a.akamaihd.net/steam/apps/883710/header.jpg?t=1556224097",
     title: "Calvin Harris, Sam Smith - Promises (Official Video)",
     channel: "Calvin Harris",
     views: "130 M views",
@@ -39,19 +39,19 @@ function Media(props) {
   return (
     <Grid container wrap="nowrap">
       {(loading ? Array.from(new Array(3)) : data).map((item, index) => (
-        <Box key={index} width={"33.3%"} marginRight={0.5} my={5}>
+        <Box key={index} width={"40.3%"} marginRight={0} marginLeft={0} my={0}>
           {item ? (
             <img
-              style={{ width: "60%", height: "150px" }}
+              style={{ width: "90%", height: "250px" }}
               alt={item.title}
               src={item.src}
             />
           ) : (
-            <Skeleton variant="rect" width={"60%"} height={150} />
+            <Skeleton variant="rect" width={"20%"} height={150} />
           )}
 
           {item ? (
-            <Box paddingRight={2}>
+            <Box paddingRight={5}>
               <Typography gutterBottom variant="body2">
                 {item.title}
               </Typography>
@@ -69,7 +69,7 @@ function Media(props) {
           ) : (
             <React.Fragment>
               <Skeleton />
-              <Skeleton width="100%" />
+              <Skeleton width="90%" />
             </React.Fragment>
           )}
         </Box>
@@ -86,8 +86,10 @@ export default function YouTube() {
   return (
     <Box overflow="hidden" clone>
       <Paper>
-        <Box px={3}>
-          <Media loading />
+        <Box px={6}>
+          <Media />
+          <Media />
+          <Media />
           <Media />
         </Box>
       </Paper>
