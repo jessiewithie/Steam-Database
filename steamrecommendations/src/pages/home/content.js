@@ -6,10 +6,10 @@ import Container from '@material-ui/core/Container';
 export default function FixedContainer() {
   return (
     <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="md">
-        <Typography component="div" style={{ backgroundColor: '#cfe8fc' }} />
-      </Container>
+      {/* <CssBaseline /> */}
+      {/* <Container maxWidth="md" style={{ backgroundColor: '#050754' }}> */}
+        {/* <Typography component="div" style={{ backgroundColor: '#050754' }} /> */}
+      {/* </Container> */}
     </React.Fragment>
   );
 }

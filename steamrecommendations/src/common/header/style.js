@@ -4,7 +4,7 @@ import loginIcon from '../../statics/password.svg';
 
 export const HeaderWrapper = styled.div`
     position: relative;
-    height:40px;
+    height:60px;
     border-bottom:1px solid #f0f0f0;
     background: #333300;
 `;
@@ -13,7 +13,7 @@ export const Logo = styled.a.attrs({
     href: '/'
 })`
     position: absolute;
-    top: 3px;
+    top: 10px;
     left: 0;
     display:inline-block;
     width:144px;

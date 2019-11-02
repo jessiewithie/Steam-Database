@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -52,17 +51,20 @@ function Media(props) {
 
           {item ? (
             <Box paddingRight={5}>
-              <Typography gutterBottom variant="body2">
+              <Typography 
+              gutterBottom variant="body2"
+              color="error"
+              >
                 {item.title}
               </Typography>
               <Typography
                 display="block"
                 variant="caption"
-                color="textSecondary"
+                color="error"
               >
                 {item.channel}
               </Typography>
-              <Typography variant="caption" color="textSecondary">
+              <Typography variant="caption" color="error">
                 {`${item.views} • ${item.createdAt}`}
               </Typography>
             </Box>
@@ -84,15 +86,11 @@ Media.propTypes = {
 
 export default function YouTube() {
   return (
-    <Box overflow="hidden" clone>
-      <Paper>
-        <Box px={6}>
-          <Media />
-          <Media />
-          <Media />
-          <Media />
+    <Box overflow="hidden" >
+      <Box px={6}>
+           <Media />
+           <Media />
         </Box>
-      </Paper>
     </Box>
   );
 }
