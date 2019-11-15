@@ -14,27 +14,28 @@ var connection = mysql.createPool(config);
 /* ----- Routers to handle FILE requests ----- */
 /* ------------------------------------------- */
 
+/* ----- index page -----*/
 router.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'dashboard.html'));
+  res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 });
 
-/* ----- Q2 (Recommendations) ----- */
-router.get('/recommendations', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'recommendations.html'));
+/* ----- search page ----- */
+router.get('/search', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'search.html'));
 });
 
-/* ----- Q3 (Best Of Decades) ----- */
-router.get('/bestof', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'bestof.html'));
+/* ----- nav page ----- */
+router.get('/nav', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'nav.html'));
 });
 
-/* ----- Bonus (Posters) ----- */
-router.get('/posters', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'posters.html'));
-});
+/* ----- detail page ----- */
+// router.get('/detail', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../', 'views', 'detail.html'));
+// });
 
-router.get('/reference', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'reference.html'));
+router.get('/detail', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'detail.html'));
 });
 
 /* Template for a FILE request router:
