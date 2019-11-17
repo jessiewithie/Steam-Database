@@ -1,43 +1,36 @@
-.genres-container {
-  /* margin: 10px 0; */
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  /* border-bottom: 1px solid #ddd; */
+.inner{
+  margin:0 auto;
+  overflow: hidden;
+  padding:3rem;
 }
 
-.genres-container .genre {
-  flex: 1 0 20%;
-  margin: 5px 0;
-  padding: 10px;
-  cursor: pointer;
-  box-sizing: border-box;
+/* USING BOOTSTRAP 3.0.3 */
+body {
+	padding-top: 60px;
 }
-
-.genres-container .genre:hover {
-  background-color: #ddd;
-}
-
-.movies-container {
-  display: flex;
-  flex-flow: column wrap;
-  /* margin-top: 10px; */
-}
-
-.movies-container .movie {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  height: 40px;
-}
-
-.movie .title, .movie .header-lg {
-  flex: 1 0 50%;
-}
-
-.movie .header, .movie .rating, .movie .votes {
-  flex: 1 0 25%;
+nav {
+  .navbar-brand {font-size: 30px;}
+	.navbar-toggle {margin: 13px 15px 13px 0;}
+	a {
+		font-size: 18px;
+		padding-bottom: 20px !important;
+		padding-top: 20px !important;
+    transition: all 0.3s ease;
+	}
 }
 
 
 
+nav.navbar.shrink {
+	min-height: 35px;
+  .navbar-brand {font-size: 25px;}
+  a {
+    font-size: 15px;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+  }
+  .navbar-toggle {
+    margin: 8px 15px 8px 0;
+    padding: 4px 5px;
+  }
+}
