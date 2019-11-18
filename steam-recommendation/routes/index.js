@@ -7,7 +7,7 @@ var config = require('../db-config.js');
 
 var mysql = require('mysql');
 
-config.connectionLimit = 10;
+config.connectionLimit = 20;
 var connection = mysql.createPool(config);
 
 /* ------------------------------------------- */
@@ -35,9 +35,10 @@ router.get('/detail', function(req, res) {
 });
 
 /* ----- login page ----- */
-// router.get('/login', function(req, res) {
-//   res.sendFile(path.join(__dirname, '../', 'views', 'login.html'));
-// });
+router.get('/login', function(req, res) {
+  // console.log("_dirname");
+  res.sendFile(path.join(__dirname, '../', 'views', 'login.html'));
+});
 
 
 /* Template for a FILE request router:
