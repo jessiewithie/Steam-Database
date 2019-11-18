@@ -1,3 +1,6 @@
+body{
+  background:black;
+}
 .inner{
   margin:0 auto;
   overflow: hidden;
@@ -5,23 +8,23 @@
 }
 
 /* USING BOOTSTRAP 3.0.3 */
-body {
+ body {
 	padding-top: 60px;
 }
-nav {
+/* nav {
   .navbar-brand {font-size: 30px;}
 	.navbar-toggle {margin: 13px 15px 13px 0;}
 	a {
 		font-size: 18px;
-		padding-bottom: 20px !important;
+		padding-bottom: 10px !important;
 		padding-top: 20px !important;
     transition: all 0.3s ease;
 	}
-}
+}  */
 
 
 
-nav.navbar.shrink {
+/* nav.navbar.shrink {
 	min-height: 35px;
   .navbar-brand {font-size: 25px;}
   a {
@@ -33,4 +36,4 @@ nav.navbar.shrink {
     margin: 8px 15px 8px 0;
     padding: 4px 5px;
   }
-}
+} */

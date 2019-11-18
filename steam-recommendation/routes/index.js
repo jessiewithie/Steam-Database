@@ -30,13 +30,15 @@ router.get('/nav', function(req, res) {
 });
 
 /* ----- detail page ----- */
-// router.get('/detail', function(req, res) {
-//   res.sendFile(path.join(__dirname, '../', 'views', 'detail.html'));
-// });
-
 router.get('/detail', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'detail.html'));
 });
+
+/* ----- login page ----- */
+// router.get('/login', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../', 'views', 'login.html'));
+// });
+
 
 /* Template for a FILE request router:
 

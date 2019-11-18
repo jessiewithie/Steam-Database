@@ -10,7 +10,7 @@ body {
 }
 
 .nav-container {
-  margin: 20px auto;
+  margin: 15px auto;
 }
 
 .jumbotron {
@@ -58,11 +58,11 @@ ul {
 
 li {
   float: left;
-  font-size:32px;
+  font-size:25px;
 }
 
 li a {
-  display: block;
+  display:inline-block;
   color: white;
   text-align: center;
   padding: 14px 16px;
