@@ -11,3 +11,24 @@ body{
  body {
 	padding-top: 60px;
 }
+
+.games-container {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 10px;
+  max-width:900px;
+  margin: 0 auto;
+}
+
+.games-container .game {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+}
+
+/* need modificatiion later*/
+.game .header, .game .title, .game .genre, .game .votes, .game .year {
+  flex: 1 0 25%;
+}
