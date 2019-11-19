@@ -1,7 +1,7 @@
 var app = angular.module('angularjsNodejsTutorial', []);
 
 // Controller for the Dashboard page
-app.controller('dashboardController', function($scope, $http) {
+app.controller('indexController', function($scope, $http) {
   // TODO: Q1
 });
 
@@ -13,4 +13,8 @@ app.controller('recommendationsController', function($scope, $http) {
 // Controller for the Best Of Page
 app.controller('bestofController', function($scope, $http) {
   // TODO: Q3
+});
+// Controller for the login page
+app.controller('loginController',function($scope,$http){
+
 });
