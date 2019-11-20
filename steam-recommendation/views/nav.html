@@ -10,11 +10,10 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="../css/nav.css">
     <script src="javascripts/app.js" type="text/javascript"></script>
   <!-- Custom styles for this template-->
   <link href="/stylesheets/common.css" rel="stylesheet">
-  <link href="/stylesheets/index.css" rel="stylesheet">
+  <link href="/stylesheets/nav.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -42,15 +41,15 @@
   <form>
     <div class="form-row">
       <div class="form-group col-md-4">
-        <label for="inputGenre">Genre</label>
+        <label for="inputGenre">Filter By</label>
         <select id="inputGenre" class="form-control">
-          <option selected>Adventure</option>
-          <option>Adventure</option>
-          <option>Simulation</option>
+          <option selected>Genre</option>
+          <option>Price Range</option>
+          <option>Games</option>
         </select>
       </div>
       <div class="form-group col-md-4">
-        <label for="inputYear">Release Year</label>
+        <label for="inputYear" >Release Year</label>
         <select id="inputYear" class="form-control">
           <option selected>2010</option>
           <option>2001</option>
@@ -59,24 +58,8 @@
           <option>2004</option>
         </select>
       </div>
-      <div class="form-group col-md-4">
-        <label for="inputYear">Price Range</label>
-        <select id="inputYear" class="form-control">
-          <option selected>$100-200</option>
-          <option>$100-200</option>
-          <option>$200-300</option>
-        </select>
-      </div>
+      <button type="submit" class="btn btn-outline-secondary btn-lg">Get games!</button>
     </div>
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck">
-        <label class="form-check-label" for="gridCheck">
-          Checking condition
-        </label>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Get games!</button>
   </form>
   </div>
 
@@ -101,3 +84,9 @@
 </body>
 
 </html>
+
+
+sqlplus 'student@DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oracleimdb.cmkp3uvpymor.us-east-2.rds.amazonaws.com)(PORT=1521))(CONNECT_DATA=(SID=ORCL)))'
+
+
+export ORACLE_HOME=/usr/local/oracle rlwrap /usr/local/oracle/bin/sqlplus 'ys@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=cis550steam.cpsgsprdaigb.us-east-1.rds.amazonaws.com) (PORT=1521))(CONNECT_DATA=(SID=STEAMDB)))'
