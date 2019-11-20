@@ -11,9 +11,15 @@ body{
  body {
 	padding-top: 60px;
 }
-.col-8{
-  /* border: 1px solid #B0C2BE; */
+.list-group li{
+  height: 150px;
+  font-size: 25px;
+  background: black;
 }
+
+/* .col-8{ */
+  /* border: 1px solid #B0C2BE; */
+/* } */
 /* nav {
   .navbar-brand {font-size: 30px;}
 	.navbar-toggle {margin: 13px 15px 13px 0;}
