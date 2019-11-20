@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>NAVIGATION</title>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -17,7 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body ng-controller="dashboardController">
+<body ng-controller="navController">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <span class="navbar-brand center">
@@ -34,34 +33,67 @@
 
 
   <!-- index Content -->
-  <br>
-  <br>
-  <br>
-  <div class="container">
-  <form>
+ 
+  <!-- <div class="container">
+  <form method="GET">
     <div class="form-row">
       <div class="form-group col-md-4">
-        <label for="inputGenre">Filter By</label>
-        <select id="inputGenre" class="form-control">
-          <option selected>Genre</option>
-          <option>Price Range</option>
-          <option>Games</option>
+        <label for="inputGenre" style="color: #92928E">Filter By</label>
+        <select ng-model="inputGenre" class="form-control">
+          <ng-options selected>Genre</ng-options>
+          <ng-options>Price Range</ng-options>
+          <ng-options>Games</ng-options>
         </select>
       </div>
       <div class="form-group col-md-4">
-        <label for="inputYear" >Release Year</label>
-        <select id="inputYear" class="form-control">
-          <option selected>2010</option>
-          <option>2001</option>
-          <option>2002</option>
-          <option>2003</option>
-          <option>2004</option>
+        <label for="inputYear" style="color: #92928E">Release Year</label>
+        <select ng-model="inputYear" class="form-control">
+          <ng-options selected>2010</ng-options>
+          <ng-options>2001</ng-options>
+          <ng-options>2004</ng-options>
         </select>
       </div>
+
+      <div class="dropdown-container">
+        <select class="dropdown" id="decadesDropdown2" ng-model="selectedDecade"
+          ng-options="item for item in names"></select>
+      </div>
+
       <button type="submit" class="btn btn-outline-secondary btn-lg">Get games!</button>
     </div>
   </form>
+  </div> -->
+
+  <!-- Sample Content. You can either use this or make your own -->
+  <div class="container nav-container">
+    <div class="jumbotron">
+      <div class="h5">Game filters!</div>
+  
+      <div class="years-container">
+        <div class="dropdown-container">
+          <select class="dropdown" id="decadesDropdown" ng-model="selectedDecade" ng-options="d.decade for d in decades"></select>
+        </div>
+        <button class="submit-btn" id="decadesSubmitBtn" ng-click="submitDecade()">Submit</button>
+      </div>
+    </div>
+    <div class="jumbotron">
+      <div class="game-container">
+        <div class="game">
+          <div class="header"><strong>Game Title</strong></div>
+          <div class="header"><strong>Link</strong></div>
+        </div>
+        <div class="game" id="results" ng-repeat="game in bestofGames">
+          <div class="title">{{game.title}}</div>
+          <div class="link">{{game.link}}</div>
+        </div>
+      </div>
+    </div>
   </div>
+  
+
+
+
+
 
 
   <!-- Testing Script -->
@@ -84,9 +116,3 @@
 </body>
 
 </html>
-
-
-sqlplus 'student@DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oracleimdb.cmkp3uvpymor.us-east-2.rds.amazonaws.com)(PORT=1521))(CONNECT_DATA=(SID=ORCL)))'
-
-
-export ORACLE_HOME=/usr/local/oracle rlwrap /usr/local/oracle/bin/sqlplus 'ys@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=cis550steam.cpsgsprdaigb.us-east-1.rds.amazonaws.com) (PORT=1521))(CONNECT_DATA=(SID=STEAMDB)))'

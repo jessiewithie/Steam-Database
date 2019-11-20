@@ -1,4 +1,13 @@
 var app = angular.module('angularjsNodejsTutorial', []);
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+var session = require('express-session')
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
@@ -10,10 +19,43 @@ app.controller('recommendationsController', function($scope, $http) {
   // TODO: Q2
 });
 
-
-
 // Controller for the Nav and Detail Of Page
+app.controller('navController', function ($scope, $http) {
+  // sample HTTP code to get data
+  // $http({
+  //   url: "/decades",
+  //   method: "GET"
+  // }).then(
+  //   res => {
+  //     console.log("DECADES: ", res.data);
+  //     $scope.decades = res.data;
+  //   },
+  //   err => {
+  //     console.log("DECADES ERROR: ", err);
+  //   }
+  // );
 
+  $scope.decades = [{ decade: '2010' },
+                    { decade: '2011' },
+                    { decade: '2012' },
+                    { decade: '2013' }];
+
+  $scope.submitDecade = function () {
+    $http({
+      url: "/selectedDecades/" + $scope.selectedDecade.decade,
+      method: "GET"
+    }).then(
+      res => {
+        console.log("SELECTEDDECADES: ", res.data);
+        $scope.bestofMovies = res.data;
+      },
+      err => {
+        console.log("SELECTEDDECADES: ", err);
+      }
+    );
+  }
+
+});
 
 //I need game names from Nav page just like the dashboaed page in hw2
 

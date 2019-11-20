@@ -1,0 +1,104 @@
+.container {
+   margin:0 auto; /* this will center the page */
+   width:960px; /*  use your width here */
+}
+
+.btn-lg {
+   height: 50%;
+}
+
+
+body{
+  background:black;
+}
+.inner{
+  margin:0 auto;
+  overflow: hidden;
+  padding:3rem;
+}
+
+/* USING BOOTSTRAP 3.0.3 */
+ body {
+	padding-top: 60px;
+}
+.col-8{
+  /* border: 1px solid #B0C2BE; */
+}
+
+
+
+.nav-container {
+  margin-top: 2rem;
+}
+
+
+.years-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.years-container .dropdown-container {
+  height: 30px;
+  overflow: hidden;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #bbb;
+}
+
+.years-container .dropdown {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  height: 30px;
+  padding: 5px;
+  cursor: pointer;
+  width: 300px;
+  outline: none;
+}
+
+.years-container .submit-btn {
+  margin-left: 10px;
+  width: 100px;
+  height: 30px;
+  border: none;
+  padding: 2px 16px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  outline: none;
+  background: #92928E;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.years-container .submit-btn:hover {
+  background: #5F5F5E;
+}
+
+.years-container .submit-btn:active {
+  background: #5F5F5E;
+}
+
+.game-container {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 10px;
+}
+
+.game-container .game{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+}
+
+.game .header, .game .title, .game .genre, .game .votes, .game .year {
+  flex: 1 0 25%;
+}
