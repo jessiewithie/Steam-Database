@@ -1,14 +1,52 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var config = require('../db-config.js');
+// var config = require('../db-config.js');
 
 /* ----- Connects to your mySQL database ----- */
 
-var mysql = require('mysql');
+// var mysql = require('mysql');
+var oracledb = require('oracledb');
 
-config.connectionLimit = 20;
-var connection = mysql.createPool(config);
+function sendQuery(queryString, callback){
+  oracledb.getConnection({
+    user: 'ys',
+    password: '31415926',
+    connectString: '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)'+
+    '(HOST = cis550steam.cpsgsprdaigb.us-east-1.rds.amazonaws.com)'+
+    '(PORT = 1521))(CONNECT_DATA =(SID = steamdb)))'
+      }, function(err, connection) {
+      if (err) {
+        console.error(err.message);
+        return;
+      }
+    console.log("\nQuery : "+queryString);
+    connection.execute(queryString, [],{ maxRows: 1000 },
+    function(err, result) {
+      if (err) {
+        console.error(err.message);
+        doRelease(connection);
+        return;
+      }
+      callback(result);
+      doRelease(connection);
+    });
+  });
+}
+
+function doRelease(connection) {
+  connection.release(
+    function(err) {
+      if (err) {
+        console.log("whywhy");
+        console.error(err.message);}
+    }
+  );
+}
+
+// config.connectionLimit = 20;
+// var connection = mysql.createPool(config);
+
 
 /* ------------------------------------------- */
 /* ----- Routers to handle FILE requests ----- */
@@ -58,8 +96,22 @@ router.get('<PATH>', function(req, res) {
 /* ------------------------------------------------ */
 
 /* -----  Homepage ----- */
-
-
+router.get('/games', function(req, res) {
+  var query = `
+SELECT review,funny FROM(
+SELECT r1.review, r2.funny FROM review_content r1
+JOIN review_criteria r2
+ON r1.review_id = r2.review_id
+WHERE r1.title = 'Dead by Daylight'
+ORDER BY r2.funny DESC)
+WHERE ROWNUM <= 1
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
 
 /* -----  Search Page ----- */
 
@@ -116,15 +168,13 @@ router.get('<PATH>', function(req, res) {
 router.get('/detail/:game', function(req, res){
   var myGame = req.params.game;
   var query = `SELECT name, url, release_date, genre, tags, game_details 
-  FROM description_dataset WHERE name = "${myGame}";`;
-  connection.query(query, function (err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
+  FROM description_dataset WHERE name = "${myGame}"`;
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
   });
 });
+
 
 
 
