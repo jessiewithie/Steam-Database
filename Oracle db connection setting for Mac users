@@ -1,0 +1,14 @@
+http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html 
+Download  a basic version from the link.
+
+Put all files in the folder that has been downloaded into 
+/usr/local/lib
+（not the folder itself，but all files directly into the path: 
+/usr/local/lib）
+
+Then in terminal cd to steam-recommendation:
+npm install oracledb
+
+If access is denied, in a new terminal：
+sudo spctl --master-disable
+allow Mac to access all files downloaded from website
