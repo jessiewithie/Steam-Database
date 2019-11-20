@@ -10,10 +10,28 @@ app.controller('recommendationsController', function($scope, $http) {
   // TODO: Q2
 });
 
-// Controller for the Best Of Page
-app.controller('bestofController', function($scope, $http) {
-  // TODO: Q3
+
+
+// Controller for the Nav and Detail Of Page
+
+
+//I need game names from Nav page just like the dashboaed page in hw2
+
+app.controller('detailController', function($scope, $http) {
+    $scope.showDetails= function(g) {
+      
+      $http({
+        url: '/detail/' + g.game,
+        method: 'GET'
+      }).then(res => {
+        console.log("DETAIL: ", res.data);
+        $scope.details = res.data;
+      }, err => {
+        console.log("DETAIL ERROR: ", err);
+      });
+  }
 });
+
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
 
