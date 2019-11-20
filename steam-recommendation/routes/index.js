@@ -57,27 +57,26 @@ router.get('<PATH>', function(req, res) {
 /* ----- Routers to handle data requests ----- */
 /* ------------------------------------------------ */
 
-/* ----- Q1 (Dashboard) ----- */
+/* -----  Homepage ----- */
 
 
 
-/* ----- Q2 (Recommendations) ----- */
+/* -----  Search Page ----- */
 
 
 
 
-/* ----- Q3 (Best Of Decades) ----- */
+/* -----  Nav page ----- */
 
-router.get('/decades', function(req, res) {
-  var query = `
-    SELECT DISTINCT (FLOOR(year/10)*10) AS decade
-    FROM (
-      SELECT DISTINCT release_year as year
-      FROM Movies
-      ORDER BY release_year
-    ) y
-  `;
-  connection.query(query, function(err, rows, fields) {
+
+
+/* ----- Detail Page ----- */
+
+router.get('/detail/:game', function(req, res){
+  var myGame = req.params.game;
+  var query = `SELECT name, url, release_date, genre, tags, game_details 
+  FROM description_dataset WHERE name = "${myGame}";`;
+  connection.query(query, function (err, rows, fields) {
     if (err) console.log(err);
     else {
       console.log(rows);
@@ -85,10 +84,6 @@ router.get('/decades', function(req, res) {
     }
   });
 });
-
-
-
-/* ----- Bonus (Posters) ----- */
 
 
 
