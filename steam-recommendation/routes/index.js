@@ -33,6 +33,17 @@ function sendQuery(queryString, callback){
     });
   });
 }
+
+function doRelease(connection) {
+  connection.release(
+    function(err) {
+      if (err) {
+        console.log("whywhy");
+        console.error(err.message);}
+    }
+  );
+}
+
 // config.connectionLimit = 20;
 // var connection = mysql.createPool(config);
 
