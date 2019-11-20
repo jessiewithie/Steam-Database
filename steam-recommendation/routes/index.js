@@ -75,15 +75,13 @@ router.get('<PATH>', function(req, res) {
 router.get('/detail/:game', function(req, res){
   var myGame = req.params.game;
   var query = `SELECT name, url, release_date, genre, tags, game_details 
-  FROM description_dataset WHERE name = "${myGame}";`;
-  connection.query(query, function (err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
+  FROM description_dataset WHERE name = "${myGame}"`;
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
   });
 });
+
 
 
 
