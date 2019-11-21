@@ -114,9 +114,50 @@ WHERE ROWNUM <= 1
 /* -----  Search Page ----- */
 
 
-
-
 /* -----  Nav page ----- */
+// router.get('/nav', function(req,res){
+//   console.log("hehe");
+//   alert("YOOO");
+//   alert(req.params);
+
+// });
+
+// router.get('/decades', function (req, res) {
+  // var query = `
+  //   SELECT DISTINCT (FLOOR(year/10)*10) AS decade
+  //   FROM (
+  //     SELECT DISTINCT release_year as year
+  //     FROM Movies
+  //     ORDER BY release_year
+  //   ) y
+  // `;
+  // connection.query(query, function (err, rows, fields) {
+  //   if (err) console.log(err);
+  //   else {
+  //     console.log(rows);
+  //     res.json(rows);
+  //   }
+  // });
+// });
+
+// router.get("/selectedDecades/:decades", function (req, res) {
+
+  // var decades = req.params.decades;
+  // var query = `
+  //   WITH top_rats AS(SELECT g1.genre, MAX(m1.vote_count) as max_vc
+  //     FROM  Movies m1 JOIN Genres g1 on m1.id=g1.movie_id
+  //     WHERE m1.release_year>=${decades} AND m1.release_year<=${decades}+9
+  //     GROUP BY g1.genre)
+  //   SELECT g.genre, m.title, m.vote_count, m.release_year
+  //   FROM Movies m JOIN Genres g on m.id=g.movie_id
+  //   WHERE m.release_year>=${decades} AND m.release_year<=${decades}+9 AND 
+  //     EXISTS(SELECT * FROM top_rats WHERE top_rats.genre=g.genre AND top_rats.max_vc=m.vote_count)
+  //   ORDER BY g.genre;
+  // `;
+//   res.json([{ name: 'Jani', country: 'Norway'}, 
+//             {name:'Hege',country:'Sweden'}, 
+//             {name: 'Kai', country:'Denmark'}]);
+// });
 
 
 

@@ -1,5 +1,8 @@
+/* USING BOOTSTRAP 3.0.3 */
+
 body{
   background:black;
+  padding-top: 60px;
 }
 .inner{
   margin:0 auto;
@@ -7,6 +10,9 @@ body{
   padding:3rem;
 }
 
+col-8{
+  border: 1px solid #B0C2BE;
+}
 /* USING BOOTSTRAP 3.0.3 */
  body {
 	padding-top: 60px;
@@ -16,6 +22,3 @@ body{
   font-size: 25px;
   background: black;
 }
-
-
-
