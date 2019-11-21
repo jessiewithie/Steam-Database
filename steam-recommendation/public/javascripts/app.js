@@ -12,7 +12,7 @@ var app = angular.module('angularjsNodejsTutorial', []);
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
   $http({
-    url:'/games',
+    url:'/q1',
     method:'GET',
   }).then(res=>{
     console.log("GAMES:", res.data);
@@ -74,20 +74,19 @@ app.controller('navController', function ($scope, $http) {
 //I need game names from Nav page just like the dashboaed page in hw2
 
 app.controller('detailController', function($scope, $http) {
-      console.log("1");
       $http({
-        url: '/detail/:DOOM',
+        url: '/detail/:game',
         method: 'GET'
       }).then(res => {
         console.log("DETAIL: ", res.data);
         console.log($scope);
-        $scope.testdata = res.data;
-        console.log($scope.testdata);
+        // $scope.testdata = res.data;
+        // console.log($scope.testdata);
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
-  console.log(1111);
 
+      
     // $scope.showDetails= function() {
       
     //   $http({
