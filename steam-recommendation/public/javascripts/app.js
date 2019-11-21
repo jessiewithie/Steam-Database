@@ -1,13 +1,13 @@
 var app = angular.module('angularjsNodejsTutorial', []);
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-var session = require('express-session')
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
-}));
+// var bodyParser = require('body-parser');
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// var session = require('express-session')
+// app.use(session({
+//   secret: 'secret',
+//   resave: true,
+//   saveUninitialized: true
+// }));
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
