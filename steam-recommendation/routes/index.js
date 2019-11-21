@@ -73,6 +73,7 @@ router.get('/detail', function(req, res) {
 
 /* ----- login page ----- */
 router.get('/login', function(req, res) {
+  // console.log("_dirname");
   res.sendFile(path.join(__dirname, '../', 'views', 'login.html'));
 });
 
@@ -273,9 +274,9 @@ ORDER BY D.best_rates DESC
 
 
 /* ----- Detail Page ----- */
-router.get('/detail/', function(req, res){
+router.get('/detail/:Portal', function(req, res){
   var query = `SELECT name, url, release_date, original_price, types, game_description 
-  FROM description WHERE name = 'DOOM'`;
+  FROM description WHERE name = 'Portal'`;
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);

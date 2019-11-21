@@ -15,22 +15,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
-  <body>
-    <div id="nav">
-    <!-- Navbar -->
+  <body ng-controller="detailController">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <a class="navbar-brand center" href="/">
-        <i class="fa fa-steam-square fa-2x" aria-hidden="true"></i>
+        <i class="fa fa-steam-square fa-3x" aria-hidden="true"></i>
       </a>
       <ul>
-        <!-- <li><a class="nav-item nav-link active" href="/">index</a></li> -->
-        <li><a class="nav-item nav-link" href="/search">search</a></li>
-        <li><a class="nav-item nav-link" href="/nav">nav</a></li>
-        <li><a class="nav-item nav-link active" href="/detail">detail</a></li>
-        <li><a class="nav-item nav-link " href="/login">login</a></li>
-      </ul>
-    </nav>
-    </div>
+      <li><a class="nav-item nav-link" href="/search">search</a></li>
+      <li><a class="nav-item nav-link" href="/nav">nav</a></li>
+      <li><a class="nav-item nav-link active" href="/detail">detail</a></li>
+      <li><a class="nav-item nav-link " href="/login">login</a></li>
+    </ul>
+  </nav>
+  
 
 
     <div id="section">
@@ -50,43 +47,43 @@
         <div class='table'>
            <h4 style="color: black"><a href="https://store.steampowered.com/app/379720/DOOM/">DOOM</a></h4>
         
-<table border="0">
-<tr>
-  <td>Game name</td>
-  <td>Release Date:</td>
-  <td>Genre</td>
-  <td>Tag</td>
-  <td>Game Details</td>
+            <table border="0">
+              <tr>
+              <td>Game name</td>
+              <td>Release Date:</td>
+              <td>Genre</td>
+              <td>Tag</td>
+              <td>Game Details</td>
   
-</tr>
-<tr>
-  <td>DOOM</td>
-  <td>12-May-16</td>
-  <td>Action</td>
-  <td>tag1,tag2,... </td>
-  <td>Single-player,Multi-player,Co-op,Steam Achievements,Steam Trading Cards,Partial Controller Support,Steam Cloud</td>
+            </tr>
+            <tr>
+            <td>DOOM</td>
+            <td>12-May-16</td>
+            <td>Action</td>
+             <td>tag1,tag2,... </td>
+              <td>Single-player,Multi-player,Co-op,Steam Achievements,Steam Trading Cards,Partial Controller Support,Steam Cloud</td>
 
-</tr>
-</table>
-    </div>
-    </div>
-</div>
+            </tr>
+            </table>
+             </div>
+             </div>
+            </div>
 
 
     <div class="games-container">
-    <div class="jumbotron">
-    <h5 style="color: black">Games you may also like: </h5>
-          <div class="games">
+      <div class="jumbotron">
+        <h5 style="color: black">Games you may also like: </h5>
+   <!--        <div class="games">
             <div class="header"><strong>Name</strong></div>
             <div class="header"><strong>Release Date</strong></div>
             <div class="header"><strong>Price</strong></div>
             <div class="header"><strong>Type</strong></div>
-          </div>
-          <div class="games-container" id="results" ng-repeat="game in testdata">
-            <div class="movie">{{game.name}}</div>
-            <div class="movie">{{game.release_date}}</div>
-            <div class="movie">{{game.original_price}}</div>
-            <div class="movie">{{game.types}}</div>
+          </div> -->
+          <div class="games-container" id="results" ng-show="testdata">
+            <div class="movie">  name : {{testdata[0]}}</div>
+            <div class="movie"> Release Date : {{testdata[2]}}</div>
+            <div class="movie">Price : {{testdata[3]}}</div>
+            <div class="movie">Type :{{testdata[4]}}</div>
           </div>
     </div>
     </div>

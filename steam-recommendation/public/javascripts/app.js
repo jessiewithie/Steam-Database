@@ -76,13 +76,13 @@ app.controller('navController', function ($scope, $http) {
 app.controller('detailController', function($scope, $http) {
       console.log("1");
       $http({
-        url: '/detail/:DOOM',
+        url: '/detail/:Portal',
         method: 'GET'
       }).then(res => {
         console.log("DETAIL: ", res.data);
-        console.log($scope);
-        $scope.testdata = res.data;
-        console.log($scope.testdata);
+        // console.log($scope);
+        $scope.testdata = res.data.rows[0];
+        // console.log($scope.testdata.rows[0][0]);
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
