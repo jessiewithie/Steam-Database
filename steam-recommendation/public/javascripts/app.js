@@ -34,20 +34,20 @@ app.controller('navController', function ($scope, $http) {
   //     console.log("DECADES ERROR: ", err);
   //   }
   // );
-  $scope.selectedDecade = { decade: "2010" };
+  $scope.selectedDecade = { decade: "0" };
   $scope.decades = [{ decade: '2010' },
                     { decade: '2011' },
                     { decade: '2012' },
                     { decade: '2013' }];
   
-  $scope.selectedGenre = { genre: "2010" };
+  $scope.selectedGenre = { genre: "0" };
   $scope.genres = [
     { genre: "Adventure" },
     { genre: "Adventure" },
     { genre: "Adventure" }
   ];
 
-  $scope.selectedPriceRange = { pr: "2010" };
+  $scope.selectedPr = { pr: "0" };
   $scope.prs = [
     { pr: "$10-50" },
     { pr: "$50-100" },
@@ -55,13 +55,16 @@ app.controller('navController', function ($scope, $http) {
   ];
 
   $scope.submitFilterCriteria = function() {
-    alert(
+    alert("Price range:" +
       $scope.selectedPr.pr +
-        " " +
+        ", genre:" +
         $scope.selectedGenre.genre +
-        " " +
+        ", decade" +
         $scope.selectedDecade.decade
     );
+
+    //score default values 0 --> aka nothing selected
+
     // $http({
     //   url: "/selectedDecades/" + $scope.selectedDecade.decade,
     //   method: "GET"
@@ -97,5 +100,10 @@ app.controller('detailController', function($scope, $http) {
 
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
+
+});
+
+// Controller for the signup page
+app.controller('signUpController',function($scope,$http){
 
 });
