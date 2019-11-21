@@ -75,17 +75,17 @@
         <div class="dropdown-container">
           <!-- <label style="color: #92928E">Release Year</label> -->
           <select class="dropdown" id="decadesDropdown" ng-model="selectedDecade" ng-options="d.decade for d in decades">
-            <option value="">--Released Year--</option>
+            <option value="" disabled selected value>--Released Year--</option>
           </select>
         </div>
         <div class="dropdown-container">
           <select class="dropdown" id="genresDropdown" ng-model="selectedGenre" ng-options="g.genre for g in genres">
-            <option value="">--Genre--</option>
+            <option value="" disabled selected value>--Genre--</option>
           </select>
         </div>
         <div class="dropdown-container">
           <select class="dropdown" id="prsDropdown" ng-model="selectedPr" ng-options="p.pr for p in prs">
-            <option value="">--Price Range--</option>
+            <option value="" disabled selected value>--Price Range--</option>
           </select>
         </div>
 
@@ -99,11 +99,11 @@
       <div class="game-container">
         <div class="game">
           <div class="header"><strong>Game Title</strong></div>
-          <div class="header"><strong>Link</strong></div>
+          <div class="header"><strong>Read more about it!</strong></div>
         </div>
         <div class="game" id="results" ng-repeat="game in bestofGames">
           <div class="title">{{game.title}}</div>
-          <div class="link">{{game.link}}</div>
+          <div class="link">{{game.description}}</div>
         </div>
       </div>
     </div>

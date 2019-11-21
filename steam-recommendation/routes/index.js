@@ -77,6 +77,11 @@ router.get('/login', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'login.html'));
 });
 
+/* ----- sign up ----- */
+router.get('/signUp', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'signUp.html'));
+});
+
 
 /* Template for a FILE request router:
 

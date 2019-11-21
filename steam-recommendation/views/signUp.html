@@ -29,51 +29,48 @@
         <li><a class="nav-item nav-link active" href="/login">login</a></li>
       </ul>
     </nav>
-    <div class="container login-container" ng-controller="loginController">
+    <div class="container login-container" ng-controller="signUpController">
       <form class="needs-validation">
         <div>
           <input class = "input" placeholder="Username" required>
           <div class="invalid-feedback">
-            Please enter your Username.
+            Please provide a username
           </div>
         </div>
         <br>
         <div>
-            <input class = "input" type="password" id="myPassword" placeholder="Password" required><br><br>
-            <input type="checkbox" onclick="hidePassword()">Show Password
+            <input class="input" type="password" id="myPassword" placeholder="Password" required>
             <div class="invalid-feedback">
-              Please enter your password.
+              Please provide a password
             </div>
         </div>
         <br>
         <div>
-          <button type = "submit" class="login-button">Login in</button>
+          <input class="input" type="password" id="myConfirmedPassword" placeholder="Confirm Password" required>
+          <div class="invalid-feedback">
+            Please provide correct password
+          </div>
+        </div>
+        <br>
+        <div>
+          <button type = "submit" class="login-button">Sign up!</button>
         </div>
       </form>
-      <div>
-        <a href="/signUp" style="color: #92928E">register today!</a>
-      </div>
     </div>
-
-  
-
     
 
     <!-- Include these before the end of body tag in every HTML file -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script>
       function hidePassword() {
-        var x = document.getElementById("myPassword");
-        if (x.type === "password") {
-          x.type = "text";
-        } else {
-          x.type = "password";
+          var x = document.getElementById("myPassword");
+          if (x.type === "password") {
+            x.type = "text";
+          } else {
+            x.type = "password";
+          }
         }
-      }
 
+      
       (function () {
           'use strict';
           window.addEventListener('load', function () {
@@ -92,6 +89,10 @@
           }, false);
         })();
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </body>
 
 </html>
