@@ -29,6 +29,6 @@ body{
 }
 
 /* need modificatiion later*/
-.game .header, .game .title, .game .genre, .game .votes, .game .year {
+.game .name, .game .genre, .game .votes, .game .year {
   flex: 1 0 25%;
 }

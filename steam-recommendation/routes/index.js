@@ -94,8 +94,8 @@ router.get('<PATH>', function(req, res) {
 /* ----- Routers to handle data requests ----- */
 /* ------------------------------------------------ */
 
-/* -----  Homepage ----- */
-router.get('/games', function(req, res) {
+/* ----- Query test (we will see where to use them)----- */
+router.get('/q1', function(req, res) {
   var query = `
 SELECT review,funny FROM(
 SELECT r1.review, r2.funny FROM review_content r1
@@ -111,6 +111,116 @@ WHERE ROWNUM <= 1
     res.json(result);
   });
 });
+
+router.get('/q2', function(req, res) {
+  var query = `
+SELECT t1.genre, t1.name, t1.recommended_times 
+FROM 
+(
+SELECT g.genre, g.name, count(*) as recommended_times 
+FROM genre g
+JOIN review_criteria r 
+ON g.name = r.title
+WHERE r.recommendation = 'Recommended'
+GROUP BY genre, name
+) t1
+JOIN 
+(select genre, max(recommended_times) as maxrec from (
+SELECT g.genre, g.name, count(*) as recommended_times 
+FROM genre g
+JOIN review_criteria r 
+ON g.name = r.title
+WHERE r.recommendation = 'Recommended'
+GROUP BY genre, name
+) group by genre) t2
+ON t1.recommended_times = t2.maxrec and t1.genre = t2.genre
+ORDER BY t1.genre
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
+router.get('/q3', function(req, res) {
+  var query = `
+SELECT * FROM (
+SELECT r2.title, r2.review, r3.helpful FROM review_content r2
+JOIN (
+SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
+RIGHT JOIN(
+SELECT title, max(helpful) as maxhelp FROM review_criteria
+WHERE title IN (SELECT name
+FROM genre g1
+WHERE g1.genre IN (SELECT g2.genre FROM genre g2 WHERE name ='Gang Beasts' AND g1.genre=g2.genre))
+AND title IN (SELECT name
+FROM tag t1
+WHERE t1.tag IN (SELECT t2.tag FROM tag t2 WHERE name ='Gang Beasts' AND t1.tag=t2.tag))
+GROUP BY title) t1
+ON r1.title = t1.title and r1.helpful = t1.maxhelp
+ORDER BY r1.helpful DESC
+) r3
+ON r2.review_id = r3.review_id
+)
+WHERE ROWNUM<=1
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
+router.get('/q4', function(req, res) {
+  var query = `
+WITH recent_release AS
+(SELECT name, release_date
+FROM description
+WHERE release_date between '1-JAN-19' AND '31-JAN-19'
+ORDER BY release_date DESC)
+SELECT name, genre
+FROM
+(SELECT genre.name AS name, genre
+FROM recent_release JOIN genre ON
+recent_release.name = genre.name)
+WHERE ROWNUM <= 10
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
+router.get('/q5', function(req, res) {
+  var query = `
+SELECT *
+FROM
+(SELECT B.name, C.best_rates, C.max_hours_played
+FROM
+(SELECT name 
+FROM language l
+WHERE l.language IN
+(SELECT language
+FROM language 
+WHERE language.name = 'Beat Saber'))B
+JOIN 
+(SELECT rc.title AS game_name, MAX(rc.helpful) AS best_rates, MAX(rc.hour_played) AS max_hours_played
+FROM review_criteria rc 
+GROUP BY rc.title) C
+ON B.name = C.game_name
+ORDER BY C.max_hours_played DESC)D
+ORDER BY D.best_rates DESC
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
+/* -----  Homepage ----- */
 
 /* -----  Search Page ----- */
 
@@ -162,12 +272,22 @@ WHERE ROWNUM <= 1
 
 
 
+
 /* ----- Detail Page ----- */
+router.get('/detail/', function(req, res){
+  var query = `SELECT name, url, release_date, original_price, types, game_description 
+  FROM description WHERE name = 'DOOM'`;
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
 
 router.get('/detail/:game', function(req, res){
-  var myGame = req.params.game;
-  var query = `SELECT name, url, release_date, genre, tags, game_details 
-  FROM description_dataset WHERE name = "${myGame}"`;
+  //var myGame = req.params.game;
+  var query = `SELECT name, url, release_date, original_price, types, game_description 
+  FROM description WHERE name = 'DOOM'`;
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);
@@ -176,7 +296,7 @@ router.get('/detail/:game', function(req, res){
 
 
 
-
+// "${myGame}"
 /* General Template for GET requests:
 
 router.get('/routeName/:customParameter', function(req, res) {
