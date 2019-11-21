@@ -1,55 +1,77 @@
-.recommendations-container {
-  margin-top: 2rem;
+body,html{
+  margin: 0;
+  padding: 0;
+  background: black !important;
 }
 
-.input-container .movie-input {
-  margin: 10px 0;
-  width: 250px;
-  height: 36px;
-  border: none;
-  padding: 2px 16px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  outline: none;
+.searchbar{
+  margin-top: 110px;
+  height: 60px;
+  background-color: #353b48;
+  border-radius: 30px;
+  padding: 10px;
 }
 
-.input-container .submit-btn {
-  margin-left: 10px;
-  width: 100px;
-  height: 36px;
-  border: none;
-  padding: 2px 16px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  outline: none;
-  background: #bd54a4;
-  color: #fff;
-  cursor: pointer;
-  font-size: 12px;
+.search_input{
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color:transparent;
+  line-height: 40px;
+  transition: width 0.4s linear;
 }
 
-.input-container .submit-btn:hover {
-  background: #c561ae;
-}
-
-.input-container .submit-btn:active {
-  background: #d86bbe;
-}
-
-.movies-container {
-  display: flex;
-  flex-flow: column wrap;
-  margin-top: 10px;
-}
-
-.movies-container .movie {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  height: 40px;
+.searchbar:hover > .search_input{
   padding: 0 10px;
+  width: 450px;
+  caret-color:red;
+  transition: width 0.4s linear;
 }
 
-.movie .header, .movie .title, .movie .id, .movie .rating, .movie .vote-count {
-  flex: 1 0 25%;
+.searchbar:hover > .search_icon{
+  background: white;
+  color: #e74c3c;
+}
+
+.search_icon{
+  height: 40px;
+  width: 40px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:white;
+  text-decoration:none;
+}
+
+.jumbotron {
+  background-color: black;
+  position: relative;
+  padding: 1.5rem;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+  padding-right: 15px;
+}
+
+h3{
+  margin-bottom: .5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #fff;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  color: #fff;
 }
