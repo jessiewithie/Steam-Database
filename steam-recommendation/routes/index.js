@@ -73,7 +73,6 @@ router.get('/detail', function(req, res) {
 
 /* ----- login page ----- */
 router.get('/login', function(req, res) {
-  // console.log("_dirname");
   res.sendFile(path.join(__dirname, '../', 'views', 'login.html'));
 });
 
