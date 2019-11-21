@@ -99,7 +99,6 @@ app.controller('navController', function ($scope, $http) {
 
 app.controller('detailController', function($scope, $http) {
       $http({
-<<<<<<< HEAD
         url: '/detail/:Portal',
         method: 'GET'
       }).then(res => {
@@ -107,15 +106,6 @@ app.controller('detailController', function($scope, $http) {
         // console.log($scope);
         $scope.testdata = res.data.rows[0];
         // console.log($scope.testdata.rows[0][0]);
-=======
-        url: '/detail/:game',
-        method: 'GET'
-      }).then(res => {
-        console.log("DETAIL: ", res.data);
-        console.log($scope);
-        // $scope.testdata = res.data;
-        // console.log($scope.testdata);
->>>>>>> 4c7ae23f61e6f4d34470c31501938eaf5040632f
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
