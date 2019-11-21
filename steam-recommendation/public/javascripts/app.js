@@ -11,7 +11,21 @@ var app = angular.module('angularjsNodejsTutorial', []);
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
-  // TODO: Q1
+  
+  $http({
+    url:'/q1',
+    method:'GET',
+  }).then(res=>{
+    console.log("GAMES:", res.data);
+    //store the response data to $scope.genres
+    $scope.genres = res.data;
+    console.log("111");
+  },err =>{
+    console.log("Games ERROR: ",err);
+  });
+  $scope.submitId = function() {
+    $scope.review =  $scope.genres.rows;
+  } 
 });
 
 // Controller for the Recommendations Page
@@ -84,18 +98,32 @@ app.controller('navController', function ($scope, $http) {
 //I need game names from Nav page just like the dashboaed page in hw2
 
 app.controller('detailController', function($scope, $http) {
-    $scope.showDetails= function(g) {
-      
       $http({
-        url: '/detail/' + g.game,
+        url: '/detail/:game',
         method: 'GET'
       }).then(res => {
         console.log("DETAIL: ", res.data);
-        $scope.details = res.data;
+        console.log($scope);
+        // $scope.testdata = res.data;
+        // console.log($scope.testdata);
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
-  }
+
+      
+    // $scope.showDetails= function() {
+      
+    //   $http({
+    //     url: '/detail/' + g.game,
+    //     method: 'GET'
+    //   }).then(res => {
+    //     console.log("DETAIL: ", res.data);
+    //     $scope.details = res.data;
+    //   }, err => {
+    //     console.log("DETAIL ERROR: ", err);
+    //   });
+  //}
+
 });
 
 // Controller for the login page
