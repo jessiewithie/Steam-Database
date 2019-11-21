@@ -67,15 +67,34 @@
   <!-- Sample Content. You can either use this or make your own -->
   <div class="container nav-container">
     <div class="jumbotron">
+
       <div class="h5">Game filters!</div>
-  
+      <!-- top container for feature selections -->
       <div class="years-container">
+
         <div class="dropdown-container">
-          <select class="dropdown" id="decadesDropdown" ng-model="selectedDecade" ng-options="d.decade for d in decades"></select>
+          <!-- <label style="color: #92928E">Release Year</label> -->
+          <select class="dropdown" id="decadesDropdown" ng-model="selectedDecade" ng-options="d.decade for d in decades">
+            <option value="">--Released Year--</option>
+          </select>
         </div>
-        <button class="submit-btn" id="decadesSubmitBtn" ng-click="submitDecade()">Submit</button>
+        <div class="dropdown-container">
+          <select class="dropdown" id="genresDropdown" ng-model="selectedGenre" ng-options="g.genre for g in genres">
+            <option value="">--Genre--</option>
+          </select>
+        </div>
+        <div class="dropdown-container">
+          <select class="dropdown" id="prsDropdown" ng-model="selectedPr" ng-options="p.pr for p in prs">
+            <option value="">--Price Range--</option>
+          </select>
+        </div>
+
+        <button class="submit-btn" id="filterSubmitBtn" ng-click="submitFilterCriteria()">Submit</button>
       </div>
+
     </div>
+
+    <!-- bottom container to show the game infos -->
     <div class="jumbotron">
       <div class="game-container">
         <div class="game">

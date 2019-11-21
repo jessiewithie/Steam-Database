@@ -11,8 +11,9 @@ var app = angular.module('angularjsNodejsTutorial', []);
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
+  
   $http({
-    url:'/games',
+    url:'/q1',
     method:'GET',
   }).then(res=>{
     console.log("GAMES:", res.data);
@@ -22,7 +23,6 @@ app.controller('indexController', function($scope, $http) {
   },err =>{
     console.log("Games ERROR: ",err);
   });
-   
   $scope.submitId = function() {
     $scope.review =  $scope.genres.rows;
   } 
@@ -48,34 +48,55 @@ app.controller('navController', function ($scope, $http) {
   //     console.log("DECADES ERROR: ", err);
   //   }
   // );
-
+  $scope.selectedDecade = { decade: "2010" };
   $scope.decades = [{ decade: '2010' },
                     { decade: '2011' },
                     { decade: '2012' },
                     { decade: '2013' }];
+  
+  $scope.selectedGenre = { genre: "2010" };
+  $scope.genres = [
+    { genre: "Adventure" },
+    { genre: "Adventure" },
+    { genre: "Adventure" }
+  ];
 
-  $scope.submitDecade = function () {
-    $http({
-      url: "/selectedDecades/" + $scope.selectedDecade.decade,
-      method: "GET"
-    }).then(
-      res => {
-        console.log("SELECTEDDECADES: ", res.data);
-        $scope.bestofMovies = res.data;
-      },
-      err => {
-        console.log("SELECTEDDECADES: ", err);
-      }
+  $scope.selectedPriceRange = { pr: "2010" };
+  $scope.prs = [
+    { pr: "$10-50" },
+    { pr: "$50-100" },
+    { pr: "$100-150" }
+  ];
+
+  $scope.submitFilterCriteria = function() {
+    alert(
+      $scope.selectedPr.pr +
+        " " +
+        $scope.selectedGenre.genre +
+        " " +
+        $scope.selectedDecade.decade
     );
-  }
+    // $http({
+    //   url: "/selectedDecades/" + $scope.selectedDecade.decade,
+    //   method: "GET"
+    // }).then(
+    //   res => {
+    //     console.log("SELECTEDDECADES: ", res.data);
+    //     $scope.bestofMovies = res.data;
+    //   },
+    //   err => {
+    //     console.log("SELECTEDDECADES: ", err);
+    //   }
+    // );
+  };
 
 });
 
 //I need game names from Nav page just like the dashboaed page in hw2
 
 app.controller('detailController', function($scope, $http) {
-      console.log("1");
       $http({
+<<<<<<< HEAD
         url: '/detail/:Portal',
         method: 'GET'
       }).then(res => {
@@ -83,11 +104,20 @@ app.controller('detailController', function($scope, $http) {
         // console.log($scope);
         $scope.testdata = res.data.rows[0];
         // console.log($scope.testdata.rows[0][0]);
+=======
+        url: '/detail/:game',
+        method: 'GET'
+      }).then(res => {
+        console.log("DETAIL: ", res.data);
+        console.log($scope);
+        // $scope.testdata = res.data;
+        // console.log($scope.testdata);
+>>>>>>> 4c7ae23f61e6f4d34470c31501938eaf5040632f
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
-  console.log(1111);
 
+      
     // $scope.showDetails= function() {
       
     //   $http({
