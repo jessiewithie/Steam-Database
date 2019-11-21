@@ -11,7 +11,21 @@ var app = angular.module('angularjsNodejsTutorial', []);
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
-  // TODO: Q1
+  $http({
+    url:'/games',
+    method:'GET',
+  }).then(res=>{
+    console.log("GAMES:", res.data);
+    //store the response data to $scope.genres
+    $scope.genres = res.data;
+    console.log("111");
+  },err =>{
+    console.log("Games ERROR: ",err);
+  });
+   
+  $scope.submitId = function() {
+    $scope.review =  $scope.genres.rows;
+  } 
 });
 
 // Controller for the Recommendations Page

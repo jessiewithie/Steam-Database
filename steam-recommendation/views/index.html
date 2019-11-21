@@ -19,7 +19,7 @@
     <!-- Navbar -->     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <a class="navbar-brand center" href="/">
-        <i class="fa fa-steam-square fa-2x" aria-hidden="true"></i>
+        <i class="fa fa-steam-square fa-3x" aria-hidden="true"></i>
       </a>
       <ul>
         <!-- <li><a class="nav-item nav-link active" href="/">index</a></li> -->
@@ -44,7 +44,7 @@
                 </li>
                 <li class="list-group-item">
                     <a class="fa fa-clock-o fa-3x" aria-hidden="true" 
-                    ng-click="showLatestGame()"></a>
+                    ng-click="submitId()"></a>
                 </li>
                 <li class="list-group-item">
                     <a class="fa fa-heart-o fa-3x" aria-hidden="true" href="/search"></a>
@@ -86,7 +86,10 @@
         </div>
         <!-- card2 -->
         <div class="col">
-          3 of 3
+            <div class="jumbotron" id="results" ng-model="review">
+                <div class="title">{{review[0][0]}}</div>
+                <div >{{review[0][1]}}</div>
+              </div>
         </div>
       </div> 
         <div>
