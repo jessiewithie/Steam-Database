@@ -10,22 +10,22 @@ var app = angular.module('angularjsNodejsTutorial', []);
 // }));
 
 //I'm not sure if this works 
-app.config(function ($stateProvider, $urlRouterProvider) {
+// app.config(function ($stateProvider, $urlRouterProvider) {
 
-      $stateProvider
-      .state('nav', {
-      url: '/nav',
-      templateUrl: 'views/nav.html',
-      controller: 'navController'
-      })
-      .state('detail', {
-       url: '/detail/:title',
-       templateUrl: 'views/detail.html',
-      //params: {'title': null},
-       controller: 'detailController'
-      });
-      $urlRouterProvider.otherwise("/nav");
-  });
+//       $stateProvider
+//       .state('nav', {
+//       url: '/nav',
+//       templateUrl: 'views/nav.html',
+//       controller: 'navController'
+//       })
+//       .state('detail', {
+//        url: '/detail/:title',
+//        templateUrl: 'views/detail.html',
+//       //params: {'title': null},
+//        controller: 'detailController'
+//       });
+//       $urlRouterProvider.otherwise("/nav");
+//   });
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
@@ -116,19 +116,19 @@ app.controller('navController', function ($scope, $http) {
 //I need game names from Nav page just like the dashboaed page in hw2
 
 app.controller('detailController', function($scope, $http, $state, $stateParams) {
-      var title = $stateParams.title
-      //$state.current.params
-      $http({
-        url: '/detail/'+ title
-        method: 'GET'
-      }).then(res => {
-        console.log("DETAIL: ", res.data);
-        // console.log($scope);
-        $scope.testdata = res.data.rows[0];
-        // console.log($scope.testdata.rows[0][0]);
-      }, err => {
-        console.log("DETAIL ERROR: ", err);
-      });
+//       var title = $stateParams.title
+//       //$state.current.params
+//       $http({
+//         url: '/detail/'+ title
+//         method: 'GET'
+//       }).then(res => {
+//         console.log("DETAIL: ", res.data);
+//         // console.log($scope);
+//         $scope.testdata = res.data.rows[0];
+//         // console.log($scope.testdata.rows[0][0]);
+//       }, err => {
+//         console.log("DETAIL ERROR: ", err);
+//       });
 
       //test
       $http({
