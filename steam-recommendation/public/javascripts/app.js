@@ -41,14 +41,29 @@ app.controller('indexController', function($scope, $http) {
   },err =>{
     console.log("Games ERROR: ",err);
   });
+  $scope.thumb = function(){
+    window.location = '/search';
+  }
   $scope.submitId = function() {
     $scope.review =  $scope.genres.rows;
   } 
 });
 
 // Controller for the Recommendations Page
-app.controller('recommendationsController', function($scope, $http) {
+app.controller('searchController', function($scope, $http) {
   // TODO: Q2
+  $http({
+      url: "/search/:recommend",
+      method: "GET"
+    }).then(
+      res => {
+        // console.log("DECADES: ", res.data);
+        // $scope.decades = res.data;
+      },
+      err => {
+        // console.log("DECADES ERROR: ", err);
+      }
+    );
 });
 
 // Controller for the Nav and Detail Of Page
