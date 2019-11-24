@@ -37,37 +37,6 @@
 
   <!-- index Content -->
  
-  <!-- <div class="container">
-  <form method="GET">
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="inputGenre" style="color: #92928E">Filter By</label>
-        <select ng-model="inputGenre" class="form-control">
-          <ng-options selected>Genre</ng-options>
-          <ng-options>Price Range</ng-options>
-          <ng-options>Games</ng-options>
-        </select>
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputYear" style="color: #92928E">Release Year</label>
-        <select ng-model="inputYear" class="form-control">
-          <ng-options selected>2010</ng-options>
-          <ng-options>2001</ng-options>
-          <ng-options>2004</ng-options>
-        </select>
-      </div>
-
-      <div class="dropdown-container">
-        <select class="dropdown" id="decadesDropdown2" ng-model="selectedDecade"
-          ng-options="item for item in names"></select>
-      </div>
-
-      <button type="submit" class="btn btn-outline-secondary btn-lg">Get games!</button>
-    </div>
-  </form>
-  </div> -->
-
-  <!-- Sample Content. You can either use this or make your own -->
   <div class="container nav-container">
     <div class="jumbotron">
 
@@ -82,7 +51,7 @@
           </select>
         </div>
         <div class="dropdown-container">
-          <select class="dropdown" id="genresDropdown" ng-model="selectedGenre" ng-options="g.genre for g in genres">
+          <select class="dropdown" id="genresDropdown" ng-model="selectedGenre" ng-options="g for g in genres">
             <option value="" disabled selected value>--Genre--</option>
           </select>
         </div>
@@ -102,11 +71,11 @@
       <div class="game-container">
         <div class="game">
           <div class="header"><strong>Game Title</strong></div>
-          <div class="header"><strong>Read more about it!</strong></div>
+          <div class="header"><strong>Top Comment</strong></div>
         </div>
         <div class="game" id="results" ng-repeat="game in bestofGames">
-          <div class="title">{{game.title}}</div>
-          <div class="link">{{game.description}}</div>
+          <div class="title">{{game[0]}}</div>
+          <div class="link">{{game[1]}}</div>
         </div>
       </div>
     </div>

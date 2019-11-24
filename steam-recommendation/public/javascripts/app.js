@@ -55,11 +55,30 @@ app.controller('navController', function ($scope, $http) {
                     { decade: '2013' }];
   
   $scope.selectedGenre = { genre: "0" };
-  $scope.genres = [
-    { genre: "Adventure" },
-    { genre: "Adventure" },
-    { genre: "Adventure" }
-  ];
+  // $scope.genres = [
+  //   { genre: "Adventure" },
+  //   { genre: "Adventure" },
+  //   { genre: "Adventure" }
+  // ];
+
+    //query the genres for the genre filter
+    $http({
+      url: "/filterGenres",
+      method: "GET"
+    }).then(
+      res => {
+        console.log("Genre: ", res.data);
+        $scope.genres = res.data.rows;
+        console.log("HEHEHE")
+      },
+      err => {
+        console.log("Genre ERROR: ", err);
+      }
+    );
+
+
+
+
 
   $scope.selectedPr = { pr: "0" };
   $scope.prs = [
@@ -68,27 +87,51 @@ app.controller('navController', function ($scope, $http) {
     { pr: "$100-150" }
   ];
 
-  $scope.submitFilterCriteria = function() {
-    alert("Price range:" +
-      $scope.selectedPr.pr +
-        ", genre:" +
-        $scope.selectedGenre.genre +
-        ", decade" +
-        $scope.selectedDecade.decade
-    );
+  // $scope.submitFilterCriteria = function() {
+  //   alert("Price range:" +
+  //     $scope.selectedPr.pr +
+  //       ", genre:" +
+  //       $scope.selectedGenre.genre +
+  //       ", decade" +
+  //       $scope.selectedDecade.decade
+  //   );
 
     //score default values 0 --> aka nothing selected
+$scope.submitFilterCriteria = function() {
+    var url_str =
+      "/filteredData/" +
+      "pr=" +
+      $scope.selectedPr.pr +
+      "&genre=" +
+      $scope.selectedGenre.genre +
+      "&decade=" +
+      $scope.selectedDecade.decade;
+    // alert(url_str);
+    var tst_url_str = $scope.selectedGenre[0];
+    $http({
+      url: "/filteredData/" + tst_url_str,
+      method: "GET"
+    }).then(
+      res => {
+        console.log("SELECTEDFILTERCRITERIA: ", res.data);
+        // $scope.filterResults = res.data;
+        $scope.bestofGames = res.data.rows;
+      },
+      err => {
+        console.log("SELECTEDFILTERCRITERIA: ", err);
+      }
+    );
+
 
     // $http({
-    //   url: "/selectedDecades/" + $scope.selectedDecade.decade,
+    //   url: "/detail/:Portal",
     //   method: "GET"
     // }).then(
     //   res => {
-    //     console.log("SELECTEDDECADES: ", res.data);
-    //     $scope.bestofMovies = res.data;
+    //     console.log("DETAIL: ", res.data.rows);
     //   },
     //   err => {
-    //     console.log("SELECTEDDECADES: ", err);
+    //     console.log("DETAIL ERROR: ", err);
     //   }
     // );
   };
@@ -99,7 +142,7 @@ app.controller('navController', function ($scope, $http) {
 
 app.controller('detailController', function($scope, $http) {
       $http({
-<<<<<<< HEAD
+
         url: '/detail/:Portal',
         method: 'GET'
       }).then(res => {
@@ -107,15 +150,14 @@ app.controller('detailController', function($scope, $http) {
         // console.log($scope);
         $scope.testdata = res.data.rows[0];
         // console.log($scope.testdata.rows[0][0]);
-=======
-        url: '/detail/:game',
-        method: 'GET'
-      }).then(res => {
-        console.log("DETAIL: ", res.data);
-        console.log($scope);
-        // $scope.testdata = res.data;
-        // console.log($scope.testdata);
->>>>>>> 4c7ae23f61e6f4d34470c31501938eaf5040632f
+
+      //   url: '/detail/:game',
+      //   method: 'GET'
+      // }).then(res => {
+      //   console.log("DETAIL: ", res.data);
+      //   console.log($scope);
+      //   // $scope.testdata = res.data;
+      //   // console.log($scope.testdata);
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });

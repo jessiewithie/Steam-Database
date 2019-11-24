@@ -231,50 +231,59 @@ ORDER BY D.best_rates DESC
 
 
 /* -----  Nav page ----- */
-// router.get('/nav', function(req,res){
-//   console.log("hehe");
-//   alert("YOOO");
-//   alert(req.params);
 
-// });
+router.get("/genres", function(req, res) {
+  var query = `
+    SELECT DISTINCT GENRE FROM GENRE
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
 
-// router.get('/decades', function (req, res) {
-  // var query = `
-  //   SELECT DISTINCT (FLOOR(year/10)*10) AS decade
-  //   FROM (
-  //     SELECT DISTINCT release_year as year
-  //     FROM Movies
-  //     ORDER BY release_year
-  //   ) y
-  // `;
-  // connection.query(query, function (err, rows, fields) {
-  //   if (err) console.log(err);
-  //   else {
-  //     console.log(rows);
-  //     res.json(rows);
-  //   }
-  // });
-// });
+router.get("/filterGenres", function(req, res) {
+  var query = `SELECT DISTINCT GENRE FROM GENRE`;
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
 
-// router.get("/selectedDecades/:decades", function (req, res) {
-
-  // var decades = req.params.decades;
-  // var query = `
-  //   WITH top_rats AS(SELECT g1.genre, MAX(m1.vote_count) as max_vc
-  //     FROM  Movies m1 JOIN Genres g1 on m1.id=g1.movie_id
-  //     WHERE m1.release_year>=${decades} AND m1.release_year<=${decades}+9
-  //     GROUP BY g1.genre)
-  //   SELECT g.genre, m.title, m.vote_count, m.release_year
-  //   FROM Movies m JOIN Genres g on m.id=g.movie_id
-  //   WHERE m.release_year>=${decades} AND m.release_year<=${decades}+9 AND 
-  //     EXISTS(SELECT * FROM top_rats WHERE top_rats.genre=g.genre AND top_rats.max_vc=m.vote_count)
-  //   ORDER BY g.genre;
-  // `;
-//   res.json([{ name: 'Jani', country: 'Norway'}, 
-//             {name:'Hege',country:'Sweden'}, 
-//             {name: 'Kai', country:'Denmark'}]);
-// });
-
+router.get('/filteredData/:genre', function(req,res){
+  console.log("req.params");
+  var genre = req.params.genre;
+  console.log(req.params);
+  var query =
+    `
+SELECT TITLE, REVIEW FROM (
+    SELECT r2.title, r2.review, r3.helpful FROM review_content r2
+    JOIN (
+    SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
+    RIGHT JOIN(
+    SELECT title, max(helpful) as maxhelp FROM review_criteria
+    WHERE title IN (SELECT name
+    FROM genre g1
+    WHERE g1.genre='` +
+    genre +
+    `')
+    GROUP BY title) t1
+    ON r1.title = t1.title and r1.helpful = t1.maxhelp
+    ORDER BY r1.helpful DESC
+    ) r3
+    ON r2.review_id = r3.review_id
+    )
+    WHERE ROWNUM<=10
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
 
 
 
