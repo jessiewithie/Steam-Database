@@ -277,22 +277,66 @@ ORDER BY D.best_rates DESC
 
 
 
-
 /* ----- Detail Page ----- */
-router.get('/detail/:Portal', function(req, res){
+// router.get('/detail/:Portal', function(req, res){
+//   var query = `SELECT name, url, release_date, original_price, types, game_description 
+//   FROM description WHERE name = 'Portal'`;
+//   console.log(query);
+//   sendQuery(query, function(result) {
+//     res.json(result);
+//   });
+// });
+
+// router.get('/detail/:DOOM', function(req, res){
+//   var myGame = req.query.gameName;
+//   //var myGame = req.params.game;
+//   console.log(myGame);
+//   var query = `SELECT name, url, release_date, original_price, types, game_description 
+//   FROM description WHERE name = 'DOOM'`;
+//   console.log(query);
+//   sendQuery(query, function(result) {
+//     res.json(result);
+// });
+
+router.get('/detail/:gameName', function(req, res){
+  var myGame = req.params.gameName;
+  //var myGame = req.params.game;
+  console.log(myGame);
   var query = `SELECT name, url, release_date, original_price, types, game_description 
-  FROM description WHERE name = 'Portal'`;
+  FROM description WHERE name = '${myGame}'`;
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);
   });
 });
 
-
-router.get('/detail/:game', function(req, res){
+router.get('/detail/rec/:gameName', function(req, res){
+  var myGame = req.params.gameName;
   //var myGame = req.params.game;
-  var query = `SELECT name, url, release_date, original_price, types, game_description 
-  FROM description WHERE name = 'DOOM'`;
+  console.log(myGame);
+  var query = `
+SELECT t1.name, t1.genre, t1.recommended_times 
+FROM 
+(
+SELECT g.genre, g.name, count(*) as recommended_times 
+FROM genre g
+JOIN review_criteria r 
+ON g.name = r.title
+WHERE r.recommendation = 'Recommended'
+GROUP BY genre, name
+) t1
+JOIN 
+(select genre, max(recommended_times) as maxrec from (
+SELECT g.genre, g.name, count(*) as recommended_times 
+FROM genre g
+JOIN review_criteria r 
+ON g.name = r.title
+WHERE r.recommendation = 'Recommended'
+GROUP BY genre, name
+) group by genre) t2
+ON t1.recommended_times = t2.maxrec and t1.genre = t2.genre
+ORDER BY t1.genre
+  `;
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);
