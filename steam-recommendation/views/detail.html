@@ -31,20 +31,26 @@
 
 
     <div id="section">
+
       <br />
       <br />
       <br />
-      <h4 style="color: white">More info about the game!</h4>
+      <h4 style="color: white">Find your game!</h4>
+      <input type="text" ng-model="gameName" placeholder="Enter Game Name" id="gameName"/>
+      <button id="submitMovieBtn" class="submit-btn" ng-click="showDetail()">Search</button>
+         <br />
+      <br />
+      <br />
      <br />
     </div>
 
 
     <!-- Reference Content -->
-    <div class="games-container">
-      <div class="jumbotron">
+<!--     <div class="games-container">
+      <div class="jumbotron"> -->
         <!-- Display details when a game is clicked -->
 
-        <div class='table'>
+        <!-- <div class='table'>
            <h4 style="color: black"><a href="https://store.steampowered.com/app/379720/DOOM/">DOOM</a></h4>
         
             <table border="0">
@@ -65,13 +71,28 @@
 
             </tr>
             </table>
-             </div>
-             </div>
-            </div>
+             </div> -->
+<!--              </div>
+            </div> -->
 
 
     <div class="games-container">
       <div class="jumbotron">
+        <h5 style="color: black">About the game</h5>
+   <!--        <div class="games">
+            <div class="header"><strong>Name</strong></div>
+            <div class="header"><strong>Release Date</strong></div>
+            <div class="header"><strong>Price</strong></div>
+            <div class="header"><strong>Type</strong></div>
+          </div> -->
+          <div class="games-container" id="results" ng-show="detail">
+            <div class="movie">  Name : {{detail[0]}}</div>
+            <div class="movie"> Release Date : {{detail[2]}}</div>
+            <div class="movie"> Price : {{detail[3]}}</div>
+            <div class="movie"> Type :{{detail[4]}}</div>
+          </div>
+    </div>
+    <div class="jumbotron">
         <h5 style="color: black">Games you may also like: </h5>
    <!--        <div class="games">
             <div class="header"><strong>Name</strong></div>
@@ -79,11 +100,11 @@
             <div class="header"><strong>Price</strong></div>
             <div class="header"><strong>Type</strong></div>
           </div> -->
-          <div class="games-container" id="results" ng-show="testdata">
-            <div class="movie">  name : {{testdata[0]}}</div>
-            <div class="movie"> Release Date : {{testdata[2]}}</div>
-            <div class="movie">Price : {{testdata[3]}}</div>
-            <div class="movie">Type :{{testdata[4]}}</div>
+          <div class="games-container" id="results" ng-show="rec">
+            <div class="movie">  Name : {{rec[0]}}</div>
+            <div class="movie"> Genre : {{rec[1]}}</div>
+            <div class="movie"> Recommended Times : {{rec[2]}}</div>
+            <!-- <div class="movie"> Type :{{rec[4]}}</div> -->
           </div>
     </div>
     </div>
