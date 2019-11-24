@@ -115,33 +115,61 @@ app.controller('navController', function ($scope, $http) {
 
 //I need game names from Nav page just like the dashboaed page in hw2
 
-app.controller('detailController', function($scope, $http, $state, $stateParams) {
-//       var title = $stateParams.title
-//       //$state.current.params
-//       $http({
-//         url: '/detail/'+ title
-//         method: 'GET'
-//       }).then(res => {
-//         console.log("DETAIL: ", res.data);
-//         // console.log($scope);
-//         $scope.testdata = res.data.rows[0];
-//         // console.log($scope.testdata.rows[0][0]);
-//       }, err => {
-//         console.log("DETAIL ERROR: ", err);
-//       });
-
-      //test
-      $http({
-        url: '/detail/:Portal',
+app.controller('detailController', function($scope, $http) {
+      // $http({
+      //   url: '/detail/:Portal',
+      //   method: 'GET'
+      // }).then(res => {
+      //   console.log("DETAIL: ", res.data);
+      //   // console.log($scope);
+      //   $scope.testdata = res.data.rows[0];
+      //   //console.log($scope.testdata[0]);
+      // }, err => {
+      //   console.log("DETAIL ERROR: ", err);
+      // });
+      $scope.showDetail = function() {
+        $http({
+        url: '/detail/' + $scope.gameName,
         method: 'GET'
       }).then(res => {
         console.log("DETAIL: ", res.data);
         // console.log($scope);
-        $scope.testdata = res.data.rows[0];
-        // console.log($scope.testdata.rows[0][0]);
+        $scope.detail = res.data.rows[0];
+        console.log($scope.gameName);
+        console.log($scope.detail);
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
+
+        $http({
+        url: '/detail/rec/' + $scope.gameName,
+        method: 'GET'
+      }).then(res => {
+        console.log("DETAIL: ", res.data);
+        // console.log($scope);
+        $scope.rec = res.data.rows[0];
+        console.log($scope.gameName);
+        console.log($scope.rec);
+      }, err => {
+        console.log("DETAIL ERROR: ", err);
+        });
+      }
+    });
+
+
+
+      // $http({
+      //   url: '/detail/' + $scope.game,
+      //   method: 'GET'
+      // }).then(res => {
+      //   console.log("DETAIL: ", res.data);
+      //   // console.log($scope);
+      //   $scope.test = res.data.rows[0];
+      //   //console.log($scope.testdata2);
+      // }, err => {
+      //   console.log("DETAIL ERROR: ", err);
+      // });
+
       
     // $scope.showDetails= function() {
       
@@ -156,7 +184,7 @@ app.controller('detailController', function($scope, $http, $state, $stateParams)
     //   });
   //}
 
-});
+
 
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
