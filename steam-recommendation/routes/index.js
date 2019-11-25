@@ -3,8 +3,7 @@ var router = express.Router();
 var path = require('path');
 // var config = require('../db-config.js');
 
-/* ----- Connects to your mySQL database ----- */
-
+/* ----- Connects to your oracleDb database ----- */
 // var mysql = require('mysql');
 var oracledb = require('oracledb');
 
@@ -45,7 +44,6 @@ function doRelease(connection) {
 // 
 // config.connectionLimit = 20;
 // var connection = mysql.createPool(config);
-
 
 /* ------------------------------------------- */
 /* ----- Routers to handle FILE requests ----- */
@@ -117,7 +115,7 @@ WHERE ROWNUM <= 1
   });
 });
 
-router.get('/q2', function(req, res) {
+router.get('/search/:recommend', function(req, res) {
   var query = `
 SELECT t1.genre, t1.name, t1.recommended_times 
 FROM 
@@ -423,8 +421,10 @@ router.get('/detail/:gameName', function(req, res){
   var myGame = req.params.gameName;
   //var myGame = req.params.game;
   console.log(myGame);
-  var query = `SELECT name, url, release_date, original_price, types, game_description 
-  FROM description WHERE name = '${myGame}'`;
+  var query = `
+  SELECT name, url, release_date, original_price, types, game_description 
+  FROM description 
+  WHERE name = '${myGame}'`;
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);

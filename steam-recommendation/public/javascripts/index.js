@@ -20,8 +20,8 @@ function overShow(){
     document.getElementById("list-left").style.display = "block";
 }
 
-// function outHide(){
-//     document.getElementById("list-left").style.display = "none";
-// }
+function outHide(){
+    document.getElementById("list-left").style.display = "none";
+}
 
     
