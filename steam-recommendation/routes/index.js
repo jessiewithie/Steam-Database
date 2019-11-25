@@ -230,23 +230,135 @@ ORDER BY D.best_rates DESC
 /* -----  Search Page ----- */
 
 
-/* -----  Nav page ----- */
+/* -----------------------------------  Nav page ------------------------------------------------------- */
 
-router.get("/genres", function(req, res) {
-  var query = `
-    SELECT DISTINCT GENRE FROM GENRE
-  `;
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
+/* -----  html flat query ----- */
+router.get("/filterGenres", function(req, res) {
+  var query = `SELECT DISTINCT GENRE FROM GENRE ORDER BY GENRE`;
+  sendQuery(query, function(result) {
+    res.json(result);
   });
 });
 
-router.get("/filterGenres", function(req, res) {
-  var query = `SELECT DISTINCT GENRE FROM GENRE`;
+router.get("/filterYears", function(req, res) {
+  var query = `SELECT DISTINCT EXTRACT(year FROM RELEASE_DATE) as year
+		FROM RELEASE_DATE
+      ORDER BY EXTRACT(year FROM RELEASE_DATE)`;
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
+/* -----  query functions ----- */
+router.get('/filteredData/:genre/:price/:year', function(req,res){
+  console.log(req.params);
+  var i;
+
+  //genre
+  var genre = req.params.genre;
+  var select_genre;
+  if (genre === "0" || genre === "undefined" || genre === "--Genre--") {
+    select_genre = "";
+  } else {
+    select_genre =
+      ` title IN (SELECT name
+    FROM genre g1
+    WHERE g1.genre='` +
+      genre +
+      `') `;
+  }
+  
+  //price
+  var price_condition = req.params.price;
+  // var select_price = `
+  //    title IN (SELECT name
+  //   FROM price p1
+  //   WHERE p1.ORIGINAL_PRICE>0 AND p1.ORIGINAL_PRICE<50)`;
+  var select_price = `
+     title IN (SELECT name
+      FROM price p1
+      WHERE `;
+  if (price_condition === "0" || price_condition === "--Price Range--") {
+    select_price = "";
+  } else {
+    if (price_condition === "FREE") {
+      price_condition = "p1.ORIGINAL_PRICE=0) ";
+    } else if (price_condition === "<$50") {
+      price_condition = "p1.ORIGINAL_PRICE>0 AND p1.ORIGINAL_PRICE<50) ";
+    } else if (price_condition === "$600+") {
+      price_condition = "p1.ORIGINAL_PRICE>500) ";
+    } else if (price_condition === "$50-100") {
+      price_condition = "p1.ORIGINAL_PRICE>50 AND p1.ORIGINAL_PRICE<=100) ";
+    } else if (price_condition === "$100-150") {
+      price_condition = "p1.ORIGINAL_PRICE>100 AND p1.ORIGINAL_PRICE<=150) ";
+    } else if (price_condition === "$150-250") {
+      price_condition = "p1.ORIGINAL_PRICE>150 AND p1.ORIGINAL_PRICE<=250) ";
+    } else if (price_condition === "$250-400") {
+      price_condition = "p1.ORIGINAL_PRICE>250 AND p1.ORIGINAL_PRICE<=400) ";
+    } else if (price_condition === "$400-600") {
+      price_condition = "p1.ORIGINAL_PRICE>400 AND p1.ORIGINAL_PRICE<=600) ";
+    }
+    select_price = select_price + price_condition;
+  }
+
+  // year!
+  var year_condition = req.params.year;
+  var select_year;
+  if (
+    year_condition === "0" ||
+    year_condition === "undefined" ||
+    year_condition === "--Released Year--"
+  ) {
+    select_year = "";
+  } else {
+    select_year =
+      ` title IN (SELECT name
+        FROM RELEASE_DATE r1
+        WHERE EXTRACT(year FROM r1.RELEASE_DATE) = ` +
+      year_condition +
+      ` ) `;
+  }
+
+  console.log(genre);
+  // determin filtering conditions
+  var filters = "";
+  if (select_price.length > 0){
+    filters = filters + " AND " + select_price;
+  } 
+  if (select_genre.length > 0) {
+    filters = filters + " AND " + select_genre;
+  }
+  if (select_year.length > 0) {
+    filters = filters + " AND " + select_year;
+  }
+  if(filters.length > 0){
+    filters = filters.substring(4);
+    filters = " WHERE "+filters;
+  }
+
+  // console.log(filters);
+  
+  // query!
+  var query =
+    `
+SELECT TITLE, REVIEW FROM (
+    SELECT r2.title, r2.review, r3.helpful FROM review_content r2
+    JOIN (
+    SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
+    RIGHT JOIN(
+    SELECT title, max(helpful) as maxhelp FROM review_criteria
+    ` +
+    filters
+    +
+    ` GROUP BY title) t1
+    ON r1.title = t1.title and r1.helpful = t1.maxhelp
+    ORDER BY r1.helpful DESC
+    ) r3
+    ON r2.review_id = r3.review_id
+    )
+    WHERE ROWNUM<=10
+  `;
+  // connect query
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);

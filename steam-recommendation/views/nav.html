@@ -46,7 +46,7 @@
 
         <div class="dropdown-container">
           <!-- <label style="color: #92928E">Release Year</label> -->
-          <select class="dropdown" id="decadesDropdown" ng-model="selectedDecade" ng-options="d.decade for d in decades">
+          <select class="dropdown" id="yearsDropdown" ng-model="selectedYear" ng-options="y for y in years">
             <option value="" disabled selected value>--Released Year--</option>
           </select>
         </div>
@@ -75,7 +75,7 @@
         </div>
         <div class="game" id="results" ng-repeat="game in bestofGames">
           <div class="title">{{game[0]}}</div>
-          <div class="link">{{game[1]}}</div>
+          <div class="link">{{game[1].substring(0,100)+"..."}}</div>
         </div>
       </div>
     </div>

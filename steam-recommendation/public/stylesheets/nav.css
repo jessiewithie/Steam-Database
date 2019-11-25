@@ -1,31 +1,9 @@
-.container {
-   margin:0 auto; /* this will center the page */
-   width:960px; /*  use your width here */
-}
-
-.btn-lg {
-   height: 50%;
-}
-
-
-body{
-  background:black;
-}
-.inner{
-  margin:0 auto;
-  overflow: hidden;
-  padding:3rem;
-}
 
 /* USING BOOTSTRAP 3.0.3 */
  body {
-	padding-top: 60px;
+  padding-top: 60px;
+  background:black;
 }
-.col-8{
-  /* border: 1px solid #B0C2BE; */
-}
-
-
 
 .nav-container {
   margin-top: 2rem;
@@ -100,5 +78,5 @@ body{
 }
 
 .game .header, .game .title, .game .genre, .game .votes, .game .year {
-  flex: 1 0 25%;
+  flex: 1 0 50%;
 }

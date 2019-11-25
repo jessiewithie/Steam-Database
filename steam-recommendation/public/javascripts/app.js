@@ -53,105 +53,74 @@ app.controller('recommendationsController', function($scope, $http) {
 
 // Controller for the Nav and Detail Of Page
 app.controller('navController', function ($scope, $http) {
-  // sample HTTP code to get data
-  // $http({
-  //   url: "/decades",
-  //   method: "GET"
-  // }).then(
-  //   res => {
-  //     console.log("DECADES: ", res.data);
-  //     $scope.decades = res.data;
-  //   },
-  //   err => {
-  //     console.log("DECADES ERROR: ", err);
-  //   }
-  // );
-  $scope.selectedDecade = { decade: "0" };
-  $scope.decades = [{ decade: '2010' },
-                    { decade: '2011' },
-                    { decade: '2012' },
-                    { decade: '2013' }];
+
+  //query years for the genre filter
+  $scope.selectedYear = ["0"];
   
-  $scope.selectedGenre = { genre: "0" };
-  // $scope.genres = [
-  //   { genre: "Adventure" },
-  //   { genre: "Adventure" },
-  //   { genre: "Adventure" }
-  // ];
+  //03-19
+  $http({
+    url: "/filterYears",
+    method: "GET"
+  }).then(
+    res => {
+      console.log("Year: ", res.data);
+      $scope.years = res.data.rows;
+    },
+    err => {
+      console.log("Genre ERROR: ", err);
+    }
+  );
+  
+  
+  //query the genres for the genre filter
+  $scope.selectedGenre = ["0"];
+  $http({
+    url: "/filterGenres",
+    method: "GET"
+  }).then(
+    res => {
+      console.log("Genre: ", res.data);
+      $scope.genres = res.data.rows;
+    },
+    err => {
+      console.log("Genre ERROR: ", err);
+    }
+  );
 
-    //query the genres for the genre filter
-    $http({
-      url: "/filterGenres",
-      method: "GET"
-    }).then(
-      res => {
-        console.log("Genre: ", res.data);
-        $scope.genres = res.data.rows;
-        console.log("HEHEHE")
-      },
-      err => {
-        console.log("Genre ERROR: ", err);
-      }
-    );
-
-
-
-
-
+  // query the price ranges for the genre filter
   $scope.selectedPr = { pr: "0" };
   $scope.prs = [
-    { pr: "$10-50" },
+    { pr: "FREE"},
+    { pr: "<$50" },
     { pr: "$50-100" },
-    { pr: "$100-150" }
+    { pr: "$100-150" },
+    { pr: "$150-250" },
+    { pr: "$250-400" },
+    { pr: "$400-600" },
+    { pr: "$600+" }
   ];
 
-  // $scope.submitFilterCriteria = function() {
-  //   alert("Price range:" +
-  //     $scope.selectedPr.pr +
-  //       ", genre:" +
-  //       $scope.selectedGenre.genre +
-  //       ", decade" +
-  //       $scope.selectedDecade.decade
-  //   );
 
     //score default values 0 --> aka nothing selected
 $scope.submitFilterCriteria = function() {
-    var url_str =
-      "/filteredData/" +
-      "pr=" +
-      $scope.selectedPr.pr +
-      "&genre=" +
-      $scope.selectedGenre.genre +
-      "&decade=" +
-      $scope.selectedDecade.decade;
-    // alert(url_str);
-    var tst_url_str = $scope.selectedGenre[0];
     $http({
-      url: "/filteredData/" + tst_url_str,
+      url:
+        "/filteredData/" +
+        $scope.selectedGenre[0] +
+        "/" +
+        $scope.selectedPr.pr +
+        "/" +
+        $scope.selectedYear[0],
       method: "GET"
     }).then(
       res => {
         console.log("SELECTEDFILTERCRITERIA: ", res.data);
-        // $scope.filterResults = res.data;
         $scope.bestofGames = res.data.rows;
       },
       err => {
         console.log("SELECTEDFILTERCRITERIA: ", err);
       }
     );
-
-
-    // $http({
-    //   url: "/detail/:Portal",
-    //   method: "GET"
-    // }).then(
-    //   res => {
-    //     console.log("DETAIL: ", res.data.rows);
-    //   },
-    //   err => {
-    //     console.log("DETAIL ERROR: ", err);
-    //   }
-    // );
   };
 
 });
@@ -191,8 +160,6 @@ app.controller('detailController', function($scope, $http) {
         console.log("DETAIL: ", res.data);
         // console.log($scope);
         $scope.rec = res.data.rows[0];
-        console.log($scope.gameName);
-        console.log($scope.rec);
       }, err => {
         console.log("DETAIL ERROR: ", err);
         });
