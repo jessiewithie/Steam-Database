@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>index</title>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="javascripts/app.js" type="text/javascript"></script>
     <script src="javascripts/index.js" type="text/javascript"></script>
@@ -31,10 +31,39 @@
       </ul>
     </nav>
 
+
+
+
+    <div class = "inner">
+      <div class="col" >
+        <ul class="list-group" id = "list-left">
+            <li class="list-group-item" ng-click="thumb()">
+                <a class="fa fa-thumbs-o-up fa-3x" aria-hidden="true" href=""></a>
+            </li>
+            <li class="list-group-item" id="clock">
+                <a class="fa fa-clock-o fa-3x" aria-hidden="true" href=""
+                ng-click="submitId()"></a>
+            </li>
+            <li class="list-group-item">
+                <a class="fa fa-heart-o fa-3x" aria-hidden="true" href="/search"></a>
+            </li>
+            <li class="list-group-item">
+                <a class="fa fa-facebook-square fa-3x" aria-hidden="true" href="http://www.facebook.com">
+                </a>
+            </li>
+          </ul>
+          <div class="jumbotron" id="results" ng-model="review">
+            <div class="title">{{review[0][0]}}</div>
+            <div >{{review[0][1]}}</div>
+          </div>
+      </div>
+    </div>
     
 
     <!-- index Content -->
-    <br>
+    <!-- <br>
+
+    
 
     <div class=" inner"> 
       <div class="row">
@@ -55,9 +84,9 @@
                     </a>
                 </li>
               </ul>
-        </div>
+        </div> -->
         <!-- carousel -->
-        <div class="col-8">
+        <!-- <div class="col-8">
             <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                   <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -84,19 +113,20 @@
                   <span class="sr-only">Next</span>
                 </a>
               </div>
-        </div>
+        </div> -->
         <!-- card2 -->
-        <div class="col">
+        <!-- <div class="col">
             <div class="jumbotron" id="results" ng-model="review">
                 <div class="title">{{review[0][0]}}</div>
                 <div >{{review[0][1]}}</div>
               </div>
         </div>
       </div> 
-        <div>
-            
+        <div>   
           </div>
-    </div>
+    </div> -->
+
+  
     
     
     

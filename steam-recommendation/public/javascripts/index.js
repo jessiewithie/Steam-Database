@@ -21,7 +21,7 @@ function overShow(){
 }
 
 function outHide(){
-    document.getElementById("list-left").style.display = "none";
+    // document.getElementById("list-left").style.display = "none";
 }
 
     
