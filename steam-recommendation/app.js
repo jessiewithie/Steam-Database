@@ -1,13 +1,37 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express       = require('express'),
+    path          = require('path'),
+    favicon       = require('serve-favicon'),
+    logger        = require('morgan'),
+    cookieParser  = require('cookie-parser'),
+    bodyParser    = require('body-parser'),
+    mongoose      = require('mongoose');
 
+    
+mongoose.connect("mongodb://localhost/cis550");
 var index = require('./routes/index');
 
 var app = express();
+
+//SCHEMA SETUP  (trial)
+var steamuserSchema = new mongoose.Schema({
+  name:String,
+  password:String
+});
+
+var Steamuser = mongoose.model("Steamuser",steamuserSchema);
+
+Steamuser.create(
+  {
+    name: "yangshu",
+    password:"31415926"
+  },function(err,Steamuser){
+    if(err){
+      console.log(err);
+    }else{
+      console.log("NEWLY CREATED");
+      console.log(Steamuser);
+    }
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
