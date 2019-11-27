@@ -115,37 +115,6 @@ WHERE ROWNUM <= 1
   });
 });
 
-router.get('/search/:recommend', function(req, res) {
-  var query = `
-SELECT t1.genre, t1.name, t1.recommended_times 
-FROM 
-(
-SELECT g.genre, g.name, count(*) as recommended_times 
-FROM genre g
-JOIN review_criteria r 
-ON g.name = r.title
-WHERE r.recommendation = 'Recommended'
-GROUP BY genre, name
-) t1
-JOIN 
-(select genre, max(recommended_times) as maxrec from (
-SELECT g.genre, g.name, count(*) as recommended_times 
-FROM genre g
-JOIN review_criteria r 
-ON g.name = r.title
-WHERE r.recommendation = 'Recommended'
-GROUP BY genre, name
-) group by genre) t2
-ON t1.recommended_times = t2.maxrec and t1.genre = t2.genre
-ORDER BY t1.genre
-  `;
-  // connect query
-  console.log(query);
-  sendQuery(query, function(result) {
-    res.json(result);
-  });
-});
-
 router.get('/q3', function(req, res) {
   var query = `
 SELECT * FROM (
@@ -226,7 +195,20 @@ ORDER BY D.best_rates DESC
 /* -----  Homepage ----- */
 
 /* -----  Search Page ----- */
-
+router.get('/search/:game', function(req, res) {
+  var inputGame = req.params.game.split("'").join("''");
+  var query = `
+    SELECT name, appid
+    FROM description
+    WHERE lower(name) LIKE lower('%${inputGame}%')
+    ORDER BY name
+  `;
+  console.log(query);
+  sendQuery(query, function(result) {
+    console.log(result);
+    res.json(result);
+  });
+});
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 

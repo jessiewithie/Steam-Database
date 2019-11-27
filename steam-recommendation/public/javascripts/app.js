@@ -49,21 +49,31 @@ app.controller('indexController', function($scope, $http) {
   } 
 });
 
-// Controller for the Recommendations Page
+// Controller for the Search Page
 app.controller('searchController', function($scope, $http) {
-  // TODO: Q2
-  $http({
-      url: "/search/:recommend",
-      method: "GET"
-    }).then(
-      res => {
-        // console.log("DECADES: ", res.data);
-        // $scope.decades = res.data;
-      },
-      err => {
-        // console.log("DECADES ERROR: ", err);
-      }
-    );
+  $scope.submitName = function() {
+    $http({
+      url: '/search/' + $scope.gameName,
+      method: 'GET'
+    }).then(res => {
+      
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      var gameArray = res.data.rows;
+      
+      Promise.all(gameArray.map(game =>
+        fetch(proxyurl + 'https://store.steampowered.com/api/appdetails?appids=' + game[1])
+          .then(response => response.text())                
+          .then(contents => {
+          var gamedata = JSON.parse(contents)[game[1]].data;
+          game.push(gamedata.header_image);
+          game.push(gamedata.short_description);})
+          .catch(() => console.log("Can’t access " + 'https://store.steampowered.com/api/appdetails?appids=' + game[1] + " response. Blocked by browser?"))
+          )).then(function(){$scope.gameInfo = res.data.rows; $scope.$apply();});
+
+    }, err => {
+      console.log("SearchGames ERROR: ", err);
+    });
+  }
 });
 
 // Controller for the Nav and Detail Of Page
