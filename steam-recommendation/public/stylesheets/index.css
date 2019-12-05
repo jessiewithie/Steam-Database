@@ -42,3 +42,45 @@ button {
 .jumbotron{
   width:200px;
 }
+.bottom{
+  position: fixed;
+  right: 0;
+  bottom: 30px;
+  left: 250px;
+  /* z-index: $zindex-fixed; */
+}
+
+.parent{
+  display:flex;
+}
+.row{
+  justify-content:space-between;
+  flex-direction:column;
+  height:100px;
+  display:flex;}
+
+a{
+  color: #ffffff;
+}
+.myButton {
+	box-shadow: 5px 11px 23px -3px #3dc21b;
+	background-color:transparent;
+	border-radius:6px;
+	border:2px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:30px 100px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.myButton:hover {
+	background-color:transparent;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}

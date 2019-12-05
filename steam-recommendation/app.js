@@ -7,7 +7,7 @@ var express       = require('express'),
     mongoose      = require('mongoose');
 
     
-mongoose.connect("mongodb://localhost/cis550");
+mongoose.connect("mongodb://localhost/cis550",{useNewUrlParser:true});
 var index = require('./routes/index');
 
 var app = express();
