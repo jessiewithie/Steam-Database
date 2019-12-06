@@ -209,6 +209,20 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
+router.get('/search?msg=/:message', function(req, res) {
+  // var inputGame = req.params.game.split("'").join("''");
+  var query = `
+    SELECT name, appid
+    FROM description
+    WHERE lower(name) LIKE lower('message')
+    ORDER BY name
+  `;
+  console.log(query);
+  sendQuery(query, function(result) {
+    console.log(result);
+    res.json(result);
+  });
+});
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 

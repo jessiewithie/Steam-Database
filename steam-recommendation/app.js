@@ -7,31 +7,31 @@ var express       = require('express'),
     mongoose      = require('mongoose');
 
     
-mongoose.connect("mongodb://localhost/cis550",{useNewUrlParser:true});
+// mongoose.connect("mongodb://localhost/cis550",{useNewUrlParser:true});
 var index = require('./routes/index');
 
 var app = express();
 
-//SCHEMA SETUP  (trial)
-var steamuserSchema = new mongoose.Schema({
-  name:String,
-  password:String
-});
+// //SCHEMA SETUP  (trial)
+// var steamuserSchema = new mongoose.Schema({
+//   name:String,
+//   password:String
+// });
 
-var Steamuser = mongoose.model("Steamuser",steamuserSchema);
+// var Steamuser = mongoose.model("Steamuser",steamuserSchema);
 
-Steamuser.create(
-  {
-    name: "yangshu",
-    password:"31415926"
-  },function(err,Steamuser){
-    if(err){
-      console.log(err);
-    }else{
-      console.log("NEWLY CREATED");
-      console.log(Steamuser);
-    }
-  });
+// Steamuser.create(
+//   {
+//     name: "yangshu",
+//     password:"31415926"
+//   },function(err,Steamuser){
+//     if(err){
+//       console.log(err);
+//     }else{
+//       console.log("NEWLY CREATED");
+//       console.log(Steamuser);
+//     }
+//   });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
