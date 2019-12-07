@@ -243,6 +243,13 @@ router.get("/filterYears", function(req, res) {
   });
 });
 
+router.get("/filterLangs", function(req, res) {
+  var query = `SELECT DISTINCT LANGUAGE FROM LANGUAGE ORDER BY LANGUAGE`;
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
 /* -----  query functions ----- */
 router.get('/filteredData/:genre/:price/:year', function(req,res){
   console.log(req.params);

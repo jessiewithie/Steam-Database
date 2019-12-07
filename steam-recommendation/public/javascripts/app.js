@@ -182,6 +182,21 @@ $scope.submitFilterCriteria = function() {
     );
   };
 
+//query the genres for the genre filter
+  $scope.selectedGenre = ["0"];
+  $http({
+    url: "/filterLangs",
+    method: "GET"
+  }).then(
+    res => {
+      console.log("Lang: ", res.data);
+      $scope.langs = res.data.rows;
+    },
+    err => {
+      console.log("Lang ERROR: ", err);
+    }
+  );
+
 });
 
 //I need game names from Nav page just like the dashboaed page in hw2
