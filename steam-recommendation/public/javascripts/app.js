@@ -41,11 +41,12 @@ app.controller('indexController', function($scope, $http) {
   },err =>{
     console.log("Games ERROR: ",err);
   });
+
   $scope.msg="Doom"
   $scope.thumb = function(msg){
     var hre = '/search?msg='+msg;
-    window.location = hre;
-  }
+    window.location = hre;}
+
   $scope.submitId = function() {
     $scope.review =  $scope.genres.rows;
   } 
@@ -109,6 +110,10 @@ app.controller('searchController', function($scope, $http) {
       console.log("SearchGames ERROR: ", err);
     });
     
+  }
+  $scope.detail = function(game){
+    var hre = '/detail?game='+game;
+    window.location = hre;
   }
 });
 
@@ -200,9 +205,16 @@ app.controller('detailController', function($scope, $http) {
       // }, err => {
       //   console.log("DETAIL ERROR: ", err);
       // });
-      $scope.showDetail = function() {
+      var urlValue="";
+      var href = location.href;
+      console.log(href);
+      urlValue = href.substring(href.indexOf("=")+1);
+      console.log(urlValue);
+      var message = urlValue;
+
+      if(message.length > 0){
         $http({
-        url: '/detail/' + $scope.gameName,
+        url: '/detail/' + message,
         method: 'GET'
       }).then(res => {
         console.log("DETAIL: ", res.data);
@@ -213,18 +225,33 @@ app.controller('detailController', function($scope, $http) {
       }, err => {
         console.log("DETAIL ERROR: ", err);
       });
-
-        $http({
-        url: '/detail/rec/' + $scope.gameName,
-        method: 'GET'
-      }).then(res => {
-        console.log("DETAIL: ", res.data);
-        // console.log($scope);
-        $scope.rec = res.data.rows[0];
-      }, err => {
-        console.log("DETAIL ERROR: ", err);
-        });
       }
+
+      // $scope.showDetail = function() {
+      //   $http({
+      //   url: '/detail/' + $scope.gameName,
+      //   method: 'GET'
+      // }).then(res => {
+      //   console.log("DETAIL: ", res.data);
+      //   // console.log($scope);
+      //   $scope.detail = res.data.rows[0];
+      //   console.log($scope.gameName);
+      //   console.log($scope.detail);
+      // }, err => {
+      //   console.log("DETAIL ERROR: ", err);
+      // });
+
+      //   $http({
+      //   url: '/detail/rec/' + $scope.gameName,
+      //   method: 'GET'
+      // }).then(res => {
+      //   console.log("DETAIL: ", res.data);
+      //   // console.log($scope);
+      //   $scope.rec = res.data.rows[0];
+      // }, err => {
+      //   console.log("DETAIL ERROR: ", err);
+      //   });
+      // }
     });
 
 

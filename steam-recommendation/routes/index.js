@@ -209,20 +209,6 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
-router.get('/search?msg=/:message', function(req, res) {
-  // var inputGame = req.params.game.split("'").join("''");
-  var query = `
-    SELECT name, appid
-    FROM description
-    WHERE lower(name) LIKE lower('message')
-    ORDER BY name
-  `;
-  console.log(query);
-  sendQuery(query, function(result) {
-    console.log(result);
-    res.json(result);
-  });
-});
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 
@@ -418,11 +404,12 @@ router.get('/detail/:gameName', function(req, res){
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
-  SELECT name, url, release_date, original_price, types, game_description 
+  SELECT name, url, types, game_description 
   FROM description 
   WHERE name = '${myGame}'`;
   console.log(query);
   sendQuery(query, function(result) {
+    console.log(result);
     res.json(result);
   });
 });
