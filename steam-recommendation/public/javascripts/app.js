@@ -30,17 +30,17 @@ var app = angular.module('angularjsNodejsTutorial', []);
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
   
-  $http({
-    url:'/q1',
-    method:'GET',
-  }).then(res=>{
-    console.log("GAMES:", res.data);
-    //store the response data to $scope.genres
-    $scope.genres = res.data;
-    console.log("111");
-  },err =>{
-    console.log("Games ERROR: ",err);
-  });
+  // $http({
+  //   url:'/q1',
+  //   method:'GET',
+  // }).then(res=>{
+  //   console.log("GAMES:", res.data);
+  //   //store the response data to $scope.genres
+  //   $scope.genres = res.data;
+  //   console.log("111");
+  // },err =>{
+  //   console.log("Games ERROR: ",err);
+  // });
   $scope.msg="Doom"
   $scope.thumb = function(msg){
     var hre = '/search?msg='+msg;
@@ -55,6 +55,7 @@ app.controller('indexController', function($scope, $http) {
 app.controller('searchController', function($scope, $http) {
   var urlValue="";
   var href = location.href;
+  console.log("1");
   console.log(href);
   urlValue = href.substring(href.indexOf("=")+1);
   console.log(urlValue);
@@ -264,5 +265,19 @@ app.controller('loginController',function($scope,$http){
 
 // Controller for the signup page
 app.controller('signUpController',function($scope,$http){
-
+  $scope.submitUserInfo = function() {
+    $http({
+      url: '/register',
+      method: 'POST',
+      data:{
+        'username':$scope.username,
+        'password':$scope.password
+      }
+    }).then(res => {
+      console.log("hello, I am doing this");
+    }, err => {
+      console.log("signUp ERROR: ", err);
+    });
+    
+  }
 });

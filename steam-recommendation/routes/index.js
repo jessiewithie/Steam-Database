@@ -7,6 +7,42 @@ var path = require('path');
 // var mysql = require('mysql');
 var oracledb = require('oracledb');
 
+// const MongoClient = require('mongodb').MongoClient;
+// const uri ="mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+
+// mongokDB insert and send query
+// function sendMongoDBQuery(bid, callback) {
+//   mongodb.MongoClient.connect(addr, function(error, db){
+//       if (error) throw error;
+//       var tips = db.db("CIS550STEAM-GAME-RECOMMENDATION").collection("Cluster0");
+//       tips.find({"username" : bid}).sort({password: -1}).limit(5).toArray(function(error, result) {
+//         callback(result);
+//       });
+//   });
+// }
+
+// function insertToMongoDB(user, callback) {
+//   client.connect(err => {
+//     const user = client.db("cis550proj").collection("user");
+//     // perform actions on the collection object
+//     client.close();
+//   });
+// }
+function insertToMongoDB(review, callback) {
+  mongodb.MongoClient.connect(addr, function(error, db){
+      if (error) throw error;
+      var tips = db.db("cis550proj").collection("tip");
+      tips.insert(review, function(err, res){
+      if(err) throw err;
+      console.log('data inserted');
+      console.log(res);
+      db.close();
+    });
+  });
+}
+
+//oracleDB
 function sendQuery(queryString, callback){
   oracledb.getConnection({
     user: 'ys',
@@ -209,20 +245,20 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
-router.get('/search?msg=/:message', function(req, res) {
-  // var inputGame = req.params.game.split("'").join("''");
-  var query = `
-    SELECT name, appid
-    FROM description
-    WHERE lower(name) LIKE lower('message')
-    ORDER BY name
-  `;
-  console.log(query);
-  sendQuery(query, function(result) {
-    console.log(result);
-    res.json(result);
-  });
-});
+// router.get('/search?msg=/:message', function(req, res) {
+//   // var inputGame = req.params.game.split("'").join("''");
+//   var query = `
+//     SELECT name, appid
+//     FROM description
+//     WHERE lower(name) LIKE lower('message')
+//     ORDER BY name
+//   `;
+//   console.log(query);
+//   sendQuery(query, function(result) {
+//     console.log(result);
+//     res.json(result);
+//   });
+// });
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 
@@ -485,6 +521,14 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
+
+router.post('/register', function(req, res) {
+  var insert = {"username":req.body.username,"password":req.body.password};
+  console.log(insert);
+  insertToMongoDB(insert, function(result) {
+        res.json(result);
+  });
+});
 
 
 module.exports = router;

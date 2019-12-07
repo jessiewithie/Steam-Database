@@ -35,14 +35,14 @@
     <div class="container login-container" ng-controller="signUpController">
       <form class="needs-validation">
         <div>
-          <input class = "input form-control" placeholder="Username" required>
+          <input class = "input form-control" placeholder="Username" ng-model="username" required>
           <div class="invalid-feedback">
             Please provide a username
           </div>
         </div>
         <br>
         <div>
-            <input class="input form-control" type="password" id="myPassword" placeholder="Password" required>
+            <input class="input form-control" type="password" id="myPassword" placeholder="Password" ng-model= "password" required>
             <div class="invalid-feedback">
               Please provide a password
             </div>
@@ -56,7 +56,7 @@
         </div>
         <br>
         <div>
-          <button type = "submit" class="login-button">Sign up!</button>
+          <button type = "submit" class="login-button" ng-click="submitUserInfo()">Sign up!</button>
         </div>
       </form>
     </div>
