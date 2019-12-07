@@ -22,6 +22,12 @@ col-8{
  body {
 	padding-top: 60px;
 }
+
+.bg-nav-color{
+  background: linear-gradient(to right,  #023450, #023429);
+}
+
+
 .list-group li{
   height: 100px;
   font-size: 25px;
@@ -84,3 +90,5 @@ a{
 	position:relative;
 	top:1px;
 }
+
+

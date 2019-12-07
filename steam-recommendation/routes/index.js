@@ -4,7 +4,6 @@ var path = require('path');
 // var config = require('../db-config.js');
 
 /* ----- Connects to your oracleDb database ----- */
-// var mysql = require('mysql');
 var oracledb = require('oracledb');
 var mongodb = require("mongodb");
 /* ----- Connects to your mongoDB database ----- */
@@ -69,7 +68,6 @@ function doRelease(connection) {
   );
 }
 
-
 /* ------------------------------------------- */
 /* ----- Routers to handle FILE requests ----- */
 /* ------------------------------------------- */
@@ -128,7 +126,7 @@ router.get('<PATH>', function(req, res) {
  */
 router.get('/q1', function(req, res) {
   var query = `
-SELECT review,funny FROM(
+SELECT title,review,funny FROM(
 SELECT r1.review, r2.funny FROM review_content r1
 JOIN review_criteria r2
 ON r1.review_id = r2.review_id
@@ -221,8 +219,6 @@ ORDER BY D.best_rates DESC
     res.json(result);
   });
 });
-
-/* -----  Homepage ----- */
 
 /* -----  Search Page ----- */
 router.get('/search/:game', function(req, res) {
@@ -385,25 +381,6 @@ SELECT TITLE, MAX(REVIEW) FROM (
 
 
 /* ----- Detail Page ----- */
-// router.get('/detail/:Portal', function(req, res){
-//   var query = `SELECT name, url, release_date, original_price, types, game_description 
-//   FROM description WHERE name = 'Portal'`;
-//   console.log(query);
-//   sendQuery(query, function(result) {
-//     res.json(result);
-//   });
-// });
-
-// router.get('/detail/:DOOM', function(req, res){
-//   var myGame = req.query.gameName;
-//   //var myGame = req.params.game;
-//   console.log(myGame);
-//   var query = `SELECT name, url, release_date, original_price, types, game_description 
-//   FROM description WHERE name = 'DOOM'`;
-//   console.log(query);
-//   sendQuery(query, function(result) {
-//     res.json(result);
-// });
 router.get('/detail/:gameName', function(req, res){
   var myGame = req.params.gameName;
   //var myGame = req.params.game;
@@ -479,7 +456,13 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
-
+router.post('/user', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  sendMongoDBQuery(username,password,function(result) {
+    res.json(result);
+  });
+});
 router.post('/adduserInfo', function(req, res) {
   var insert = {"username":req.body.username,"password":req.body.password};
   console.log(insert);
