@@ -21,7 +21,7 @@
 .years-container .dropdown-container {
   height: 30px;
   overflow: hidden;
-  width: 300px;
+  width: 100px;
   background-color: #fff;
   border-radius: 10px;
   cursor: pointer;
@@ -36,7 +36,7 @@
   height: 30px;
   padding: 5px;
   cursor: pointer;
-  width: 300px;
+  width: 100px;
   outline: none;
 }
 

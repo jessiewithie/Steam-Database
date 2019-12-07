@@ -60,6 +60,11 @@
             <option value="" disabled selected value>--Price Range--</option>
           </select>
         </div>
+        <div class="dropdown-container">
+          <select class="dropdown" id="langsDropdown" ng-model="selectedLang" ng-options="p.lang for l in langs">
+            <option value="" disabled selected value>--Language--</option>
+          </select>
+        </div>
 
         <button class="submit-btn" id="filterSubmitBtn" ng-click="submitFilterCriteria()">Submit</button>
       </div>

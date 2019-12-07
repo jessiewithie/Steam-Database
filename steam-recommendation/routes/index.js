@@ -7,6 +7,42 @@ var path = require('path');
 // var mysql = require('mysql');
 var oracledb = require('oracledb');
 
+// const MongoClient = require('mongodb').MongoClient;
+// const uri ="mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+
+// mongokDB insert and send query
+// function sendMongoDBQuery(bid, callback) {
+//   mongodb.MongoClient.connect(addr, function(error, db){
+//       if (error) throw error;
+//       var tips = db.db("CIS550STEAM-GAME-RECOMMENDATION").collection("Cluster0");
+//       tips.find({"username" : bid}).sort({password: -1}).limit(5).toArray(function(error, result) {
+//         callback(result);
+//       });
+//   });
+// }
+
+// function insertToMongoDB(user, callback) {
+//   client.connect(err => {
+//     const user = client.db("cis550proj").collection("user");
+//     // perform actions on the collection object
+//     client.close();
+//   });
+// }
+function insertToMongoDB(review, callback) {
+  mongodb.MongoClient.connect(addr, function(error, db){
+      if (error) throw error;
+      var tips = db.db("cis550proj").collection("tip");
+      tips.insert(review, function(err, res){
+      if(err) throw err;
+      console.log('data inserted');
+      console.log(res);
+      db.close();
+    });
+  });
+}
+
+//oracleDB
 function sendQuery(queryString, callback){
   oracledb.getConnection({
     user: 'ys',
@@ -209,6 +245,23 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
+<<<<<<< HEAD
+=======
+// router.get('/search?msg=/:message', function(req, res) {
+//   // var inputGame = req.params.game.split("'").join("''");
+//   var query = `
+//     SELECT name, appid
+//     FROM description
+//     WHERE lower(name) LIKE lower('message')
+//     ORDER BY name
+//   `;
+//   console.log(query);
+//   sendQuery(query, function(result) {
+//     console.log(result);
+//     res.json(result);
+//   });
+// });
+>>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 
@@ -224,6 +277,13 @@ router.get("/filterYears", function(req, res) {
   var query = `SELECT DISTINCT EXTRACT(year FROM RELEASE_DATE) as year
 		FROM RELEASE_DATE
       ORDER BY EXTRACT(year FROM RELEASE_DATE)`;
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
+
+router.get("/filterLangs", function(req, res) {
+  var query = `SELECT DISTINCT LANGUAGE FROM LANGUAGE ORDER BY LANGUAGE`;
   sendQuery(query, function(result) {
     res.json(result);
   });
@@ -321,15 +381,14 @@ router.get('/filteredData/:genre/:price/:year', function(req,res){
   // query!
   var query =
     `
-SELECT TITLE, REVIEW FROM (
+SELECT TITLE, MAX(REVIEW) FROM (
     SELECT r2.title, r2.review, r3.helpful FROM review_content r2
     JOIN (
     SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
     RIGHT JOIN(
     SELECT title, max(helpful) as maxhelp FROM review_criteria
     ` +
-    filters
-    +
+    filters +
     ` GROUP BY title) t1
     ON r1.title = t1.title and r1.helpful = t1.maxhelp
     ORDER BY r1.helpful DESC
@@ -337,6 +396,7 @@ SELECT TITLE, REVIEW FROM (
     ON r2.review_id = r3.review_id
     )
     WHERE ROWNUM<=10
+    GROUP BY TITLE
   `;
   // connect query
   console.log(query);
@@ -345,37 +405,6 @@ SELECT TITLE, REVIEW FROM (
   });
 });
 
-router.get('/filteredData/:genre', function(req,res){
-  console.log("req.params");
-  var genre = req.params.genre;
-  console.log(req.params);
-  var query =
-    `
-SELECT TITLE, REVIEW FROM (
-    SELECT r2.title, r2.review, r3.helpful FROM review_content r2
-    JOIN (
-    SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
-    RIGHT JOIN(
-    SELECT title, max(helpful) as maxhelp FROM review_criteria
-    WHERE title IN (SELECT name
-    FROM genre g1
-    WHERE g1.genre='` +
-    genre +
-    `')
-    GROUP BY title) t1
-    ON r1.title = t1.title and r1.helpful = t1.maxhelp
-    ORDER BY r1.helpful DESC
-    ) r3
-    ON r2.review_id = r3.review_id
-    )
-    WHERE ROWNUM<=10
-  `;
-  // connect query
-  console.log(query);
-  sendQuery(query, function(result) {
-    res.json(result);
-  });
-});
 
 
 /* ----- Detail Page ----- */
@@ -398,15 +427,27 @@ SELECT TITLE, REVIEW FROM (
 //   sendQuery(query, function(result) {
 //     res.json(result);
 // });
-
 router.get('/detail/:gameName', function(req, res){
   var myGame = req.params.gameName;
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
+<<<<<<< HEAD
   SELECT name, url, types, game_description 
   FROM description 
   WHERE name = '${myGame}'`;
+=======
+select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages
+FROM description d
+JOIN price p ON d.name = p.name AND d.name = '${myGame}'
+JOIN release_date r ON r.name = p.name
+JOIN (select name , listagg(genre,',') within group (order by name) as genres from (SELECT distinct name,genre FROM genre) GROUP BY name) g ON d.name = g.name
+JOIN (select name , listagg(tag,',') within group (order by name) as tags from (select distinct name,tag from tag) GROUP BY name) t ON d.name = t.name
+JOIN (select name , listagg(language,',') within group (order by name) as languages from (select distinct name,language from language) GROUP BY name) l ON d.name = l.name
+LEFT JOIN review_criteria rc ON rc.title = d.name
+LEFT JOIN review_content rt ON rc.review_id = rt.review_id
+ORDER BY rc.helpful,rc.funny,rc.date_posted`;
+>>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
   console.log(query);
   sendQuery(query, function(result) {
     console.log(result);
@@ -466,6 +507,14 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
+
+router.post('/register', function(req, res) {
+  var insert = {"username":req.body.username,"password":req.body.password};
+  console.log(insert);
+  insertToMongoDB(insert, function(result) {
+        res.json(result);
+  });
+});
 
 
 module.exports = router;

@@ -1,13 +1,4 @@
 var app = angular.module('angularjsNodejsTutorial', []);
-// var bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// var session = require('express-session')
-// app.use(session({
-//   secret: 'secret',
-//   resave: true,
-//   saveUninitialized: true
-// }));
 
 //I'm not sure if this works 
 // app.config(function ($stateProvider, $urlRouterProvider) {
@@ -30,6 +21,7 @@ var app = angular.module('angularjsNodejsTutorial', []);
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
   
+<<<<<<< HEAD
   $http({
     url:'/q1',
     method:'GET',
@@ -42,6 +34,19 @@ app.controller('indexController', function($scope, $http) {
     console.log("Games ERROR: ",err);
   });
 
+=======
+  // $http({
+  //   url:'/q1',
+  //   method:'GET',
+  // }).then(res=>{
+  //   console.log("GAMES:", res.data);
+  //   //store the response data to $scope.genres
+  //   $scope.genres = res.data;
+  //   console.log("111");
+  // },err =>{
+  //   console.log("Games ERROR: ",err);
+  // });
+>>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
   $scope.msg="Doom"
   $scope.thumb = function(msg){
     var hre = '/search?msg='+msg;
@@ -61,7 +66,7 @@ app.controller('searchController', function($scope, $http) {
   console.log(urlValue);
   var message = urlValue;
   // var message = angular.fromJson(urlValue);
-  if(message.length > 0){
+  if(message.length > 0 && href != "http://localhost:8081/search"){
     $http({
       url: "/search/" + message,
       method: "GET"
@@ -116,6 +121,13 @@ app.controller('searchController', function($scope, $http) {
     window.location = hre;
   }
 });
+
+app.service('myService', function(){
+  var game_name = '';
+  this.get_game_name = function(){
+    return game_name;
+  }
+})
 
 // Controller for the Nav and Detail Of Page
 app.controller('navController', function ($scope, $http) {
@@ -189,6 +201,21 @@ $scope.submitFilterCriteria = function() {
     );
   };
 
+//query the genres for the genre filter
+  $scope.selectedGenre = ["0"];
+  $http({
+    url: "/filterLangs",
+    method: "GET"
+  }).then(
+    res => {
+      console.log("Lang: ", res.data);
+      $scope.langs = res.data.rows;
+    },
+    err => {
+      console.log("Lang ERROR: ", err);
+    }
+  );
+
 });
 
 //I need game names from Nav page just like the dashboaed page in hw2
@@ -255,7 +282,6 @@ app.controller('detailController', function($scope, $http) {
     });
 
 
-
       // $http({
       //   url: '/detail/' + $scope.game,
       //   method: 'GET'
@@ -291,5 +317,19 @@ app.controller('loginController',function($scope,$http){
 
 // Controller for the signup page
 app.controller('signUpController',function($scope,$http){
-
+  $scope.submitUserInfo = function() {
+    $http({
+      url: '/register',
+      method: 'POST',
+      data:{
+        'username':$scope.username,
+        'password':$scope.password
+      }
+    }).then(res => {
+      console.log("hello, I am doing this");
+    }, err => {
+      console.log("signUp ERROR: ", err);
+    });
+    
+  }
 });
