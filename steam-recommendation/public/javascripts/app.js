@@ -55,13 +55,12 @@ app.controller('indexController', function($scope, $http) {
 app.controller('searchController', function($scope, $http) {
   var urlValue="";
   var href = location.href;
-  console.log("1");
   console.log(href);
   urlValue = href.substring(href.indexOf("=")+1);
   console.log(urlValue);
   var message = urlValue;
   // var message = angular.fromJson(urlValue);
-  if(message.length > 0){
+  if(message.length > 0 && href != "http://localhost:8081/search"){
     $http({
       url: "/search/" + message,
       method: "GET"
