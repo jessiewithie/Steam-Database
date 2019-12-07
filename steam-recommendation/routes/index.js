@@ -7,6 +7,42 @@ var path = require('path');
 // var mysql = require('mysql');
 var oracledb = require('oracledb');
 
+// const MongoClient = require('mongodb').MongoClient;
+// const uri ="mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+
+// mongokDB insert and send query
+// function sendMongoDBQuery(bid, callback) {
+//   mongodb.MongoClient.connect(addr, function(error, db){
+//       if (error) throw error;
+//       var tips = db.db("CIS550STEAM-GAME-RECOMMENDATION").collection("Cluster0");
+//       tips.find({"username" : bid}).sort({password: -1}).limit(5).toArray(function(error, result) {
+//         callback(result);
+//       });
+//   });
+// }
+
+// function insertToMongoDB(user, callback) {
+//   client.connect(err => {
+//     const user = client.db("cis550proj").collection("user");
+//     // perform actions on the collection object
+//     client.close();
+//   });
+// }
+function insertToMongoDB(review, callback) {
+  mongodb.MongoClient.connect(addr, function(error, db){
+      if (error) throw error;
+      var tips = db.db("cis550proj").collection("tip");
+      tips.insert(review, function(err, res){
+      if(err) throw err;
+      console.log('data inserted');
+      console.log(res);
+      db.close();
+    });
+  });
+}
+
+//oracleDB
 function sendQuery(queryString, callback){
   oracledb.getConnection({
     user: 'ys',
@@ -209,20 +245,20 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
-router.get('/search?msg=/:message', function(req, res) {
-  // var inputGame = req.params.game.split("'").join("''");
-  var query = `
-    SELECT name, appid
-    FROM description
-    WHERE lower(name) LIKE lower('message')
-    ORDER BY name
-  `;
-  console.log(query);
-  sendQuery(query, function(result) {
-    console.log(result);
-    res.json(result);
-  });
-});
+// router.get('/search?msg=/:message', function(req, res) {
+//   // var inputGame = req.params.game.split("'").join("''");
+//   var query = `
+//     SELECT name, appid
+//     FROM description
+//     WHERE lower(name) LIKE lower('message')
+//     ORDER BY name
+//   `;
+//   console.log(query);
+//   sendQuery(query, function(result) {
+//     console.log(result);
+//     res.json(result);
+//   });
+// });
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 
@@ -388,15 +424,21 @@ SELECT TITLE, MAX(REVIEW) FROM (
 //   sendQuery(query, function(result) {
 //     res.json(result);
 // });
-
 router.get('/detail/:gameName', function(req, res){
   var myGame = req.params.gameName;
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
-  SELECT name, url, release_date, original_price, types, game_description 
-  FROM description 
-  WHERE name = '${myGame}'`;
+select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages
+FROM description d
+JOIN price p ON d.name = p.name AND d.name = '${myGame}'
+JOIN release_date r ON r.name = p.name
+JOIN (select name , listagg(genre,',') within group (order by name) as genres from (SELECT distinct name,genre FROM genre) GROUP BY name) g ON d.name = g.name
+JOIN (select name , listagg(tag,',') within group (order by name) as tags from (select distinct name,tag from tag) GROUP BY name) t ON d.name = t.name
+JOIN (select name , listagg(language,',') within group (order by name) as languages from (select distinct name,language from language) GROUP BY name) l ON d.name = l.name
+LEFT JOIN review_criteria rc ON rc.title = d.name
+LEFT JOIN review_content rt ON rc.review_id = rt.review_id
+ORDER BY rc.helpful,rc.funny,rc.date_posted`;
   console.log(query);
   sendQuery(query, function(result) {
     res.json(result);
@@ -455,6 +497,14 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
+
+router.post('/register', function(req, res) {
+  var insert = {"username":req.body.username,"password":req.body.password};
+  console.log(insert);
+  insertToMongoDB(insert, function(result) {
+        res.json(result);
+  });
+});
 
 
 module.exports = router;
