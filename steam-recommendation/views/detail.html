@@ -31,31 +31,69 @@
 
   <div class="container">
     <div class="row">
-        <div class="gameTitle">name</div>
+        <div class="gameTitle">{{detail[0]}}</div>
     </div>
     <div class="row">
-      <div class="col-md-8">
-        <img src="https://steamcdn-a.akamaihd.net/steam/apps/982730/ss_71235b4326ab0eb6e3cdaeb41c4139311097a2fa.600x338.jpg">
+      <div class="col-md-6">
+        <!-- <img src="https://steamcdn-a.akamaihd.net/steam/apps/982730/ss_71235b4326ab0eb6e3cdaeb41c4139311097a2fa.600x338.jpg"> -->
+        <img src="{{gamePic[0][15]}}">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="game-content">
-          <div>
-              <p>REVIEW</p>
-          </div>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-          <p>DEVELOPER</p>
-          <P>PUBLISHER</P>
-          <p>PRICE</p>
+
+          <p>RELEASE DATE: {{detail[7]}}</p>
+          <p>PRICE: {{detail[6]}}</p>
+          <p>TYPES:{{detail[2]}}</p>
+          <P>GENRE:{{detail[11]}}</P>
+          <P>TAG:{{detail[12]}}</P>
+          <P>DEVELOPER:{{detail[4]}}</P>
+          <!-- <P>LANGUAGE:{{detail[13]}}</P> -->
+          <a href={{detail[1]}}>visit offical website</a>
+
         </div>
       </div> 
     </div>
     <br>
     <div class="row">
       <div class="col-md-12">
-          <div class = "game-content ">111</div>
+        <div class = "game-content ">Description: {{detail[3]}} </div>
+         <br>
+          <br>
+        <div class = "game-content ">Review: {{detail[8]}} </div>
       </div>
     </div>
   </div>
+
+<!-- 
+   <div class="games-container">
+      <div class="jumbotron">
+        <h5 style="color: black">About the game</h5>
+         <div class = "game-content ">Description: {{detail[3]}} </div>
+
+          <div class="games-container" id="results" ng-show="detail">
+            <div class="movie">  Name : {{detail[0]}}</div>
+            <div class="movie"> Release Date : {{detail[2]}}</div>
+            <div class="movie"> Price : {{detail[3]}}</div>
+            <div class="movie"> Type :{{detail[4]}}</div>
+          </div>
+    </div> -->
+<!--     <div class="jumbotron">
+        <h5 style="color: black">Games you may also like: </h5>
+          <div class="games">
+            <div class="header"><strong>Name</strong></div>
+            <div class="header"><strong>Release Date</strong></div>
+            <div class="header"><strong>Price</strong></div>
+            <div class="header"><strong>Type</strong></div>
+          </div>
+          <div class="games-container" id="results" ng-show="rec">
+            <div class="movie">  Name : {{rec[0]}}</div>
+            <div class="movie"> Genre : {{rec[1]}}</div>
+            <div class="movie"> Recommended Times : {{rec[2]}}</div>
+            <div class="movie"> Type :{{rec[4]}}</div>
+          </div>
+    </div> -->
+      </div>
+
 
     <!-- <div id="section">
 
@@ -69,7 +107,7 @@
       <br />
       <br />
      <br />
-    </div> -->
+    </div>
 
 
     <!-- Reference Content -->
