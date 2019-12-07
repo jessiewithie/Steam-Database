@@ -287,7 +287,7 @@ router.get("/filterLangs", function(req, res) {
 });
 
 /* -----  query functions ----- */
-router.get('/filteredData/:genre/:price/:year', function(req,res){
+router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   console.log(req.params);
   var i;
 

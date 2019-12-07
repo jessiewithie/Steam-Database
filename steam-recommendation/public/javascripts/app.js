@@ -103,19 +103,12 @@ app.controller('searchController', function($scope, $http) {
   }
 });
 
-app.service('myService', function(){
-  var game_name = '';
-  this.get_game_name = function(){
-    return game_name;
-  }
-})
-
 // Controller for the Nav and Detail Of Page
 app.controller('navController', function ($scope, $http) {
 
   //query years for the genre filter
   $scope.selectedYear = ["0"];
-  
+
   //03-19
   $http({
     url: "/filterYears",
@@ -129,10 +122,10 @@ app.controller('navController', function ($scope, $http) {
       console.log("Genre ERROR: ", err);
     }
   );
-  
-  
+
+
   //query the genres for the genre filter
-  $scope.selectedGenre = ["0"];
+  console.log($scope.selectedGenre);
   $http({
     url: "/filterGenres",
     method: "GET"
@@ -149,7 +142,7 @@ app.controller('navController', function ($scope, $http) {
   // query the price ranges for the genre filter
   $scope.selectedPr = { pr: "0" };
   $scope.prs = [
-    { pr: "FREE"},
+    { pr: "FREE" },
     { pr: "<$50" },
     { pr: "$50-100" },
     { pr: "$100-150" },
@@ -159,30 +152,7 @@ app.controller('navController', function ($scope, $http) {
     { pr: "$600+" }
   ];
 
-
-    //score default values 0 --> aka nothing selected
-$scope.submitFilterCriteria = function() {
-    $http({
-      url:
-        "/filteredData/" +
-        $scope.selectedGenre[0] +
-        "/" +
-        $scope.selectedPr.pr +
-        "/" +
-        $scope.selectedYear[0],
-      method: "GET"
-    }).then(
-      res => {
-        console.log("SELECTEDFILTERCRITERIA: ", res.data);
-        $scope.bestofGames = res.data.rows;
-      },
-      err => {
-        console.log("SELECTEDFILTERCRITERIA: ", err);
-      }
-    );
-  };
-
-//query the genres for the genre filter
+  //query the languages for the language filter
   $scope.selectedGenre = ["0"];
   $http({
     url: "/filterLangs",
@@ -196,6 +166,54 @@ $scope.submitFilterCriteria = function() {
       console.log("Lang ERROR: ", err);
     }
   );
+
+  //score default values 0 --> aka nothing selected
+  $scope.submitFilterCriteria = function () {
+    var genre = "0";
+    if (!(typeof $scope.selectedGenre === "undefined")){
+      genre = $scope.selectedGenre[0];
+    } else if (!(typeof $scope.selectedGenre === "undefined") && $scope.selectedGenre == null){
+      genre = "0";
+    }
+    var pr = "0";
+    if (!(typeof $scope.selectedPr === "undefined")) {
+      pr = $scope.selectedPr.pr;
+    } else if (!(typeof $scope.selectedPr === "undefined") && $scope.selectedPr == null) {
+      pr = "0";
+    }
+    var yr = "0";
+    if (!(typeof $scope.selectedYear === "undefined")) {
+      pr = $scope.selectedYear[0];
+    } else if (!(typeof $scope.selectedYear === "undefined") && $scope.selectedYear == null) {
+      yr = "0";
+    }
+    var lang = "0";
+    if (!(typeof $scope.selectedLang=== "undefined")) {
+      lang = $scope.selectedLang;
+    } else if (!(typeof $scope.selectedLAng === "undefined") && $scope.selectedLang == null) {
+      lang= "0";
+    }
+    $http({
+      url:
+        "/filteredData/" +
+        genre +
+        "/" +
+        pr +
+        "/" +
+        yr +
+        "/" +
+        lang,
+      method: "GET"
+    }).then(
+      res => {
+        console.log("SELECTEDFILTERCRITERIA: ", res.data);
+        $scope.bestofGames = res.data.rows;
+      },
+      err => {
+        console.log("SELECTEDFILTERCRITERIA: ", err);
+      }
+    );
+  };
 
 });
 
