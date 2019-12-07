@@ -339,15 +339,14 @@ router.get('/filteredData/:genre/:price/:year', function(req,res){
   // query!
   var query =
     `
-SELECT TITLE, REVIEW FROM (
+SELECT TITLE, MAX(REVIEW) FROM (
     SELECT r2.title, r2.review, r3.helpful FROM review_content r2
     JOIN (
     SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
     RIGHT JOIN(
     SELECT title, max(helpful) as maxhelp FROM review_criteria
     ` +
-    filters
-    +
+    filters +
     ` GROUP BY title) t1
     ON r1.title = t1.title and r1.helpful = t1.maxhelp
     ORDER BY r1.helpful DESC
@@ -355,6 +354,7 @@ SELECT TITLE, REVIEW FROM (
     ON r2.review_id = r3.review_id
     )
     WHERE ROWNUM<=10
+    GROUP BY TITLE
   `;
   // connect query
   console.log(query);
@@ -363,37 +363,6 @@ SELECT TITLE, REVIEW FROM (
   });
 });
 
-router.get('/filteredData/:genre', function(req,res){
-  console.log("req.params");
-  var genre = req.params.genre;
-  console.log(req.params);
-  var query =
-    `
-SELECT TITLE, REVIEW FROM (
-    SELECT r2.title, r2.review, r3.helpful FROM review_content r2
-    JOIN (
-    SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
-    RIGHT JOIN(
-    SELECT title, max(helpful) as maxhelp FROM review_criteria
-    WHERE title IN (SELECT name
-    FROM genre g1
-    WHERE g1.genre='` +
-    genre +
-    `')
-    GROUP BY title) t1
-    ON r1.title = t1.title and r1.helpful = t1.maxhelp
-    ORDER BY r1.helpful DESC
-    ) r3
-    ON r2.review_id = r3.review_id
-    )
-    WHERE ROWNUM<=10
-  `;
-  // connect query
-  console.log(query);
-  sendQuery(query, function(result) {
-    res.json(result);
-  });
-});
 
 
 /* ----- Detail Page ----- */

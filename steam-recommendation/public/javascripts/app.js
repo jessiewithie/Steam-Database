@@ -1,13 +1,4 @@
 var app = angular.module('angularjsNodejsTutorial', []);
-// var bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// var session = require('express-session')
-// app.use(session({
-//   secret: 'secret',
-//   resave: true,
-//   saveUninitialized: true
-// }));
 
 //I'm not sure if this works 
 // app.config(function ($stateProvider, $urlRouterProvider) {
@@ -65,6 +56,13 @@ app.controller('searchController', function($scope, $http) {
       }
     );
 });
+
+app.service('myService', function(){
+  var game_name = '';
+  this.get_game_name = function(){
+    return game_name;
+  }
+})
 
 // Controller for the Nav and Detail Of Page
 app.controller('navController', function ($scope, $http) {
@@ -180,7 +178,6 @@ app.controller('detailController', function($scope, $http) {
         });
       }
     });
-
 
 
       // $http({
