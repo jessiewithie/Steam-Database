@@ -409,7 +409,8 @@ router.get('/detail/:gameName', function(req, res){
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
-select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages
+SELECT * FROM (select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, 
+nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages,d.appid
 FROM description d
 JOIN price p ON d.name = p.name AND d.name = '${myGame}'
 JOIN release_date r ON r.name = p.name
@@ -418,7 +419,7 @@ JOIN (select name , listagg(tag,',') within group (order by name) as tags from (
 JOIN (select name , listagg(language,',') within group (order by name) as languages from (select distinct name,language from language) GROUP BY name) l ON d.name = l.name
 LEFT JOIN review_criteria rc ON rc.title = d.name
 LEFT JOIN review_content rt ON rc.review_id = rt.review_id
-ORDER BY rc.helpful,rc.funny,rc.date_posted`;
+ORDER BY rc.helpful,rc.funny,rc.date_posted) WHERE ROWNUM<=5`;
   console.log(query);
   sendQuery(query, function(result) {
     console.log(result);
