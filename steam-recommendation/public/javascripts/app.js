@@ -32,29 +32,75 @@ app.controller('indexController', function($scope, $http) {
   },err =>{
     console.log("Games ERROR: ",err);
   });
-  $scope.thumb = function(){
-    window.location = '/search';
+  $scope.msg="Doom"
+  $scope.thumb = function(msg){
+    var hre = '/search?msg='+msg;
+    window.location = hre;
   }
   $scope.submitId = function() {
     $scope.review =  $scope.genres.rows;
   } 
 });
 
-// Controller for the Recommendations Page
+// Controller for the Search Page
 app.controller('searchController', function($scope, $http) {
-  // TODO: Q2
-  $http({
-      url: "/search/:recommend",
+  var urlValue="";
+  var href = location.href;
+  console.log(href);
+  urlValue = href.substring(href.indexOf("=")+1);
+  console.log(urlValue);
+  var message = urlValue;
+  // var message = angular.fromJson(urlValue);
+  if(message.length > 0){
+    $http({
+      url: "/search/" + message,
       method: "GET"
     }).then(
       res => {
-        // console.log("DECADES: ", res.data);
-        // $scope.decades = res.data;
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        var gameArray = res.data.rows;
+        
+        Promise.all(gameArray.map(game =>
+          fetch(proxyurl + 'https://store.steampowered.com/api/appdetails?appids=' + game[1])
+            .then(response => response.text())                
+            .then(contents => {
+            var gamedata = JSON.parse(contents)[game[1]].data;
+            game.push(gamedata.header_image);
+            game.push(gamedata.short_description);})
+            .catch(() => console.log("Can’t access " + 'https://store.steampowered.com/api/appdetails?appids=' + game[1] + " response. Blocked by browser?"))
+            )).then(function(){$scope.gameInfo = res.data.rows; $scope.$apply();});
+  
       },
       err => {
-        // console.log("DECADES ERROR: ", err);
+        console.log("Genre ERROR: ", err);
       }
     );
+  }
+
+  $scope.submitName = function() {
+    $http({
+      url: '/search/' + $scope.gameName,
+      method: 'GET'
+    }).then(res => {
+      
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      var gameArray = res.data.rows;
+      
+      Promise.all(gameArray.map(game =>
+        fetch(proxyurl + 'https://store.steampowered.com/api/appdetails?appids=' + game[1])
+          .then(response => response.text())                
+          .then(contents => {
+          var gamedata = JSON.parse(contents)[game[1]].data;
+          game.push(gamedata.header_image);
+          game.push(gamedata.short_description);})
+          .catch(() => console.log("Can’t access " + 'https://store.steampowered.com/api/appdetails?appids=' + game[1] + " response. Blocked by browser?"))
+          )).then(function(){$scope.gameInfo = res.data.rows; $scope.$apply();});
+
+    }, err => {
+      console.log("SearchGames ERROR: ", err);
+    });
+    
+  }
 });
 
 app.service('myService', function(){

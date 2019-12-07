@@ -8,7 +8,6 @@
     <title>Search</title>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
     <script src="javascripts/app.js" type="text/javascript"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -36,8 +35,8 @@
   <div class="container">
     <div class="d-flex justify-content-center">
       <div class="searchbar">
-        <input class="search_input" type="text" name="" placeholder="Enter game name, please be accurate..">
-        <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        <input class="search_input" type="text" name="" ng-model="gameName" placeholder="Enter game name, please be accurate..">
+        <a href="" class="search_icon" ng-click="submitName()"><i class="fas fa-search"></i></a>
       </div>
     </div>
   </div>
@@ -46,25 +45,15 @@
     <div class="jumbotron">
         <div class="paragraphs">
           <div class="row">
-            <div class="span4">
-              <img style="float:left" src="https://steamcdn-a.akamaihd.net/steam/apps/814380/header.jpg?t=1568841718">
-              <div class="content-heading"><h3>Sekiro: Shadows Die Twice</h3></div>
-                <p>Carve your own clever path to vengeance in an all-new adventure from developer FromSoftware, creators of Bloodborne and the Dark Souls series. Take Revenge. Restore your honor. Kill Ingeniously.</p>
+            <div class="span4" ng-repeat="game in gameInfo">
+              <img style="float:left" ng-src="{{game[2]}}">
+              <div class="content-heading"><h3>{{game[0]}}</h3></div>
+                <p>{{game[3]}}</p>
               <div style="clear:both"></div>
+              <br>
             </div>
           </div>
         </div>
-      <br>
-      <div class="paragraphs">
-        <div class="row">
-          <div class="span4">
-            <img style="float:left" src="https://steamcdn-a.akamaihd.net/steam/apps/374320/header.jpg?t=1553251330">
-            <div class="content-heading"><h3>DARK SOULS™ III</h3></div>
-              <p>Dark Souls continues to push the boundaries with the latest, ambitious chapter in the critically-acclaimed and genre-defining series. Prepare yourself and Embrace The Darkness!</p>
-            <div style="clear:both"></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
