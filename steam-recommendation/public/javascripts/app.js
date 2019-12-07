@@ -1,57 +1,25 @@
 var app = angular.module('angularjsNodejsTutorial', []);
 
-//I'm not sure if this works 
-// app.config(function ($stateProvider, $urlRouterProvider) {
-
-//       $stateProvider
-//       .state('nav', {
-//       url: '/nav',
-//       templateUrl: 'views/nav.html',
-//       controller: 'navController'
-//       })
-//       .state('detail', {
-//        url: '/detail/:title',
-//        templateUrl: 'views/detail.html',
-//       //params: {'title': null},
-//        controller: 'detailController'
-//       });
-//       $urlRouterProvider.otherwise("/nav");
-//   });
-
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
-  
-<<<<<<< HEAD
-  $http({
-    url:'/q1',
-    method:'GET',
-  }).then(res=>{
-    console.log("GAMES:", res.data);
-    //store the response data to $scope.genres
-    $scope.genres = res.data;
-    console.log("111");
-  },err =>{
-    console.log("Games ERROR: ",err);
-  });
-
-=======
-  // $http({
-  //   url:'/q1',
-  //   method:'GET',
-  // }).then(res=>{
-  //   console.log("GAMES:", res.data);
-  //   //store the response data to $scope.genres
-  //   $scope.genres = res.data;
-  //   console.log("111");
-  // },err =>{
-  //   console.log("Games ERROR: ",err);
-  // });
->>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
-  $scope.msg="Doom"
-  $scope.thumb = function(msg){
-    var hre = '/search?msg='+msg;
-    window.location = hre;}
-
+  $scope.thumb = function(){
+    var hre = '/search?msg=q1';
+    window.location = hre;
+  }
+  $scope.latest = function(){
+    $http({
+      url:'/q3',
+      method:'GET',
+    }).then(res=>{
+      console.log("GAMES:", res.data);
+      var gameName = res.data.rows[0][0];
+      var hre1 = '/detail?msg='+angular.toJson(gameName);
+      console.log(hre1);
+      window.location = hre1;
+    },err =>{
+      console.log("Games ERROR: ",err);
+    });
+  }
   $scope.submitId = function() {
     $scope.review =  $scope.genres.rows;
   } 
@@ -63,7 +31,7 @@ app.controller('searchController', function($scope, $http) {
   var href = location.href;
   console.log(href);
   urlValue = href.substring(href.indexOf("=")+1);
-  console.log(urlValue);
+  // console.log(urlValue);
   var message = urlValue;
   // var message = angular.fromJson(urlValue);
   if(message.length > 0 && href != "http://localhost:8081/search"){
@@ -116,10 +84,6 @@ app.controller('searchController', function($scope, $http) {
     });
     
   }
-  $scope.detail = function(game){
-    var hre = '/detail?game='+game;
-    window.location = hre;
-  }
 });
 
 // Controller for the Nav and Detail Of Page
@@ -127,7 +91,7 @@ app.controller('navController', function ($scope, $http) {
 
   //query years for the genre filter
   $scope.selectedYear = ["0"];
-
+  
   //03-19
   $http({
     url: "/filterYears",
@@ -141,10 +105,10 @@ app.controller('navController', function ($scope, $http) {
       console.log("Genre ERROR: ", err);
     }
   );
-
-
+  
+  
   //query the genres for the genre filter
-  console.log($scope.selectedGenre);
+  $scope.selectedGenre = ["0"];
   $http({
     url: "/filterGenres",
     method: "GET"
@@ -161,7 +125,7 @@ app.controller('navController', function ($scope, $http) {
   // query the price ranges for the genre filter
   $scope.selectedPr = { pr: "0" };
   $scope.prs = [
-    { pr: "FREE" },
+    { pr: "FREE"},
     { pr: "<$50" },
     { pr: "$50-100" },
     { pr: "$100-150" },
@@ -171,57 +135,17 @@ app.controller('navController', function ($scope, $http) {
     { pr: "$600+" }
   ];
 
-  //query the languages for the language filter
-  $scope.selectedGenre = ["0"];
-  $http({
-    url: "/filterLangs",
-    method: "GET"
-  }).then(
-    res => {
-      console.log("Lang: ", res.data);
-      $scope.langs = res.data.rows;
-    },
-    err => {
-      console.log("Lang ERROR: ", err);
-    }
-  );
 
-  //score default values 0 --> aka nothing selected
-  $scope.submitFilterCriteria = function () {
-    var genre = "0";
-    if (!(typeof $scope.selectedGenre === "undefined")){
-      genre = $scope.selectedGenre[0];
-    } else if (!(typeof $scope.selectedGenre === "undefined") && $scope.selectedGenre == null){
-      genre = "0";
-    }
-    var pr = "0";
-    if (!(typeof $scope.selectedPr === "undefined")) {
-      pr = $scope.selectedPr.pr;
-    } else if (!(typeof $scope.selectedPr === "undefined") && $scope.selectedPr == null) {
-      pr = "0";
-    }
-    var yr = "0";
-    if (!(typeof $scope.selectedYear === "undefined")) {
-      pr = $scope.selectedYear[0];
-    } else if (!(typeof $scope.selectedYear === "undefined") && $scope.selectedYear == null) {
-      yr = "0";
-    }
-    var lang = "0";
-    if (!(typeof $scope.selectedLang=== "undefined")) {
-      lang = $scope.selectedLang;
-    } else if (!(typeof $scope.selectedLAng === "undefined") && $scope.selectedLang == null) {
-      lang= "0";
-    }
+    //score default values 0 --> aka nothing selected
+$scope.submitFilterCriteria = function() {
     $http({
       url:
         "/filteredData/" +
-        genre +
+        $scope.selectedGenre[0] +
         "/" +
-        pr +
+        $scope.selectedPr.pr +
         "/" +
-        yr +
-        "/" +
-        lang,
+        $scope.selectedYear[0],
       method: "GET"
     }).then(
       res => {
@@ -239,39 +163,13 @@ app.controller('navController', function ($scope, $http) {
 //I need game names from Nav page just like the dashboaed page in hw2
 
 app.controller('detailController', function($scope, $http) {
-      // $http({
-      //   url: '/detail/:Portal',
-      //   method: 'GET'
-      // }).then(res => {
-      //   console.log("DETAIL: ", res.data);
-      //   // console.log($scope);
-      //   $scope.testdata = res.data.rows[0];
-      //   //console.log($scope.testdata[0]);
-      // }, err => {
-      //   console.log("DETAIL ERROR: ", err);
-      // });
-      var urlValue="";
+      var urlValue1="";
       var href = location.href;
       console.log(href);
-      urlValue = href.substring(href.indexOf("=")+1);
-      console.log(urlValue);
-      var message = urlValue;
-
-      if(message.length > 0){
-        $http({
-        url: '/detail/' + message,
-        method: 'GET'
-      }).then(res => {
-        console.log("DETAIL: ", res.data);
-        // console.log($scope);
-        $scope.detail = res.data.rows[0];
-        console.log($scope.gameName);
-        console.log($scope.detail);
-      }, err => {
-        console.log("DETAIL ERROR: ", err);
-      });
-      }
-
+      // urlValue = href.substring(href.indexOf("=")+1);
+      // message=angular.fromJson(decodeURI(urlValue));
+      // console.log(message);
+      // var message = urlValue;
       // $scope.showDetail = function() {
       //   $http({
       //   url: '/detail/' + $scope.gameName,
@@ -298,6 +196,7 @@ app.controller('detailController', function($scope, $http) {
       //   });
       // }
     });
+
 
 
       // $http({
@@ -330,24 +229,38 @@ app.controller('detailController', function($scope, $http) {
 
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
-
+  $scope.signIn = function() {
+    $http({
+     url: '/user',
+     method: 'POST',
+     data: ({
+       'username' : $scope.username,
+       'password' : $scope.password
+     })
+   }).then(res => {
+     console.log("LOGIN: ", res.data);
+   }, err => {
+     console.log("LOGIN ERROR: ", err);
+   });
+  }
 });
 
 // Controller for the signup page
 app.controller('signUpController',function($scope,$http){
   $scope.submitUserInfo = function() {
-    $http({
-      url: '/register',
-      method: 'POST',
-      data:{
-        'username':$scope.username,
-        'password':$scope.password
-      }
-    }).then(res => {
-      console.log("hello, I am doing this");
-    }, err => {
-      console.log("signUp ERROR: ", err);
-    });
-    
+   console.log($scope);
+   $http({
+    url: '/adduserInfo',
+    method: 'POST',
+    data: ({
+      'username' : $scope.username,
+      'password' : $scope.password
+    })
+  }).then(res => {
+        console.log("USER: ", res.data);
+  }, err => {
+    console.log("USER ERROR: ", err);
+  });
+  
   }
 });

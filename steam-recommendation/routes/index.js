@@ -6,39 +6,30 @@ var path = require('path');
 /* ----- Connects to your oracleDb database ----- */
 // var mysql = require('mysql');
 var oracledb = require('oracledb');
+var mongodb = require("mongodb");
+/* ----- Connects to your mongoDB database ----- */
+const addr = "mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
 
-// const MongoClient = require('mongodb').MongoClient;
-// const uri ="mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-
-// mongokDB insert and send query
-// function sendMongoDBQuery(bid, callback) {
-//   mongodb.MongoClient.connect(addr, function(error, db){
-//       if (error) throw error;
-//       var tips = db.db("CIS550STEAM-GAME-RECOMMENDATION").collection("Cluster0");
-//       tips.find({"username" : bid}).sort({password: -1}).limit(5).toArray(function(error, result) {
-//         callback(result);
-//       });
-//   });
-// }
-
-// function insertToMongoDB(user, callback) {
-//   client.connect(err => {
-//     const user = client.db("cis550proj").collection("user");
-//     // perform actions on the collection object
-//     client.close();
-//   });
-// }
 function insertToMongoDB(review, callback) {
   mongodb.MongoClient.connect(addr, function(error, db){
       if (error) throw error;
-      var tips = db.db("cis550proj").collection("tip");
-      tips.insert(review, function(err, res){
+      var userInfo = db.db("cis550").collection("userInfo");
+      userInfo.insert(review, function(err, res){
       if(err) throw err;
-      console.log('data inserted');
-      console.log(res);
+        console.log('data inserted');
+        console.log(res);
       db.close();
     });
+  });
+}
+
+function sendMongoDBQuery(username,password, callback) {
+  mongodb.MongoClient.connect(addr, function(error, db){
+      if (error) throw error;
+      var user = db.db("cis550").collection("userInfo");
+      user.find({"username" : username,"password":password}).toArray(function(error, result) {
+        callback(result);
+      });
   });
 }
 
@@ -77,9 +68,7 @@ function doRelease(connection) {
     }
   );
 }
-// 
-// config.connectionLimit = 20;
-// var connection = mysql.createPool(config);
+
 
 /* ------------------------------------------- */
 /* ----- Routers to handle FILE requests ----- */
@@ -134,6 +123,9 @@ router.get('<PATH>', function(req, res) {
 /* ------------------------------------------------ */
 
 /* ----- Query test (we will see where to use them)----- */
+/*
+   most funniest review
+ */
 router.get('/q1', function(req, res) {
   var query = `
 SELECT review,funny FROM(
@@ -150,7 +142,9 @@ WHERE ROWNUM <= 1
     res.json(result);
   });
 });
-
+/*
+  most helpful
+ */
 router.get('/q3', function(req, res) {
   var query = `
 SELECT * FROM (
@@ -245,23 +239,6 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
-<<<<<<< HEAD
-=======
-// router.get('/search?msg=/:message', function(req, res) {
-//   // var inputGame = req.params.game.split("'").join("''");
-//   var query = `
-//     SELECT name, appid
-//     FROM description
-//     WHERE lower(name) LIKE lower('message')
-//     ORDER BY name
-//   `;
-//   console.log(query);
-//   sendQuery(query, function(result) {
-//     console.log(result);
-//     res.json(result);
-//   });
-// });
->>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 
@@ -432,11 +409,6 @@ router.get('/detail/:gameName', function(req, res){
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
-<<<<<<< HEAD
-  SELECT name, url, types, game_description 
-  FROM description 
-  WHERE name = '${myGame}'`;
-=======
 select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages
 FROM description d
 JOIN price p ON d.name = p.name AND d.name = '${myGame}'
@@ -447,7 +419,6 @@ JOIN (select name , listagg(language,',') within group (order by name) as langua
 LEFT JOIN review_criteria rc ON rc.title = d.name
 LEFT JOIN review_content rt ON rc.review_id = rt.review_id
 ORDER BY rc.helpful,rc.funny,rc.date_posted`;
->>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
   console.log(query);
   sendQuery(query, function(result) {
     console.log(result);
@@ -508,7 +479,7 @@ router.get('/routeName/:customParameter', function(req, res) {
 });
 */
 
-router.post('/register', function(req, res) {
+router.post('/adduserInfo', function(req, res) {
   var insert = {"username":req.body.username,"password":req.body.password};
   console.log(insert);
   insertToMongoDB(insert, function(result) {
