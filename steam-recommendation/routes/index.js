@@ -245,6 +245,8 @@ router.get('/search/:game', function(req, res) {
     res.json(result);
   });
 });
+<<<<<<< HEAD
+=======
 // router.get('/search?msg=/:message', function(req, res) {
 //   // var inputGame = req.params.game.split("'").join("''");
 //   var query = `
@@ -259,6 +261,7 @@ router.get('/search/:game', function(req, res) {
 //     res.json(result);
 //   });
 // });
+>>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
 
@@ -429,6 +432,11 @@ router.get('/detail/:gameName', function(req, res){
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
+<<<<<<< HEAD
+  SELECT name, url, types, game_description 
+  FROM description 
+  WHERE name = '${myGame}'`;
+=======
 select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages
 FROM description d
 JOIN price p ON d.name = p.name AND d.name = '${myGame}'
@@ -439,8 +447,10 @@ JOIN (select name , listagg(language,',') within group (order by name) as langua
 LEFT JOIN review_criteria rc ON rc.title = d.name
 LEFT JOIN review_content rt ON rc.review_id = rt.review_id
 ORDER BY rc.helpful,rc.funny,rc.date_posted`;
+>>>>>>> 418358a414daff97581ec66ba3ad445055d196e7
   console.log(query);
   sendQuery(query, function(result) {
+    console.log(result);
     res.json(result);
   });
 });
