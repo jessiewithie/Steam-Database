@@ -160,44 +160,56 @@ $scope.submitFilterCriteria = function() {
 
 });
 
-//I need game names from Nav page just like the dashboaed page in hw2
-
 app.controller('detailController', function($scope, $http) {
-      var urlValue1="";
-      var href = location.href;
-      console.log(href);
-      // urlValue = href.substring(href.indexOf("=")+1);
-      // message=angular.fromJson(decodeURI(urlValue));
-      // console.log(message);
-      // var message = urlValue;
-      // $scope.showDetail = function() {
-      //   $http({
-      //   url: '/detail/' + $scope.gameName,
-      //   method: 'GET'
-      // }).then(res => {
-      //   console.log("DETAIL: ", res.data);
-      //   // console.log($scope);
-      //   $scope.detail = res.data.rows[0];
-      //   console.log($scope.gameName);
-      //   console.log($scope.detail);
-      // }, err => {
-      //   console.log("DETAIL ERROR: ", err);
-      // });
+  var urlValue="";
+  var href = location.href;
+  console.log(href);
+  urlValue = href.substring(href.indexOf("=")+1);
+  // console.log(urlValue);
+  var message = angular.fromJson(decodeURI(urlValue));
+  console.log(message)
+  // var message = angular.fromJson(urlValue);
+  if(message.length > 0 && href != "http://localhost:8081/search"){
+    $http({
+      url: "/detail/" + message,
+      method: "GET"
+    }).then(
+      res => {
 
-      //   $http({
-      //   url: '/detail/rec/' + $scope.gameName,
-      //   method: 'GET'
-      // }).then(res => {
-      //   console.log("DETAIL: ", res.data);
-      //   // console.log($scope);
-      //   $scope.rec = res.data.rows[0];
-      // }, err => {
-      //   console.log("DETAIL ERROR: ", err);
-      //   });
-      // }
-    });
+        $scope.detail = res.data.rows[0];
+        console.log("Detail:", res.data);
 
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        var gameArray = res.data.rows;
+        
+          Promise.all(gameArray.map(game =>
+          fetch(proxyurl + 'https://store.steampowered.com/api/appdetails?appids=' + game[14])
+            .then(response => response.text())                
+            .then(contents => {
+            var gamedata = JSON.parse(contents)[game[14]].data;
+            game.push(gamedata.header_image);
+            game.push(gamedata.short_description);})
+            .catch(() => console.log("Can’t access " + 'https://store.steampowered.com/api/appdetails?appids=' + game[14] + " response. Blocked by browser?"))
+            )).then(function(){$scope.gamePic = res.data.rows; $scope.$apply();}); 
+      
+      },err => {
+        console.log("Detail ERROR: ", err);
+      });
+  }
 
+    // $http({
+    //     url: '/detail/' + $scope.game,
+    //     method: 'GET'
+    //   }).then(res => {
+    //     console.log("test: ", res.data);
+    //     // console.log($scope);
+    //     $scope.test = res.data.rows[0];
+    //     //console.log($scope.testdata2);
+    //   }, err => {
+    //     console.log("DETAIL ERROR: ", err);
+    //   });
+
+});
 
       // $http({
       //   url: '/detail/' + $scope.game,
