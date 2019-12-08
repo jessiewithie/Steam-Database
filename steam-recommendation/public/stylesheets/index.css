@@ -1,15 +1,13 @@
-/* USING BOOTSTRAP 3.0.3 */
-
 body{
   padding-top: 60px;
   overflow: hidden;
+  background: url('./../assets/steam-wallpaper.png')center center fixed;
 }
 .inner{
   width:100% 100%;
   height: 100%;
   -moz-background-size:100% 100%;
   background-size:100% 100%;
-  background: url('./../assets/steam-wallpaper.png')center center fixed;
   overflow: hidden;
   padding:3rem;
 }
@@ -44,8 +42,7 @@ button {
   position: fixed;
   right: 0;
   bottom: 30px;
-  left: 250px;
-  /* z-index: $zindex-fixed; */
+  left: 150px;
 }
 
 .parent{

@@ -1,7 +1,7 @@
-body,html{
+body{
   margin: 0;
-  padding: 0;
-  background: black !important;
+  padding-top: 60px;
+  background: url(http://vignette4.wikia.nocookie.net/steamtradingcards/images/9/93/0RBITALIS_Background_Nebula.jpg/revision/latest?cb=20141118020246)center center fixed;
 }
 
 .searchbar{
@@ -50,7 +50,7 @@ body,html{
 .jumbotron {
   background-color: black;
   position: relative;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
 }
 
 img {

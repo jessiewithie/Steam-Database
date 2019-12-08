@@ -31,13 +31,17 @@
           </div>
       </nav>
 
+  
+  <div style="height:100px;width: auto;">
+      你好
+  </div>
   <div class="container">
     <div class="row">
         <div class="gameTitle">{{detail[0]}}</div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <video width="500" height="375" ng-src="{{gamePic[0][16][0]['webm']['480']}}" controls></video>
+        <video width="500" height="375" ng-src="{{gamePic[0][16][0]['webm']['480']}}" controls="controls" autoplay="autoplay"></video>
         <!-- <img src="https://steamcdn-a.akamaihd.net/steam/apps/982730/ss_71235b4326ab0eb6e3cdaeb41c4139311097a2fa.600x338.jpg"> -->
 <!--     <img src="{{gamePic[0][15]}}"> -->
       </div>
