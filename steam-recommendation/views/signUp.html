@@ -17,20 +17,20 @@
 
   <body ng-controller="loginController">
     <!-- Navbar -->     
-    <div id="nav">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand center" href="/">
-          <i class="fa fa-steam-square fa-2x" aria-hidden="true"></i>
-        </a>
-        <ul>
-          <li><a class="nav-item nav-link" href="/search">search</a></li>
-          <li><a class="nav-item nav-link" href="/nav">nav</a></li>
-          <li><a class="nav-item nav-link" href="/detail">detail</a></li>
-          <li><a class="nav-item nav-link " href="/login">login</a></li>
-        </ul>
-      </nav>
-    </div>
+    <nav class="nav affix">
+        <div class="container">
+            <div class="logo">
+                <a href="/"><i class="fa fa-steam-square fa-3x" aria-hidden="true"></i></a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="/search">search</a></li>
+                    <li><a href="/nav">nav</a></li>
+                    <li><a class="active" href="/nav">sign up today!</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     
     <div class="container login-container" ng-controller="signUpController">
       <form class="needs-validation">

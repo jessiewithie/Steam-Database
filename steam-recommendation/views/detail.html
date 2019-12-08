@@ -16,46 +16,90 @@
   </head>
 
   <body ng-controller="detailController">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand center" href="/">
-        <i class="fa fa-steam-square fa-3x" aria-hidden="true"></i>
-      </a>
-      <ul>
-      <li><a class="nav-item nav-link" href="/search">search</a></li>
-      <li><a class="nav-item nav-link" href="/nav">nav</a></li>
-      <li><a class="nav-item nav-link active" href="/detail">detail</a></li>
-      <li><a class="nav-item nav-link " href="/login">login</a></li>
-    </ul>
-  </nav>
-
+      <nav class="nav affix">
+          <div class="container">
+              <div class="logo">
+                  <a href="/"><i class="fa fa-steam-square fa-3x" aria-hidden="true"></i></a>
+              </div>
+              <div id="mainListDiv" class="main_list">
+                  <ul class="navlinks">
+                      <li><a class="active" href="/search">search</a></li>
+                      <li><a href="/nav">nav</a></li>
+                      <li><a href="/login">login</a></li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
 
   <div class="container">
     <div class="row">
-        <div class="gameTitle">name</div>
+        <div class="gameTitle">{{detail[0]}}</div>
     </div>
     <div class="row">
-      <div class="col-md-8">
-        <img src="https://steamcdn-a.akamaihd.net/steam/apps/982730/ss_71235b4326ab0eb6e3cdaeb41c4139311097a2fa.600x338.jpg">
+      <div class="col-md-6">
+        <video width="500" height="375" ng-src="{{gamePic[0][16][0]['webm']['480']}}" controls></video>
+        <!-- <img src="https://steamcdn-a.akamaihd.net/steam/apps/982730/ss_71235b4326ab0eb6e3cdaeb41c4139311097a2fa.600x338.jpg"> -->
+<!--     <img src="{{gamePic[0][15]}}"> -->
       </div>
-      <div class="col-md-4">
+      
+      <div class="col-md-6">
         <div class="game-content">
-          <div>
-              <p>REVIEW</p>
-          </div>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-          <p>DEVELOPER</p>
-          <P>PUBLISHER</P>
-          <p>PRICE</p>
+          <br>
+          <br>
+          <br>
+          <br>
+          <p><strong>RELEASE DATE:</strong> {{datesub}}</p>
+          <p><strong>PRICE:</strong> ${{pricesub}}</p> 
+          <P><strong>GENRE:</strong> {{detail[11]}}</P>
+          <P><strong>DEVELOPER:</strong> {{detail[4]}}</P>
+          <p><strong>TYPE:</strong> {{detail[2]}}</p>
+          <P><strong>TAGS:</strong> {{detail[12]}}</P>
+          <!-- <P>LANGUAGE:{{detail[13]}}</P> -->
+          <a href={{detail[1]}} style="color:#9AFF02">visit offical website</a>
+       
         </div>
       </div> 
     </div>
     <br>
     <div class="row">
       <div class="col-md-12">
-          <div class = "game-content ">111</div>
+        <div class = "game-content "><strong>Description:</strong> {{des}} ... </div>
+          <br>
+        <div class = "game-content "><strong>Review:</strong> {{detail[8]}} </div>
       </div>
     </div>
   </div>
+
+<!-- 
+   <div class="games-container">
+      <div class="jumbotron">
+        <h5 style="color: black">About the game</h5>
+         <div class = "game-content ">Description: {{detail[3]}} </div>
+
+          <div class="games-container" id="results" ng-show="detail">
+            <div class="movie">  Name : {{detail[0]}}</div>
+            <div class="movie"> Release Date : {{detail[2]}}</div>
+            <div class="movie"> Price : {{detail[3]}}</div>
+            <div class="movie"> Type :{{detail[4]}}</div>
+          </div>
+    </div> -->
+<!--     <div class="jumbotron">
+        <h5 style="color: black">Games you may also like: </h5>
+          <div class="games">
+            <div class="header"><strong>Name</strong></div>
+            <div class="header"><strong>Release Date</strong></div>
+            <div class="header"><strong>Price</strong></div>
+            <div class="header"><strong>Type</strong></div>
+          </div>
+          <div class="games-container" id="results" ng-show="rec">
+            <div class="movie">  Name : {{rec[0]}}</div>
+            <div class="movie"> Genre : {{rec[1]}}</div>
+            <div class="movie"> Recommended Times : {{rec[2]}}</div>
+            <div class="movie"> Type :{{rec[4]}}</div>
+          </div>
+    </div> -->
+      </div>
+
 
     <!-- <div id="section">
 
@@ -69,7 +113,7 @@
       <br />
       <br />
      <br />
-    </div> -->
+    </div>
 
 
     <!-- Reference Content -->
