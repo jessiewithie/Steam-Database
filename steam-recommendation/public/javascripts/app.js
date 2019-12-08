@@ -177,8 +177,12 @@ app.controller('detailController', function($scope, $http) {
       res => {
 
         $scope.detail = res.data.rows[0];
+        var price= res.data.rows[0][6].toString();
+        $scope.pricesub = price.substring(0,5);
+        var date= res.data.rows[0][7].toString();
+        $scope.datesub = date.substring(0,10);
         console.log("Detail:", res.data);
-
+        
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         var gameArray = res.data.rows;
         
