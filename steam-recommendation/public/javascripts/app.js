@@ -65,6 +65,7 @@ app.controller('searchController', function($scope, $http) {
   }
 
   $scope.submitName = function() {
+    
     $http({
       url: '/search/' + $scope.gameName,
       method: 'GET'
@@ -111,7 +112,7 @@ app.controller('navController', function ($scope, $http) {
       $scope.years = res.data.rows;
     },
     err => {
-      console.log("Genre ERROR: ", err);
+      console.log("Year ERROR: ", err);
     }
   );
   
@@ -146,15 +147,38 @@ app.controller('navController', function ($scope, $http) {
 
 
     //score default values 0 --> aka nothing selected
-$scope.submitFilterCriteria = function() {
+  //score default values 0 --> aka nothing selected
+  $scope.submitFilterCriteria = function () {
+    var genre = "0";
+    if (!(typeof $scope.selectedGenre === "undefined")) {
+      if ($scope.selectedGenre == null) { genre = "0";}
+      else{genre = $scope.selectedGenre[0];}
+    }
+    var pr = "0";
+    if (!(typeof $scope.selectedPr === "undefined")) {
+      if ($scope.selectedPr == null){pr = "0";}
+      else{pr = $scope.selectedPr.pr;}
+    }
+    var yr = "0";
+    if (!(typeof $scope.selectedYear === "undefined")) {
+      if ($scope.selectedYear == null){yr = "0";}
+      else {pr = $scope.selectedYear[0];}
+    }
+    var lang = "0";
+    if (!(typeof $scope.selectedLang === "undefined")) {
+      if ($scope.selectedLang == null){lang = "0";}
+      else {lang = $scope.selectedLang;}
+    } 
     $http({
       url:
         "/filteredData/" +
-        $scope.selectedGenre[0] +
+        genre +
         "/" +
-        $scope.selectedPr.pr +
+        pr +
         "/" +
-        $scope.selectedYear[0],
+        yr +
+        "/" +
+        lang,
       method: "GET"
     }).then(
       res => {
@@ -166,6 +190,11 @@ $scope.submitFilterCriteria = function() {
       }
     );
   };
+
+  $scope.detail = function (game) {
+    var hre = '/detail?msg=' + angular.toJson(game);
+    window.location = hre;
+  }
 
 });
 

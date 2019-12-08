@@ -80,7 +80,7 @@
           <div class="header"><strong>Top Comment</strong></div>
         </div>
         <div class="game" id="results" ng-repeat="game in bestofGames">
-          <div class="title">{{game[0]}}</div>
+          <div class="title" ng-click="detail(game[0])"> <a href="">{{game[0]}}</a></div>
           <div class="link">{{game[1].substring(0,100)+"..."}}</div>
         </div>
       </div>

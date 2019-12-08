@@ -354,7 +354,8 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   // query!
   var query =
     `
-SELECT TITLE, MAX(REVIEW) FROM (
+    SELECT TITLE, REVIEW, APPID FROM(
+SELECT TITLE, MAX(REVIEW) AS REVIEW FROM (
     SELECT r2.title, r2.review, r3.helpful FROM review_content r2
     JOIN (
     SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
@@ -370,6 +371,7 @@ SELECT TITLE, MAX(REVIEW) FROM (
     )
     WHERE ROWNUM<=10
     GROUP BY TITLE
+    ) r4 JOIN PRICE p ON p.name=r4.TITLE
   `;
   // connect query
   console.log(query);
