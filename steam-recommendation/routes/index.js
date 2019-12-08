@@ -291,7 +291,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
      title IN (SELECT name
       FROM price p1
       WHERE `;
-  if (price_condition === "0" || price_condition === "--Price Range--") {
+  if (price_condition === "0") {
     select_price = "";
   } else {
     if (price_condition === "FREE") {
@@ -317,11 +317,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   // year!
   var year_condition = req.params.year;
   var select_year;
-  if (
-    year_condition === "0" ||
-    year_condition === "undefined" ||
-    year_condition === "--Released Year--"
-  ) {
+  if (year_condition === "0") {
     select_year = "";
   } else {
     select_year =
@@ -332,7 +328,19 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
       ` ) `;
   }
 
-  console.log(genre);
+  // language！
+  var lang_condition = req.params.lang;
+  console.log(lang_condition);
+  var select_lang;
+  if (lang_condition === "0") {
+    select_lang= "";
+  } else {
+    select_lang =
+      ` title IN (SELECT name FROM LANGUAGE l1 WHERE LANGUAGE = '` +
+      lang_condition +
+      `' ) `;
+  }
+
   // determin filtering conditions
   var filters = "";
   if (select_price.length > 0){
@@ -343,6 +351,9 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   }
   if (select_year.length > 0) {
     filters = filters + " AND " + select_year;
+  }
+  if (select_lang.length > 0) {
+    filters = filters + " AND " + select_lang;
   }
   if(filters.length > 0){
     filters = filters.substring(4);

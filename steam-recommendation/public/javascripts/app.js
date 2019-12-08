@@ -99,9 +99,8 @@ app.controller('searchController', function($scope, $http) {
 // Controller for the Nav and Detail Of Page
 app.controller('navController', function ($scope, $http) {
 
-  //query years for the genre filter
-  $scope.selectedYear = ["0"];
   
+  $scope.selectedYear = ["0"];
   //03-19
   $http({
     url: "/filterYears",
@@ -144,6 +143,21 @@ app.controller('navController', function ($scope, $http) {
     { pr: "$400-600" },
     { pr: "$600+" }
   ];
+
+  //query the languages for the language filter
+  $scope.selectedLang = ["0"];
+  $http({
+    url: "/filterLangs",
+    method: "GET"
+  }).then(
+    res => {
+      console.log("Lang: ", res.data);
+      $scope.langs = res.data.rows;
+    },
+    err => {
+      console.log("Lang ERROR: ", err);
+    }
+  );
 
 
     //score default values 0 --> aka nothing selected
