@@ -84,6 +84,11 @@ app.controller('searchController', function($scope, $http) {
     });
     
   }
+  
+  $scope.detail = function(game){
+    var hre = '/detail?msg=' + angular.toJson(game);
+    window.location = hre;
+  }
 });
 
 // Controller for the Nav and Detail Of Page
