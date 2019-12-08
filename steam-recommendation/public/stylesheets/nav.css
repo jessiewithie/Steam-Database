@@ -2,7 +2,10 @@
 /* USING BOOTSTRAP 3.0.3 */
  body {
   /* padding-top: 60px; */
-  background:black;
+  /* background:black; */
+  padding-top: 60px;
+  overflow: hidden;
+  background: url(https://stmed.net/sites/default/files/steam-wallpapers-30778-9452180.jpg)center center fixed;
 }
 .container .nav-container{
   margin-top:200px;

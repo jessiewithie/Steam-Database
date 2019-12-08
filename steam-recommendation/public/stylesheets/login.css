@@ -7,7 +7,10 @@
   color: #fff;
 }
 body{
-  background:black;
+    padding-top: 60px;
+    overflow: hidden;
+    /* background: url(https://stmed.net/sites/default/files/steam-wallpapers-30778-9452180.jpg)center center fixed; */
+    background: url(http://www.ucatx.cat/wallpic/full/14/144417/gamer-wallpaper-4k.jpg)center center fixed;
 }
 
 .login-container {
