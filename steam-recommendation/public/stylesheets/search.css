@@ -1,7 +1,8 @@
 body,html{
   margin: 0;
   padding: 0;
-  background: black !important;
+  /* background: black !important; */
+  background: url(https://wallpapertag.com/wallpaper/full/8/5/7/218097-top-steam-wallpapers-2560x1600-for-windows.jpg)center center fixed;
 }
 
 .searchbar{
@@ -50,7 +51,7 @@ body,html{
 .jumbotron {
   background-color: black;
   position: relative;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
 }
 
 img {
