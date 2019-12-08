@@ -1,5 +1,9 @@
 var app = angular.module('angularjsNodejsTutorial', []);
 
+app.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist(['**']);
+});
+
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
   $scope.thumb = function(){
@@ -186,6 +190,8 @@ app.controller('detailController', function($scope, $http) {
         $scope.pricesub = price.substring(0,5);
         var date= res.data.rows[0][7].toString();
         $scope.datesub = date.substring(0,10);
+        var des = res.data.rows[0][3].toString();
+        $scope.des= des.substring(0,997);
         console.log("Detail:", res.data);
         
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
@@ -196,10 +202,13 @@ app.controller('detailController', function($scope, $http) {
             .then(response => response.text())                
             .then(contents => {
             var gamedata = JSON.parse(contents)[game[14]].data;
-            game.push(gamedata.header_image);
-            game.push(gamedata.short_description);})
+           game.push(gamedata.header_image);//15
+            //game.push(gamedata.short_description);//16
+            game.push(gamedata.movies);//16
+          })
             .catch(() => console.log("Can’t access " + 'https://store.steampowered.com/api/appdetails?appids=' + game[14] + " response. Blocked by browser?"))
-            )).then(function(){$scope.gamePic = res.data.rows; $scope.$apply();}); 
+            )).then(function(){$scope.gamePic = res.data.rows; $scope.$apply();}
+            ); 
       
       },err => {
         console.log("Detail ERROR: ", err);
