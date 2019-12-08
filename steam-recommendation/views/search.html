@@ -12,23 +12,25 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template-->
-    <link rel="stylesheet" href="/stylesheets/common.css" >
     <link rel="stylesheet" href="/stylesheets/search.css" >
+    <link rel="stylesheet" href="/stylesheets/common.css" >
   </head>
 
   <body ng-controller="searchController">
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <span class="navbar-brand center">
-      <i class="fa fa-steam-square fa-3x" aria-hidden="true"></i>
-    </span>
-    <ul>
-      <li><a class="nav-item nav-link" href="/">index</a></li>
-      <li><a class="nav-item nav-link active" href="/search">search</a></li>
-      <li><a class="nav-item nav-link" href="/nav">nav</a></li>
-      <li><a class="nav-item nav-link" href="/detail">detail</a></li>
-      <li><a class="nav-item nav-link " href="/login">login</a></li>
-    </ul>
+  <nav class="nav affix">
+      <div class="container">
+          <div class="logo">
+              <a href="/"><i class="fa fa-steam-square fa-3x" aria-hidden="true"></i></a>
+          </div>
+          <div id="mainListDiv" class="main_list">
+              <ul class="navlinks">
+                  <li><a class="active" href="/search">search</a></li>
+                  <li><a href="/nav">nav</a></li>
+                  <li><a href="/login">login</a></li>
+              </ul>
+          </div>
+      </div>
   </nav>
 
     <!-- Sample Content. You can either use this or make your own -->

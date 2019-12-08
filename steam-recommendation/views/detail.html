@@ -16,18 +16,20 @@
   </head>
 
   <body ng-controller="detailController">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand center" href="/">
-        <i class="fa fa-steam-square fa-3x" aria-hidden="true"></i>
-      </a>
-      <ul>
-      <li><a class="nav-item nav-link" href="/search">search</a></li>
-      <li><a class="nav-item nav-link" href="/nav">nav</a></li>
-      <li><a class="nav-item nav-link active" href="/detail">detail</a></li>
-      <li><a class="nav-item nav-link " href="/login">login</a></li>
-    </ul>
-  </nav>
-
+      <nav class="nav affix">
+          <div class="container">
+              <div class="logo">
+                  <a href="/"><i class="fa fa-steam-square fa-3x" aria-hidden="true"></i></a>
+              </div>
+              <div id="mainListDiv" class="main_list">
+                  <ul class="navlinks">
+                      <li><a class="active" href="/search">search</a></li>
+                      <li><a href="/nav">nav</a></li>
+                      <li><a href="/login">login</a></li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
 
   <div class="container">
     <div class="row">
