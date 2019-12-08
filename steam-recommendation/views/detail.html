@@ -35,31 +35,35 @@
     </div>
     <div class="row">
       <div class="col-md-6">
+        <video width="500" height="375" ng-src="{{gamePic[0][16][0]['webm']['480']}}" controls></video>
         <!-- <img src="https://steamcdn-a.akamaihd.net/steam/apps/982730/ss_71235b4326ab0eb6e3cdaeb41c4139311097a2fa.600x338.jpg"> -->
-        <img src="{{gamePic[0][15]}}">
+<!--     <img src="{{gamePic[0][15]}}"> -->
       </div>
+      
       <div class="col-md-6">
         <div class="game-content">
-
-          <p>RELEASE DATE: {{datesub}}</p>
-          <p>PRICE: {{pricesub}}</p>
-          <p>TYPES:{{detail[2]}}</p>
-          <P>GENRE:{{detail[11]}}</P>
-          <P>TAG:{{detail[12]}}</P>
-          <P>DEVELOPER:{{detail[4]}}</P>
+          <br>
+          <br>
+          <br>
+          <br>
+          <p><strong>RELEASE DATE:</strong> {{datesub}}</p>
+          <p><strong>PRICE:</strong> ${{pricesub}}</p> 
+          <P><strong>GENRE:</strong> {{detail[11]}}</P>
+          <P><strong>DEVELOPER:</strong> {{detail[4]}}</P>
+          <p><strong>TYPE:</strong> {{detail[2]}}</p>
+          <P><strong>TAGS:</strong> {{detail[12]}}</P>
           <!-- <P>LANGUAGE:{{detail[13]}}</P> -->
-          <a href={{detail[1]}}>visit offical website</a>
-
+          <a href={{detail[1]}} style="color:#9AFF02">visit offical website</a>
+       
         </div>
       </div> 
     </div>
     <br>
     <div class="row">
       <div class="col-md-12">
-        <div class = "game-content ">Description: {{detail[3]}} </div>
-         <br>
+        <div class = "game-content "><strong>Description:</strong> {{des}} ... </div>
           <br>
-        <div class = "game-content ">Review: {{detail[8]}} </div>
+        <div class = "game-content "><strong>Review:</strong> {{detail[8]}} </div>
       </div>
     </div>
   </div>
