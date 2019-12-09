@@ -6,10 +6,6 @@ app.config(function($sceDelegateProvider) {
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
-  // $scope.thumb = function(){
-  //   var hre = '/search?msg=q1';
-  //   window.location = hre;
-  // }
   $scope.thumb = function(){
     $http({
       url:'/q1',
@@ -139,7 +135,6 @@ app.controller('navController', function ($scope, $http) {
       console.log("Year ERROR: ", err);
     }
   );
-  
   
   //query the genres for the genre filter
   $scope.selectedGenre = ["0"];
@@ -282,48 +277,7 @@ app.controller('detailController', function($scope, $http) {
         console.log("Detail ERROR: ", err);
       });
   }
-
-    // $http({
-    //     url: '/detail/' + $scope.game,
-    //     method: 'GET'
-    //   }).then(res => {
-    //     console.log("test: ", res.data);
-    //     // console.log($scope);
-    //     $scope.test = res.data.rows[0];
-    //     //console.log($scope.testdata2);
-    //   }, err => {
-    //     console.log("DETAIL ERROR: ", err);
-    //   });
-
 });
-
-      // $http({
-      //   url: '/detail/' + $scope.game,
-      //   method: 'GET'
-      // }).then(res => {
-      //   console.log("DETAIL: ", res.data);
-      //   // console.log($scope);
-      //   $scope.test = res.data.rows[0];
-      //   //console.log($scope.testdata2);
-      // }, err => {
-      //   console.log("DETAIL ERROR: ", err);
-      // });
-
-      
-    // $scope.showDetails= function() {
-      
-    //   $http({
-    //     url: '/detail/' + g.game,
-    //     method: 'GET'
-    //   }).then(res => {
-    //     console.log("DETAIL: ", res.data);
-    //     $scope.details = res.data;
-    //   }, err => {
-    //     console.log("DETAIL ERROR: ", err);
-    //   });
-  //}
-
-
 
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
@@ -346,7 +300,6 @@ app.controller('loginController',function($scope,$http){
 // Controller for the signup page
 app.controller('signUpController',function($scope,$http){
   $scope.submitUserInfo = function() {
-   console.log($scope);
    $http({
     url: '/adduserInfo',
     method: 'POST',
@@ -355,7 +308,9 @@ app.controller('signUpController',function($scope,$http){
       'password' : $scope.password
     })
   }).then(res => {
-        console.log("USER: ", res.data);
+    var hre = '/index';
+    window.location = hre;
+    console.log("USER: ", res.data);
   }, err => {
     console.log("USER ERROR: ", err);
   });

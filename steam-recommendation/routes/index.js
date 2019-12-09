@@ -478,6 +478,7 @@ router.post('/user', function(req, res) {
     res.json(result);
   });
 });
+
 router.post('/adduserInfo', function(req, res) {
   var insert = {"username":req.body.username,"password":req.body.password};
   console.log(insert);
