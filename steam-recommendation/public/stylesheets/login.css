@@ -13,62 +13,65 @@ body{
     background: url(http://www.ucatx.cat/wallpic/full/14/144417/gamer-wallpaper-4k.jpg)center center fixed;
 }
 
+/*login and signUp*/
 .login-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-}
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    /* font-size:18px; */
+  }
+  .login-container .input, .login-container .login-button {
+    margin: 10px 0;
+    width: 400px;
+    height: 60px;
+    border: none;
+    padding: 2px 16px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    outline: none;
+  }
+  
+  .login-container .login-button {
+    background: #92928E;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .login-container .login-button:hover {
+    background: #92928E;
+  }
+  
+  .login-container .login-button:active {
+    background: #92928E;
+  }
+  
+  ::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #bbb;
+  }
+  
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #bbb;
+  }
+  
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    color: #bbb;
+  }
+  
+  :-moz-placeholder {
+    /* Firefox 18- */
+    color: #bbb;
+  }
 
-.login-container .input, .login-container .login-button {
-  margin: 10px 0;
-  width: 400px;
-  height: 60px;
-  border: none;
-  padding: 2px 16px;
-  box-sizing: border-box;
-  border-radius: 25px;
-  outline: none;
-}
 
-.login-container .login-button {
-  background: #92928E;
-  color: #fff;
-  cursor: pointer;
-  font-size: 24px;
-}
-
-.login-container .login-button:hover {
-  background: #92928E;
-}
-
-.login-container .login-button:active {
-  background: #92928E;
-}
-
-::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
-  color: #bbb;
-}
-
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #bbb;
-}
-
-:-ms-input-placeholder {
-  /* IE 10+ */
-  color: #bbb;
-}
-
-:-moz-placeholder {
-  /* Firefox 18- */
-  color: #bbb;
-}
 
 
 /*nav*/
