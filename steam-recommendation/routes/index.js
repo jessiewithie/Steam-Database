@@ -27,7 +27,10 @@ function sendMongoDBQuery(username,password, callback) {
       if (error) throw error;
       var user = db.db("cis550").collection("userInfo");
       user.find({"username" : username,"password":password}).toArray(function(error, result) {
+        console.log("hello here");
         callback(result);
+        if(error) throw error;
+        console.log("??");
       });
   });
 }
@@ -126,13 +129,14 @@ router.get('<PATH>', function(req, res) {
  */
 router.get('/q1', function(req, res) {
   var query = `
-SELECT title,review,funny FROM(
-SELECT r1.review, r2.funny FROM review_content r1
-JOIN review_criteria r2
-ON r1.review_id = r2.review_id
-WHERE r1.title = 'Dead by Daylight'
-ORDER BY r2.funny DESC)
-WHERE ROWNUM <= 1
+  SELECT title 
+  FROM(
+  SELECT title FROM
+  (SELECT title, max(helpful) AS max
+  FROM review_criteria
+  GROUP BY title) 
+  ORDER BY max) 
+  WHERE rownum <= 1
   `;
   // connect query
   console.log(query);
@@ -140,30 +144,31 @@ WHERE ROWNUM <= 1
     res.json(result);
   });
 });
-/*
-  most helpful
- */
+
+router.get('/q2', function(req, res) {
+  var query = `
+  SELECT name 
+  FROM
+  (SELECT name,release_date
+  FROM release_date 
+  WHERE release_date < '12-DEC-19'
+  ORDER BY release_date DESC)
+  WHERE ROWNUM <= 1
+  `;
+  // connect query
+  console.log(query);
+  sendQuery(query, function(result) {
+    res.json(result);
+  });
+});
 router.get('/q3', function(req, res) {
   var query = `
-SELECT * FROM (
-SELECT r2.title, r2.review, r3.helpful FROM review_content r2
-JOIN (
-SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
-RIGHT JOIN(
-SELECT title, max(helpful) as maxhelp FROM review_criteria
-WHERE title IN (SELECT name
-FROM genre g1
-WHERE g1.genre IN (SELECT g2.genre FROM genre g2 WHERE name ='Gang Beasts' AND g1.genre=g2.genre))
-AND title IN (SELECT name
-FROM tag t1
-WHERE t1.tag IN (SELECT t2.tag FROM tag t2 WHERE name ='Gang Beasts' AND t1.tag=t2.tag))
-GROUP BY title) t1
-ON r1.title = t1.title and r1.helpful = t1.maxhelp
-ORDER BY r1.helpful DESC
-) r3
-ON r2.review_id = r3.review_id
-)
-WHERE ROWNUM<=1
+  SELECT title
+  FROM
+  (SELECT title
+  FROM review_criteria
+  ORDER BY funny DESC, title ASC)
+  WHERE ROWNUM <=1
   `;
   // connect query
   console.log(query);
@@ -475,6 +480,7 @@ router.post('/user', function(req, res) {
     res.json(result);
   });
 });
+
 router.post('/adduserInfo', function(req, res) {
   var insert = {"username":req.body.username,"password":req.body.password};
   console.log(insert);

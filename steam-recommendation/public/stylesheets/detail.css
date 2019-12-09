@@ -1,5 +1,7 @@
 body{
-  background:black;
+  /* background:black; */
+  /* background: url(https://vignette.wikia.nocookie.net/steamtradingcards/images/a/a0/Hearts_of_Iron_III_Background_The_Axis.jpg/revision/latest?cb=20140814192928)center center fixed; */
+  background: url(https://images3.alphacoders.com/629/629130.jpg)center center fixed;
 }
 .inner{
   margin:0 auto;
@@ -44,6 +46,7 @@ body{
 
 .game-content{
   color:white;
+  font-size:18px;
 }
 
 /*nav*/
@@ -119,8 +122,6 @@ body {
 .nav div.main_list ul li a:hover {
     color: #00E676;
 }
-
-
 
 /* Media qurey section */
 nav .container {

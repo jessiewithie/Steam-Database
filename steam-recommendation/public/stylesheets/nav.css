@@ -1,6 +1,8 @@
 
 /* USING BOOTSTRAP 3.0.3 */
 body{
+  padding-top: 60px;
+  overflow: hidden;
   background: url(https://steamuserimages-a.akamaihd.net/ugc/81470688487804074/3437DCCA5FCBCA7A7FA08362D5C84AA903F87F52/)center center fixed;
 }
 
