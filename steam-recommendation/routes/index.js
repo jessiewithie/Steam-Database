@@ -9,11 +9,24 @@ var mongodb = require("mongodb");
 /* ----- Connects to your mongoDB database ----- */
 const addr = "mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
 
-function insertToMongoDB(review, callback) {
+function sendMongoDBQuery(key, callback) {
   mongodb.MongoClient.connect(addr, function(error, db){
       if (error) throw error;
       var userInfo = db.db("cis550").collection("userInfo");
-      userInfo.insert(review, function(err, res){
+      userInfo.findOne(key,function(err, res) {
+        if(err) throw err;
+        console.log("we find you!");
+        console.log(res);
+        db.close();
+      });
+  });
+}
+
+function insertToMongoDB(msg, callback) {
+  mongodb.MongoClient.connect(addr, function(error, db){
+      if (error) throw error;
+      var userInfo = db.db("cis550").collection("userInfo");
+      userInfo.insertOne(msg, function(err, res){
       if(err) throw err;
         console.log('data inserted');
         console.log(res);
@@ -22,18 +35,6 @@ function insertToMongoDB(review, callback) {
   });
 }
 
-function sendMongoDBQuery(username,password, callback) {
-  mongodb.MongoClient.connect(addr, function(error, db){
-      if (error) throw error;
-      var user = db.db("cis550").collection("userInfo");
-      user.find({"username" : username,"password":password}).toArray(function(error, result) {
-        console.log("hello here");
-        callback(result);
-        if(error) throw error;
-        console.log("??");
-      });
-  });
-}
 
 //oracleDB
 function sendQuery(queryString, callback){
@@ -473,10 +474,12 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
+
 router.post('/user', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  sendMongoDBQuery(username,password,function(result) {
+  var key = {"username":username,"password":password};
+  sendMongoDBQuery(key,password,function(result) {
     res.json(result);
   });
 });

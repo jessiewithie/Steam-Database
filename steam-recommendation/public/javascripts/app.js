@@ -283,19 +283,32 @@ app.controller('detailController', function($scope, $http) {
 
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
-  $scope.signIn = function() {
-    $http({
-     url: '/user',
-     method: 'POST',
-     data: ({
-       'username' : $scope.username,
-       'password' : $scope.password
-     })
-   }).then(res => {
-     console.log("LOGIN: ", res.data);
-   }, err => {
-     console.log("LOGIN ERROR: ", err);
-   });
+  $scope.signIn = function(username,password) {
+    $scope.username = username;
+    $scope.password = password;
+    console.log(typeof username);
+    var request = $http({
+      url: '/user',
+      method: "POST",
+      data: {
+        'username':username,
+        'password':password
+      }
+    });
+    request.success(function(response) {
+      // success
+      // console.log(response);
+      console.log("success");
+      $http({
+        url:'/user',
+        method:"GET"
+      })
+    });
+    request.error(function(err) {
+        // failed
+        console.log("error: ", err);
+    });
+    
   }
 });
 
@@ -310,12 +323,9 @@ app.controller('signUpController',function($scope,$http){
       'password' : $scope.password
     })
   }).then(res => {
-    var hre = '/index';
-    window.location = hre;
     console.log("USER: ", res.data);
   }, err => {
     console.log("USER ERROR: ", err);
   });
-  
   }
 });
