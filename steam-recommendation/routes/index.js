@@ -27,7 +27,10 @@ function sendMongoDBQuery(username,password, callback) {
       if (error) throw error;
       var user = db.db("cis550").collection("userInfo");
       user.find({"username" : username,"password":password}).toArray(function(error, result) {
+        console.log("hello here");
         callback(result);
+        if(error) throw error;
+        console.log("??");
       });
   });
 }
