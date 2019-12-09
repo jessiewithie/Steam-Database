@@ -6,11 +6,39 @@ app.config(function($sceDelegateProvider) {
 
 // Controller for the Dashboard page
 app.controller('indexController', function($scope, $http) {
+  // $scope.thumb = function(){
+  //   var hre = '/search?msg=q1';
+  //   window.location = hre;
+  // }
   $scope.thumb = function(){
-    var hre = '/search?msg=q1';
-    window.location = hre;
+    $http({
+      url:'/q1',
+      method:'GET',
+    }).then(res=>{
+      console.log("GAMES:", res.data);
+      var gameName = res.data.rows[0][0];
+      var hre1 = '/detail?msg='+angular.toJson(gameName);
+      console.log(hre1);
+      window.location = hre1;
+    },err =>{
+      console.log("Games ERROR: ",err);
+    });
   }
-  $scope.latest = function(){
+  $scope.latest = function() {
+    $http({
+      url:'/q2',
+      method:'GET',
+    }).then(res=>{
+      console.log("GAMES:", res.data);
+      var gameName = res.data.rows[0][0];
+      var hre1 = '/detail?msg='+angular.toJson(gameName);
+      console.log(hre1);
+      window.location = hre1;
+    },err =>{
+      console.log("Games ERROR: ",err);
+    });
+  } 
+  $scope.funniest = function(){
     $http({
       url:'/q3',
       method:'GET',
@@ -24,9 +52,6 @@ app.controller('indexController', function($scope, $http) {
       console.log("Games ERROR: ",err);
     });
   }
-  $scope.submitId = function() {
-    $scope.review =  $scope.genres.rows;
-  } 
 });
 
 // Controller for the Search Page
