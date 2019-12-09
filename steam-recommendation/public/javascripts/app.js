@@ -125,6 +125,7 @@ app.controller('navController', function ($scope, $http) {
     res => {
       console.log("Genre: ", res.data);
       $scope.genres = res.data.rows;
+      console.log($scope.genres);
     },
     err => {
       console.log("Genre ERROR: ", err);
@@ -133,8 +134,8 @@ app.controller('navController', function ($scope, $http) {
 
   // query the price ranges for the genre filter
   $scope.selectedPr = { pr: "0" };
-  $scope.prs = [
-    { pr: "FREE"},
+  $scope.prs = angular.fromJson([
+    { pr: "FREE" },
     { pr: "<$50" },
     { pr: "$50-100" },
     { pr: "$100-150" },
@@ -142,7 +143,8 @@ app.controller('navController', function ($scope, $http) {
     { pr: "$250-400" },
     { pr: "$400-600" },
     { pr: "$600+" }
-  ];
+  ]);
+  console.log($scope.prs);
 
   //query the languages for the language filter
   $scope.selectedLang = ["0"];

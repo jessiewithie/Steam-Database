@@ -380,7 +380,6 @@ SELECT TITLE, MAX(REVIEW) AS REVIEW FROM (
     ) r3
     ON r2.review_id = r3.review_id
     )
-    WHERE ROWNUM<=10
     GROUP BY TITLE
     ) r4 JOIN PRICE p ON p.name=r4.TITLE
   `;
