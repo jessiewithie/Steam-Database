@@ -335,7 +335,6 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
 
   // language！
   var lang_condition = req.params.lang;
-  console.log(lang_condition);
   var select_lang;
   if (lang_condition === "0") {
     select_lang= "";
@@ -364,8 +363,6 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     filters = filters.substring(4);
     filters = " WHERE "+filters;
   }
-
-  // console.log(filters);
   
   // query!
   var query =

@@ -219,6 +219,9 @@ app.controller('navController', function ($scope, $http) {
     }).then(
       res => {
         console.log("SELECTEDFILTERCRITERIA: ", res.data);
+        if (res.data.rows.length === 0){
+            console.log("empty data!");
+        } 
         $scope.bestofGames = res.data.rows;
       },
       err => {

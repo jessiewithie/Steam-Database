@@ -43,14 +43,15 @@
     <div class="jumbotron">
       <!-- top container for feature selections -->
       <div class="features-container">
-        <div class="dropdown-container">
+        <div class="dropdown-container" style="">
           <select class="dropdown" ng-model="selectedYear" ng-options="y for y in years">
             <option value="" >Released Year</option>
           </select>
         </div>
+        <div>   </div>
         <div class="dropdown-container">
           <select class="dropdown" ng-model="selectedGenre" ng-options="g for g in genres">
-            <option value="" >Genre</option>
+            <option value="">Genre</option>
           </select>
         </div>
         <div class="dropdown-container">

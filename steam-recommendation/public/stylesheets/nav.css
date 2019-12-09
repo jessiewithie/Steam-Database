@@ -1,8 +1,6 @@
 
 /* USING BOOTSTRAP 3.0.3 */
 body{
-  padding-top: 60px;
-  overflow: hidden;
   background: url(https://steamuserimages-a.akamaihd.net/ugc/81470688487804074/3437DCCA5FCBCA7A7FA08362D5C84AA903F87F52/)center center fixed;
 }
 
@@ -13,34 +11,52 @@ html {
   margin-top:200px;
 }
 
-
-
 .features-container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  background-color: transparent;
 }
 
 .features-container .dropdown-container {
-  height: 30px;
+  height: 50px;
   overflow: hidden;
-  width: 200px;
-  background-color: #fff;
-  border-radius: 10px;
+  width: 150px;
+  background-color:transparent;
+  /* border-radius: 10px; */
   cursor: pointer;
   outline: none;
-  border: 1px solid #bbb;
+  /* border: 1px solid #bbb; */
+  border-bottom: 2px solid #bbb;
+  margin-right: 40px;
+}
+
+.features-container .dropdown-container:hover {
+  color: #5F5F5E;
+  border-bottom: 2px solid #5F5F5E;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 0.5px;
+    color: #fff;
 }
 
 .features-container .dropdown {
   background: transparent;
   border: none;
-  font-size: 14px;
-  height: 30px;
+  font-size: 20px;
+  height: 50px;
   padding: 5px;
   cursor: pointer;
   width: 200px;
   outline: none;
+}
+
+.features-container .dropdown:hover {
+  color: #5F5F5E;
+  border-bottom: 2px solid #5F5F5E;
 }
 
 
@@ -213,16 +229,16 @@ html {
 .features-container .submit-btn {
   margin-left: 10px;
   width: 100px;
-  height: 30px;
+  height: 50px;
   border: none;
   padding: 2px 16px;
   box-sizing: border-box;
   border-radius: 10px;
   outline: none;
-  background: #92928E;
+  background: rgba(57, 57, 56, 0.6);
   color: #fff;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 20px;
 }
 
 .features-container .submit-btn:hover {
