@@ -400,7 +400,7 @@ SELECT TITLE, MAX(REVIEW) AS REVIEW FROM (
 
 /* ----- Detail Page ----- */
 router.get('/detail/:gameName', function(req, res){
-  var myGame = req.params.gameName;
+  var myGame = req.params.gameName.split("'").join("''");
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
@@ -423,7 +423,7 @@ ORDER BY rc.helpful,rc.funny,rc.date_posted) WHERE ROWNUM<=5`;
 });
 
 router.get('/detail/rec/:gameName', function(req, res){
-  var myGame = req.params.gameName;
+  var myGame = req.params.gameName.split("'").join("''");
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
