@@ -2,6 +2,9 @@ body{
   margin: 0;
   padding-top: 60px;
   background: url(http://vignette4.wikia.nocookie.net/steamtradingcards/images/9/93/0RBITALIS_Background_Nebula.jpg/revision/latest?cb=20141118020246)center center fixed;
+  font-family: "Quicksand", sans-serif;
+  font-size: 62.5%;
+  font-size: 10px;
 }
 
 .searchbar{
@@ -48,7 +51,7 @@ body{
 }
 
 .jumbotron {
-  background-color: black;
+  background: url(http://vignette4.wikia.nocookie.net/steamtradingcards/images/9/93/0RBITALIS_Background_Nebula.jpg/revision/latest?cb=20141118020246)center center fixed;
   position: relative;
   /* padding: 1.5rem; */
 }
@@ -105,6 +108,9 @@ body {
     width: auto;
     height: auto;
     padding-left: 3rem;
+    position: relative;
+    top: 60%;
+    transform: translateY(-50%);
 }
 
 .nav div.logo a {
@@ -399,5 +405,5 @@ nav .container {
 
 .affix {
     padding: 0;
-    background-color: #111;
+    background-color: black;
 }

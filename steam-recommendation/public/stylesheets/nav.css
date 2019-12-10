@@ -149,6 +149,9 @@ body {
     width: auto;
     height: auto;
     padding-left: 3rem;
+    position: relative;
+    top: 60%;
+    transform: translateY(-50%);
 }
 
 .nav div.logo a {
@@ -443,6 +446,6 @@ nav .container {
 
 .affix {
     padding: 0;
-    background-color: #111;
+    background-color: black;
 }
 
