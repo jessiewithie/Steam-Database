@@ -9,24 +9,11 @@ var mongodb = require("mongodb");
 /* ----- Connects to your mongoDB database ----- */
 const addr = "mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
 
-function sendMongoDBQuery(key, callback) {
+function insertToMongoDB(review, callback) {
   mongodb.MongoClient.connect(addr, function(error, db){
       if (error) throw error;
       var userInfo = db.db("cis550").collection("userInfo");
-      userInfo.findOne(key,function(err, res) {
-        if(err) throw err;
-        console.log("we find you!");
-        console.log(res);
-        db.close();
-      });
-  });
-}
-
-function insertToMongoDB(msg, callback) {
-  mongodb.MongoClient.connect(addr, function(error, db){
-      if (error) throw error;
-      var userInfo = db.db("cis550").collection("userInfo");
-      userInfo.insertOne(msg, function(err, res){
+      userInfo.insert(review, function(err, res){
       if(err) throw err;
         console.log('data inserted');
         console.log(res);
@@ -35,6 +22,18 @@ function insertToMongoDB(msg, callback) {
   });
 }
 
+function sendMongoDBQuery(username,password, callback) {
+  mongodb.MongoClient.connect(addr, function(error, db){
+      if (error) throw error;
+      var user = db.db("cis550").collection("userInfo");
+      user.find({"username" : username,"password":password}).toArray(function(error, result) {
+        console.log("hello here");
+        callback(result);
+        if(error) throw error;
+        console.log("??");
+      });
+  });
+}
 
 //oracleDB
 function sendQuery(queryString, callback){
@@ -255,7 +254,7 @@ router.get("/filterGenres", function(req, res) {
 router.get("/filterYears", function(req, res) {
   var query = `SELECT DISTINCT EXTRACT(year FROM RELEASE_DATE) as year
 		FROM RELEASE_DATE
-      ORDER BY EXTRACT(year FROM RELEASE_DATE)`;
+      ORDER BY EXTRACT(year FROM RELEASE_DATE) DESC`;
   sendQuery(query, function(result) {
     res.json(result);
   });
@@ -280,7 +279,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     select_genre = "";
   } else {
     select_genre =
-      ` title IN (SELECT name
+      ` name IN (SELECT name
     FROM genre g1
     WHERE g1.genre='` +
       genre +
@@ -294,7 +293,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   //   FROM price p1
   //   WHERE p1.ORIGINAL_PRICE>0 AND p1.ORIGINAL_PRICE<50)`;
   var select_price = `
-     title IN (SELECT name
+     name IN (SELECT name
       FROM price p1
       WHERE `;
   if (price_condition === "0") {
@@ -327,7 +326,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     select_year = "";
   } else {
     select_year =
-      ` title IN (SELECT name
+      ` name IN (SELECT name
         FROM RELEASE_DATE r1
         WHERE EXTRACT(year FROM r1.RELEASE_DATE) = ` +
       year_condition +
@@ -336,13 +335,12 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
 
   // language！
   var lang_condition = req.params.lang;
-  console.log(lang_condition);
   var select_lang;
   if (lang_condition === "0") {
     select_lang= "";
   } else {
     select_lang =
-      ` title IN (SELECT name FROM LANGUAGE l1 WHERE LANGUAGE = '` +
+      ` name IN (SELECT name FROM LANGUAGE l1 WHERE LANGUAGE = '` +
       lang_condition +
       `' ) `;
   }
@@ -365,30 +363,44 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     filters = filters.substring(4);
     filters = " WHERE "+filters;
   }
-
-  // console.log(filters);
   
   // query!
+  // var query =
+  //   `
+  //   SELECT DISTINCT r2.title, r2.review, r3.helpful FROM review_content r2
+  //   RIGHT JOIN (
+  //   SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
+  //   RIGHT JOIN(
+  //   SELECT title, max(helpful) as maxhelp FROM review_criteria
+
+    // ` +
+    // filters +
+    // ` GROUP BY title) t1
+  //   ON r1.title = t1.title and r1.helpful = t1.maxhelp
+  //   ORDER BY r1.helpful DESC
+  //   ) r3
+  //   ON r2.review_id = r3.review_id
+  // `;
+
   var query =
     `
-    SELECT TITLE, REVIEW, APPID FROM(
-SELECT TITLE, MAX(REVIEW) AS REVIEW FROM (
-    SELECT r2.title, r2.review, r3.helpful FROM review_content r2
-    JOIN (
-    SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
-    RIGHT JOIN(
-    SELECT title, max(helpful) as maxhelp FROM review_criteria
-    ` +
+    SELECT * FROM(
+  SELECT name AS title, MAX(r2.review) as review, MAX(r3.helpful) as helpful FROM review_content r2
+  RIGHT JOIN (
+  SELECT r1.review_id, t1.name, r1.helpful FROM review_criteria r1
+  RIGHT JOIN(
+  SELECT name, max(helpful) as maxhelp FROM review_criteria
+  RIGHT JOIN (SELECT name FROM GENRE ` +
     filters +
-    ` GROUP BY title) t1
-    ON r1.title = t1.title and r1.helpful = t1.maxhelp
-    ORDER BY r1.helpful DESC
-    ) r3
-    ON r2.review_id = r3.review_id
-    )
-    GROUP BY TITLE
-    ) r4 JOIN PRICE p ON p.name=r4.TITLE
+    ` ) g ON title = name
+  GROUP BY name) t1 ON r1.title = t1.name and r1.helpful = t1.maxhelp
+  ) r3
+  ON r2.review_id = r3.review_id
+  GROUP BY name) final
+  WHERE ROWNUM<10000
+  ORDER BY helpful DESC NULLS LAST
   `;
+
   // connect query
   console.log(query);
   sendQuery(query, function(result) {
@@ -400,7 +412,7 @@ SELECT TITLE, MAX(REVIEW) AS REVIEW FROM (
 
 /* ----- Detail Page ----- */
 router.get('/detail/:gameName', function(req, res){
-  var myGame = req.params.gameName;
+  var myGame = req.params.gameName.split("'").join("''");
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
@@ -423,7 +435,7 @@ ORDER BY rc.helpful,rc.funny,rc.date_posted) WHERE ROWNUM<=5`;
 });
 
 router.get('/detail/rec/:gameName', function(req, res){
-  var myGame = req.params.gameName;
+  var myGame = req.params.gameName.split("'").join("''");
   //var myGame = req.params.game;
   console.log(myGame);
   var query = `
@@ -474,12 +486,10 @@ router.get('/routeName/:customParameter', function(req, res) {
   });
 });
 */
-
 router.post('/user', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  var key = {"username":username,"password":password};
-  sendMongoDBQuery(key,password,function(result) {
+  sendMongoDBQuery(username,password,function(result) {
     res.json(result);
   });
 });

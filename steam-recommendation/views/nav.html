@@ -43,14 +43,15 @@
     <div class="jumbotron">
       <!-- top container for feature selections -->
       <div class="features-container">
-        <div class="dropdown-container">
+        <div class="dropdown-container" style="">
           <select class="dropdown" ng-model="selectedYear" ng-options="y for y in years">
             <option value="" >Released Year</option>
           </select>
         </div>
+        <div>   </div>
         <div class="dropdown-container">
           <select class="dropdown" ng-model="selectedGenre" ng-options="g for g in genres">
-            <option value="" >Genre</option>
+            <option value="">Genre</option>
           </select>
         </div>
         <div class="dropdown-container">
@@ -80,12 +81,12 @@
           <div class="comment" style = "color:white">{{game[1].substring(0,100)+"..."}}</div>
         </div>
       </div> -->
+      <div class = "resultCount">{{numResults}}</div>
       <div class="info" id="results" ng-repeat="game in bestofGames">
         <div class="title" ng-click="detail(game[0])" style="color:white; font-size: 20px"> <a href="">{{game[0]}}</a></div>
-        <div class="comment" style="color:white; font-size: 15px">Top comment: {{game[1].substring(0,600)+"..."}}</div>
+        <div class="comment" style="color:white; font-size: 15px">Top comment: {{game[1].substring(0,1000)+"...click on the name to read more"}}</div>
         <br>
       </div>
-      
 
     </div>
   </div>
