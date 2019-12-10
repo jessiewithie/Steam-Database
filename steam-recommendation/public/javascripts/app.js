@@ -8,7 +8,7 @@ app.config(function($sceDelegateProvider) {
 app.controller('indexController', function($scope, $http) {
   $scope.thumb = function(){
     $http({
-      url:'/q1',
+      url:'/rec',
       method:'GET',
     }).then(res=>{
       console.log("GAMES:", res.data);
@@ -20,6 +20,7 @@ app.controller('indexController', function($scope, $http) {
       console.log("Games ERROR: ",err);
     });
   }
+  
   $scope.latest = function() {
     $http({
       url:'/q2',

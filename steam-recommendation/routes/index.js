@@ -384,7 +384,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
 
   var query =
     `
-    SELECT * FROM(
+  SELECT * FROM(
   SELECT name AS title, MAX(r2.review) as review, MAX(r3.helpful) as helpful FROM review_content r2
   RIGHT JOIN (
   SELECT r1.review_id, t1.name, r1.helpful FROM review_criteria r1
@@ -434,10 +434,10 @@ ORDER BY rc.helpful,rc.funny,rc.date_posted) WHERE ROWNUM<=5`;
   });
 });
 
-router.get('/detail/rec/:gameName', function(req, res){
-  var myGame = req.params.gameName.split("'").join("''");
+router.get('/rec', function(req, res){
+  //var myGame = req.params.gameName.split("'").join("''");
   //var myGame = req.params.game;
-  console.log(myGame);
+  //console.log(myGame);
   var query = `
 SELECT t1.name, t1.genre, t1.recommended_times 
 FROM 
