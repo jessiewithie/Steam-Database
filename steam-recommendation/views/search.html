@@ -44,10 +44,10 @@
   </div>
 
   <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron" ng-repeat="game in gameInfo">
         <div class="paragraphs">
           <div class="row">
-            <div class="span4" ng-repeat="game in gameInfo">
+            <div class="span4">
               <div ng-click="detail(game[0])">
                 <a aria-hidden="true" href=""><img style="float:left" ng-src="{{game[2]}}"></a>
               </div>
