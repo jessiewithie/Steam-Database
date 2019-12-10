@@ -16,7 +16,8 @@ function insertToMongoDB(review, callback) {
       userInfo.insert(review, function(err, res){
       if(err) throw err;
         console.log('data inserted');
-        console.log(res);
+        // console.log(res);
+      callback(res);
       db.close();
     });
   });
@@ -512,7 +513,12 @@ router.post('/adduserInfo', function(req, res) {
   insertToMongoDB(insert, function(result) {
         res.json(result);
   });
+
 });
+
+// router.get('/user', function(req, res){
+//   res.json(req);
+// });
 
 
 module.exports = router;

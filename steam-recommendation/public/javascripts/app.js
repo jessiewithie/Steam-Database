@@ -293,24 +293,33 @@ app.controller('loginController',function($scope,$http){
   $scope.signIn = function(username,password) {
     $scope.username = username;
     $scope.password = password;
-    console.log(typeof username);
+    // console.log(typeof username);
     var request = $http({
       url: '/user',
       method: "POST",
-      data: {
+      data: ({
         'username':username,
         'password':password
-      }
+      })
     }).then(res=>{
-      if(res.status === 200){
-        if(JSON.stringify(res.data[0]).length > 0){
-        window.location = '/';
+        console.log(res.status);
+        if( res.status == 200){
+          console.log(res.data);
+          if(res.data.length > 0){
+            window.location='/';
+          }
+        
         }
-      }
-    });
-    
-    
-  }
+      });  
+    };
+  //   request.success(function(res){
+  //     if( JSON.stringify(res.data[0]).length > 0) {
+  //             var hre1 = '/';
+  //             console.log(hre1);
+  //             window.location = hre1;
+  //           }
+  //   });
+  // }
 });
 
 // Controller for the signup page
@@ -324,10 +333,11 @@ app.controller('signUpController',function($scope,$http){
       'password' : $scope.password
     })
   }).then(res => {
-    console.log("USER: ", res.data);
-    // window.location = '/login';
+    console.log(res);
+    window.location='/login';
   }, err => {
     console.log("USER ERROR: ", err);
+    // window.location = '/login';
   });
   }
 });
