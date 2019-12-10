@@ -20,7 +20,7 @@ app.controller('indexController', function($scope, $http) {
       console.log("Games ERROR: ",err);
     });
   }
-  
+
   $scope.latest = function() {
     $http({
       url:'/q2',
@@ -270,10 +270,10 @@ app.controller('detailController', function($scope, $http) {
         var gameArray = res.data.rows;
         
           Promise.all(gameArray.map(game =>
-          fetch(proxyurl + 'https://store.steampowered.com/api/appdetails?appids=' + game[14])
+          fetch(proxyurl + 'https://store.steampowered.com/api/appdetails?appids=' + game[12])
             .then(response => response.text())                
             .then(contents => {
-            var gamedata = JSON.parse(contents)[game[14]].data;
+            var gamedata = JSON.parse(contents)[game[12]].data;
            game.push(gamedata.header_image);//15
             //game.push(gamedata.short_description);//16
             game.push(gamedata.movies);//16
@@ -301,20 +301,14 @@ app.controller('loginController',function($scope,$http){
         'username':username,
         'password':password
       }
+    }).then(res=>{
+      if(res.status === 200){
+        if(JSON.stringify(res.data[0]).length > 0){
+        window.location = '/';
+        }
+      }
     });
-    request.success(function(response) {
-      // success
-      // console.log(response);
-      console.log("success");
-      $http({
-        url:'/user',
-        method:"GET"
-      })
-    });
-    request.error(function(err) {
-        // failed
-        console.log("error: ", err);
-    });
+    
     
   }
 });
@@ -331,6 +325,7 @@ app.controller('signUpController',function($scope,$http){
     })
   }).then(res => {
     console.log("USER: ", res.data);
+    // window.location = '/login';
   }, err => {
     console.log("USER ERROR: ", err);
   });
