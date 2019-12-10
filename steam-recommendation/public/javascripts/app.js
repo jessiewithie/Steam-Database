@@ -1,10 +1,11 @@
 var app = angular.module("angularjsNodejsTutorial", []);
 
+// allow website to fetch video and picture
 app.config(function($sceDelegateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['**']);
 });
 
-// Controller for the Dashboard page
+// Controller for the index page
 app.controller('indexController', function($scope, $http) {
   $scope.thumb = function(){
     $http({
@@ -51,15 +52,14 @@ app.controller('indexController', function($scope, $http) {
   }
 });
 
+
 // Controller for the Search Page
 app.controller('searchController', function($scope, $http) {
   var urlValue="";
   var href = location.href;
   console.log(href);
   urlValue = href.substring(href.indexOf("=")+1);
-  // console.log(urlValue);
   var message = urlValue;
-  // var message = angular.fromJson(urlValue);
   if(message.length > 0 && href != "http://localhost:8081/search"){
     $http({
       url: "/search/" + message,
@@ -118,7 +118,7 @@ app.controller('searchController', function($scope, $http) {
   }
 });
 
-// Controller for the Nav and Detail Of Page
+// Controller for the Nav Page
 app.controller('navController', function ($scope, $http) {
 
   
@@ -180,8 +180,6 @@ app.controller('navController', function ($scope, $http) {
     }
   );
 
-
-    //score default values 0 --> aka nothing selected
   //score default values 0 --> aka nothing selected
   $scope.submitFilterCriteria = function () {
     var genre = "0";
@@ -241,22 +239,20 @@ app.controller('navController', function ($scope, $http) {
 
 });
 
+// Controller for the Search Page
 app.controller('detailController', function($scope, $http) {
   var urlValue="";
   var href = location.href;
-  console.log(href);
+  // console.log(href);
   urlValue = href.substring(href.indexOf("=")+1);
-  // console.log(urlValue);
   var message = angular.fromJson(decodeURI(urlValue));
-  console.log(message)
-  // var message = angular.fromJson(urlValue);
+  // console.log(message)
   if(message.length > 0 && href != "http://localhost:8081/search"){
     $http({
       url: "/detail/" + message,
       method: "GET"
     }).then(
       res => {
-
         $scope.detail = res.data.rows[0];
         var price= res.data.rows[0][6].toString();
         $scope.pricesub = price.substring(0,5);
@@ -312,14 +308,6 @@ app.controller('loginController',function($scope,$http){
         }
       });  
     };
-  //   request.success(function(res){
-  //     if( JSON.stringify(res.data[0]).length > 0) {
-  //             var hre1 = '/';
-  //             console.log(hre1);
-  //             window.location = hre1;
-  //           }
-  //   });
-  // }
 });
 
 // Controller for the signup page
@@ -337,7 +325,6 @@ app.controller('signUpController',function($scope,$http){
     window.location='/login';
   }, err => {
     console.log("USER ERROR: ", err);
-    // window.location = '/login';
   });
   }
 });

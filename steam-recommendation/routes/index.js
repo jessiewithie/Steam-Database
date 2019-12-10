@@ -8,7 +8,7 @@ var oracledb = require('oracledb');
 var mongodb = require("mongodb");
 /* ----- Connects to your mongoDB database ----- */
 const addr = "mongodb+srv://yashu:31415926@cluster0-syao4.mongodb.net/test?retryWrites=true&w=majority";
-
+/* ----- for user sign up ----- */
 function insertToMongoDB(review, callback) {
   mongodb.MongoClient.connect(addr, function(error, db){
       if (error) throw error;
@@ -16,13 +16,12 @@ function insertToMongoDB(review, callback) {
       userInfo.insert(review, function(err, res){
       if(err) throw err;
         console.log('data inserted');
-        // console.log(res);
       callback(res);
       db.close();
     });
   });
 }
-
+/* ----- for user to sign in  ----- */
 function sendMongoDBQuery(username,password, callback) {
   mongodb.MongoClient.connect(addr, function(error, db){
       if (error) throw error;
@@ -108,26 +107,12 @@ router.get('/signUp', function(req, res) {
 });
 
 
-/* Template for a FILE request router:
-
-Specifies that when the app recieves a GET request at <PATH>,
-it should respond by sending file <MY_FILE>
-
-router.get('<PATH>', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', '<MY_FILE>'));
-});
-
-*/
-
-
 /* ------------------------------------------------ */
 /* ----- Routers to handle data requests ----- */
 /* ------------------------------------------------ */
 
 /* ----- Query test (we will see where to use them)----- */
-/*
-   most funniest review
- */
+/*most funniest review*/
 router.get('/q1', function(req, res) {
   var query = `
   SELECT title 
@@ -146,6 +131,7 @@ router.get('/q1', function(req, res) {
   });
 });
 
+/*most latest game*/
 router.get('/q2', function(req, res) {
   var query = `
   SELECT name 
@@ -178,19 +164,20 @@ router.get('/q3', function(req, res) {
   });
 });
 
+
 router.get('/q4', function(req, res) {
   var query = `
-WITH recent_release AS
-(SELECT name, release_date
-FROM description
-WHERE release_date between '1-JAN-19' AND '31-JAN-19'
-ORDER BY release_date DESC)
-SELECT name, genre
-FROM
-(SELECT genre.name AS name, genre
-FROM recent_release JOIN genre ON
-recent_release.name = genre.name)
-WHERE ROWNUM <= 10
+  WITH recent_release AS
+  (SELECT name, release_date
+  FROM description
+  WHERE release_date between '1-JAN-19' AND '31-JAN-19'
+  ORDER BY release_date DESC)
+  SELECT name, genre
+  FROM
+  (SELECT genre.name AS name, genre
+  FROM recent_release JOIN genre ON
+  recent_release.name = genre.name)
+  WHERE ROWNUM <= 10
   `;
   // connect query
   console.log(query);
@@ -201,23 +188,23 @@ WHERE ROWNUM <= 10
 
 router.get('/q5', function(req, res) {
   var query = `
-SELECT *
-FROM
-(SELECT B.name, C.best_rates, C.max_hours_played
-FROM
-(SELECT name 
-FROM language l
-WHERE l.language IN
-(SELECT language
-FROM language 
-WHERE language.name = 'Beat Saber'))B
-JOIN 
-(SELECT rc.title AS game_name, MAX(rc.helpful) AS best_rates, MAX(rc.hour_played) AS max_hours_played
-FROM review_criteria rc 
-GROUP BY rc.title) C
-ON B.name = C.game_name
-ORDER BY C.max_hours_played DESC)D
-ORDER BY D.best_rates DESC
+  SELECT *
+  FROM
+  (SELECT B.name, C.best_rates, C.max_hours_played
+  FROM
+  (SELECT name 
+  FROM language l
+  WHERE l.language IN
+  (SELECT language
+  FROM language 
+  WHERE language.name = 'Beat Saber'))B
+  JOIN 
+  (SELECT rc.title AS game_name, MAX(rc.helpful) AS best_rates, MAX(rc.hour_played) AS max_hours_played
+  FROM review_criteria rc 
+  GROUP BY rc.title) C
+  ON B.name = C.game_name
+  ORDER BY C.max_hours_played DESC)D
+  ORDER BY D.best_rates DESC
   `;
   // connect query
   console.log(query);
@@ -243,7 +230,6 @@ router.get('/search/:game', function(req, res) {
 });
 
 /* -----------------------------------  Nav page ------------------------------------------------------- */
-
 /* -----  html flat query ----- */
 router.get("/filterGenres", function(req, res) {
   var query = `SELECT DISTINCT GENRE FROM GENRE ORDER BY GENRE`;
@@ -289,10 +275,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   
   //price
   var price_condition = req.params.price;
-  // var select_price = `
-  //    title IN (SELECT name
-  //   FROM price p1
-  //   WHERE p1.ORIGINAL_PRICE>0 AND p1.ORIGINAL_PRICE<50)`;
+
   var select_price = `
      name IN (SELECT name
       FROM price p1
@@ -365,24 +348,6 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     filters = " WHERE "+filters;
   }
   
-  // query!
-  // var query =
-  //   `
-  //   SELECT DISTINCT r2.title, r2.review, r3.helpful FROM review_content r2
-  //   RIGHT JOIN (
-  //   SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
-  //   RIGHT JOIN(
-  //   SELECT title, max(helpful) as maxhelp FROM review_criteria
-
-    // ` +
-    // filters +
-    // ` GROUP BY title) t1
-  //   ON r1.title = t1.title and r1.helpful = t1.maxhelp
-  //   ORDER BY r1.helpful DESC
-  //   ) r3
-  //   ON r2.review_id = r3.review_id
-  // `;
-
   var query =
     `
   SELECT * FROM(
@@ -409,37 +374,21 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   });
 });
 
-
-
 /* ----- Detail Page ----- */
 router.get('/detail/:gameName', function(req, res){
   var myGame = req.params.gameName.split("'").join("''");
-  //var myGame = req.params.game;
   console.log(myGame);
-//   var query = `
-// SELECT * FROM (select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, 
-// nvl(rt.review,'No reviews yet'),nvl(rc.helpful,0),nvl(rc.funny,0),genres,tags,languages,d.appid
-// FROM description d
-// JOIN price p ON d.name = p.name AND d.name = '${myGame}'
-// JOIN release_date r ON r.name = p.name
-// JOIN (select name , listagg(genre,',') within group (order by name) as genres from (SELECT distinct name,genre FROM genre) GROUP BY name) g ON d.name = g.name
-// JOIN (select name , listagg(tag,',') within group (order by name) as tags from (select distinct name,tag from tag) GROUP BY name) t ON d.name = t.name
-// JOIN (select name , listagg(language,',') within group (order by name) as languages from (select distinct name,language from language) GROUP BY name) l ON d.name = l.name
-// LEFT JOIN review_criteria rc ON rc.title = d.name
-// LEFT JOIN review_content rt ON rc.review_id = rt.review_id
-// ORDER BY rc.helpful,rc.funny,rc.date_posted) WHERE ROWNUM<=5`;
-
-var query = `
-SELECT * FROM (select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, 
-nvl(rt.review,'No reviews yet'),genres,tags,languages,d.appid
-FROM description d
-JOIN price p ON d.name = p.name AND d.name = '${myGame}'
-JOIN release_date r ON r.name = p.name
-JOIN (select name , listagg(genre,',') within group (order by name) as genres from (SELECT distinct name,genre FROM genre) GROUP BY name) g ON d.name = g.name
-JOIN (select name , listagg(tag,',') within group (order by name) as tags from (select distinct name,tag from tag) GROUP BY name) t ON d.name = t.name
-JOIN (select name , listagg(language,',') within group (order by name) as languages from (select distinct name,language from language) GROUP BY name) l ON d.name = l.name
-LEFT JOIN review_content rt ON rt.title = d.name
-) WHERE ROWNUM<=5 `;
+  var query = `
+  SELECT * FROM (select d.name, d.url, d.types, d.game_description, d.developer, d.publisher, p.original_price, r.release_date, 
+  nvl(rt.review,'No reviews yet'),genres,tags,languages,d.appid
+  FROM description d
+  JOIN price p ON d.name = p.name AND d.name = '${myGame}'
+  JOIN release_date r ON r.name = p.name
+  JOIN (select name , listagg(genre,',') within group (order by name) as genres from (SELECT distinct name,genre FROM genre) GROUP BY name) g ON d.name = g.name
+  JOIN (select name , listagg(tag,',') within group (order by name) as tags from (select distinct name,tag from tag) GROUP BY name) t ON d.name = t.name
+  JOIN (select name , listagg(language,',') within group (order by name) as languages from (select distinct name,language from language) GROUP BY name) l ON d.name = l.name
+  LEFT JOIN review_content rt ON rt.title = d.name
+  ) WHERE ROWNUM<=5 `;
   console.log(query);
   sendQuery(query, function(result) {
     console.log(result);
@@ -448,31 +397,28 @@ LEFT JOIN review_content rt ON rt.title = d.name
 });
 
 router.get('/rec', function(req, res){
-  //var myGame = req.params.gameName.split("'").join("''");
-  //var myGame = req.params.game;
-  //console.log(myGame);
   var query = `
-SELECT t1.name, t1.genre, t1.recommended_times 
-FROM 
-(
-SELECT g.genre, g.name, count(*) as recommended_times 
-FROM genre g
-JOIN review_criteria r 
-ON g.name = r.title
-WHERE r.recommendation = 'Recommended'
-GROUP BY genre, name
-) t1
-JOIN 
-(select genre, max(recommended_times) as maxrec from (
-SELECT g.genre, g.name, count(*) as recommended_times 
-FROM genre g
-JOIN review_criteria r 
-ON g.name = r.title
-WHERE r.recommendation = 'Recommended'
-GROUP BY genre, name
-) group by genre) t2
-ON t1.recommended_times = t2.maxrec and t1.genre = t2.genre
-ORDER BY t1.genre
+  SELECT t1.name, t1.genre, t1.recommended_times 
+  FROM 
+  (
+  SELECT g.genre, g.name, count(*) as recommended_times 
+  FROM genre g
+  JOIN review_criteria r 
+  ON g.name = r.title
+  WHERE r.recommendation = 'Recommended'
+  GROUP BY genre, name
+  ) t1
+  JOIN 
+  (select genre, max(recommended_times) as maxrec from (
+  SELECT g.genre, g.name, count(*) as recommended_times 
+  FROM genre g
+  JOIN review_criteria r 
+  ON g.name = r.title
+  WHERE r.recommendation = 'Recommended'
+  GROUP BY genre, name
+  ) group by genre) t2
+  ON t1.recommended_times = t2.maxrec and t1.genre = t2.genre
+  ORDER BY t1.genre
   `;
   console.log(query);
   sendQuery(query, function(result) {
@@ -480,25 +426,7 @@ ORDER BY t1.genre
   });
 });
 
-
-
-// "${myGame}"
-/* General Template for GET requests:
-
-router.get('/routeName/:customParameter', function(req, res) {
-  // Parses the customParameter from the path, and assigns it to variable myData
-  var myData = req.params.customParameter;
-  var query = '';
-  console.log(query);
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      // Returns the result of the query (rows) in JSON as the response
-      res.json(rows);
-    }
-  });
-});
-*/
+/* ----- log in Page router ----- */
 router.post('/user', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -507,6 +435,7 @@ router.post('/user', function(req, res) {
   });
 });
 
+/* ----- sign up Page router ----- */
 router.post('/adduserInfo', function(req, res) {
   var insert = {"username":req.body.username,"password":req.body.password};
   console.log(insert);
@@ -515,10 +444,5 @@ router.post('/adduserInfo', function(req, res) {
   });
 
 });
-
-// router.get('/user', function(req, res){
-//   res.json(req);
-// });
-
 
 module.exports = router;

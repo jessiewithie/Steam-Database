@@ -1,6 +1,4 @@
 body{
-  /* background:black; */
-  /* background: url(https://vignette.wikia.nocookie.net/steamtradingcards/images/a/a0/Hearts_of_Iron_III_Background_The_Axis.jpg/revision/latest?cb=20140814192928)center center fixed; */
   background: url(https://images3.alphacoders.com/629/629130.jpg)center center fixed;
 }
 .inner{
@@ -30,7 +28,6 @@ body{
   padding: 0 10px;
 }
 
-/* need modificatiion later*/
 .game .name, .game .genre, .game .votes, .game .year {
   flex: 1 0 25%;
 }
@@ -180,8 +177,6 @@ nav .container {
 
 
 /* Animation */
-/* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
-
 .navTrigger {
     cursor: pointer;
     width: 30px;

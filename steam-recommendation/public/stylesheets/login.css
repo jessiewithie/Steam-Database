@@ -9,7 +9,6 @@
 body{
     padding-top: 60px;
     overflow: hidden;
-    /* background: url(https://stmed.net/sites/default/files/steam-wallpapers-30778-9452180.jpg)center center fixed; */
     background: url(http://www.ucatx.cat/wallpic/full/14/144417/gamer-wallpaper-4k.jpg)center center fixed;
 }
 
@@ -23,7 +22,6 @@ body{
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    /* font-size:18px; */
   }
   .login-container .input, .login-container .login-button {
     margin: 10px 0;
@@ -151,8 +149,6 @@ body {
     color: #00E676;
 }
 
-
-
 /* Media qurey section */
 nav .container {
   margin: 0;
@@ -207,8 +203,6 @@ nav .container {
 
 
 /* Animation */
-/* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
-
 .navTrigger {
     cursor: pointer;
     width: 30px;

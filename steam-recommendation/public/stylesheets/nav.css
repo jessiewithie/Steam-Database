@@ -105,11 +105,6 @@ select {
   font-size: 16px
 }
 
-/* .info .header, .info .title, .info .comment {
-  flex: 1 0 25%;
-  text-shadow: #00E676;
-} */
-
 .jumbotron{
   background-color:rgba(0, 0, 0, 0.4);
   text-shadow: #00E676;
@@ -130,7 +125,6 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*font-family: "Quicksand", sans-serif;*/
     font-size: 62.5%;
     font-size: 10px;
 }
@@ -197,8 +191,6 @@ body {
     color: #00E676;
 }
 
-
-
 /* Media qurey section */
 nav .container {
   margin: 0;
@@ -253,8 +245,6 @@ nav .container {
 
 
 /* Animation */
-/* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
-
 .navTrigger {
     cursor: pointer;
     width: 30px;
