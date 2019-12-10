@@ -81,12 +81,12 @@
           <div class="comment" style = "color:white">{{game[1].substring(0,100)+"..."}}</div>
         </div>
       </div> -->
+      <div class = "resultCount">{{numResults}}</div>
       <div class="info" id="results" ng-repeat="game in bestofGames">
         <div class="title" ng-click="detail(game[0])" style="color:white; font-size: 20px"> <a href="">{{game[0]}}</a></div>
         <div class="comment" style="color:white; font-size: 15px">Top comment: {{game[1].substring(0,600)+"..."}}</div>
         <br>
       </div>
-      
 
     </div>
   </div>

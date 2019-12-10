@@ -1,4 +1,4 @@
-var app = angular.module('angularjsNodejsTutorial', []);
+var app = angular.module("angularjsNodejsTutorial", []);
 
 app.config(function($sceDelegateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['**']);
@@ -145,7 +145,6 @@ app.controller('navController', function ($scope, $http) {
     res => {
       console.log("Genre: ", res.data);
       $scope.genres = res.data.rows;
-      console.log($scope.genres);
     },
     err => {
       console.log("Genre ERROR: ", err);
@@ -164,7 +163,6 @@ app.controller('navController', function ($scope, $http) {
     { pr: "$400-600" },
     { pr: "$600+" }
   ]);
-  console.log($scope.prs);
 
   //query the languages for the language filter
   $scope.selectedLang = ["0"];
@@ -198,12 +196,12 @@ app.controller('navController', function ($scope, $http) {
     var yr = "0";
     if (!(typeof $scope.selectedYear === "undefined")) {
       if ($scope.selectedYear == null){yr = "0";}
-      else {pr = $scope.selectedYear[0];}
+      else {yr = $scope.selectedYear[0];}
     }
     var lang = "0";
     if (!(typeof $scope.selectedLang === "undefined")) {
       if ($scope.selectedLang == null){lang = "0";}
-      else {lang = $scope.selectedLang;}
+      else {lang = $scope.selectedLang[0];}
     } 
     $http({
       url:
@@ -219,15 +217,20 @@ app.controller('navController', function ($scope, $http) {
     }).then(
       res => {
         console.log("SELECTEDFILTERCRITERIA: ", res.data);
-        if (res.data.rows.length === 0){
-            console.log("empty data!");
-        } 
         $scope.bestofGames = res.data.rows;
+        $scope.numResults = "Number of Results: " + res.data.rows.length;
       },
       err => {
         console.log("SELECTEDFILTERCRITERIA: ", err);
       }
     );
+  };
+
+  $scope.loadMore = function() {
+    var last = $scope.bestofGames[$scope.bestofGames.length - 1];
+    for (i = 1; i <= 8; i++) {
+      $scope.images.push(last + i);
+    }
   };
 
   $scope.detail = function (game) {
@@ -286,19 +289,32 @@ app.controller('detailController', function($scope, $http) {
 
 // Controller for the login page
 app.controller('loginController',function($scope,$http){
-  $scope.signIn = function() {
-    $http({
-     url: '/user',
-     method: 'POST',
-     data: ({
-       'username' : $scope.username,
-       'password' : $scope.password
-     })
-   }).then(res => {
-     console.log("LOGIN: ", res.data);
-   }, err => {
-     console.log("LOGIN ERROR: ", err);
-   });
+  $scope.signIn = function(username,password) {
+    $scope.username = username;
+    $scope.password = password;
+    console.log(typeof username);
+    var request = $http({
+      url: '/user',
+      method: "POST",
+      data: {
+        'username':username,
+        'password':password
+      }
+    });
+    request.success(function(response) {
+      // success
+      // console.log(response);
+      console.log("success");
+      $http({
+        url:'/user',
+        method:"GET"
+      })
+    });
+    request.error(function(err) {
+        // failed
+        console.log("error: ", err);
+    });
+    
   }
 });
 
@@ -313,12 +329,9 @@ app.controller('signUpController',function($scope,$http){
       'password' : $scope.password
     })
   }).then(res => {
-    var hre = '/index';
-    window.location = hre;
     console.log("USER: ", res.data);
   }, err => {
     console.log("USER ERROR: ", err);
   });
-  
   }
 });
