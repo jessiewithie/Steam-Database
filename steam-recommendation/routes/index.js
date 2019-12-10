@@ -254,7 +254,7 @@ router.get("/filterGenres", function(req, res) {
 router.get("/filterYears", function(req, res) {
   var query = `SELECT DISTINCT EXTRACT(year FROM RELEASE_DATE) as year
 		FROM RELEASE_DATE
-      ORDER BY EXTRACT(year FROM RELEASE_DATE)`;
+      ORDER BY EXTRACT(year FROM RELEASE_DATE) DESC`;
   sendQuery(query, function(result) {
     res.json(result);
   });
@@ -279,7 +279,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     select_genre = "";
   } else {
     select_genre =
-      ` title IN (SELECT name
+      ` name IN (SELECT name
     FROM genre g1
     WHERE g1.genre='` +
       genre +
@@ -293,7 +293,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   //   FROM price p1
   //   WHERE p1.ORIGINAL_PRICE>0 AND p1.ORIGINAL_PRICE<50)`;
   var select_price = `
-     title IN (SELECT name
+     name IN (SELECT name
       FROM price p1
       WHERE `;
   if (price_condition === "0") {
@@ -326,7 +326,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     select_year = "";
   } else {
     select_year =
-      ` title IN (SELECT name
+      ` name IN (SELECT name
         FROM RELEASE_DATE r1
         WHERE EXTRACT(year FROM r1.RELEASE_DATE) = ` +
       year_condition +
@@ -340,7 +340,7 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
     select_lang= "";
   } else {
     select_lang =
-      ` title IN (SELECT name FROM LANGUAGE l1 WHERE LANGUAGE = '` +
+      ` name IN (SELECT name FROM LANGUAGE l1 WHERE LANGUAGE = '` +
       lang_condition +
       `' ) `;
   }
@@ -365,22 +365,42 @@ router.get('/filteredData/:genre/:price/:year/:lang', function(req,res){
   }
   
   // query!
+  // var query =
+  //   `
+  //   SELECT DISTINCT r2.title, r2.review, r3.helpful FROM review_content r2
+  //   RIGHT JOIN (
+  //   SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
+  //   RIGHT JOIN(
+  //   SELECT title, max(helpful) as maxhelp FROM review_criteria
+
+    // ` +
+    // filters +
+    // ` GROUP BY title) t1
+  //   ON r1.title = t1.title and r1.helpful = t1.maxhelp
+  //   ORDER BY r1.helpful DESC
+  //   ) r3
+  //   ON r2.review_id = r3.review_id
+  // `;
+
   var query =
     `
-    SELECT DISTINCT r2.title, r2.review, r3.helpful FROM review_content r2
-    RIGHT JOIN (
-    SELECT r1.review_id, r1.title, r1.helpful FROM review_criteria r1
-    RIGHT JOIN(
-    SELECT title, max(helpful) as maxhelp FROM review_criteria
-
-    ` +
+    SELECT * FROM(
+  SELECT name AS title, MAX(r2.review) as review, MAX(r3.helpful) as helpful FROM review_content r2
+  RIGHT JOIN (
+  SELECT r1.review_id, t1.name, r1.helpful FROM review_criteria r1
+  RIGHT JOIN(
+  SELECT name, max(helpful) as maxhelp FROM review_criteria
+  RIGHT JOIN (SELECT name FROM GENRE ` +
     filters +
-    ` GROUP BY title) t1
-    ON r1.title = t1.title and r1.helpful = t1.maxhelp
-    ORDER BY r1.helpful DESC
-    ) r3
-    ON r2.review_id = r3.review_id
+    ` ) g ON title = name
+  GROUP BY name) t1 ON r1.title = t1.name and r1.helpful = t1.maxhelp
+  ) r3
+  ON r2.review_id = r3.review_id
+  GROUP BY name) final
+  WHERE ROWNUM<10000
+  ORDER BY helpful DESC NULLS LAST
   `;
+
   // connect query
   console.log(query);
   sendQuery(query, function(result) {
