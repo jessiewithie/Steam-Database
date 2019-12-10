@@ -53,7 +53,6 @@ body{
 
 .jumbotron {
   background: url(http://vignette4.wikia.nocookie.net/steamtradingcards/images/9/93/0RBITALIS_Background_Nebula.jpg/revision/latest?cb=20141118020246)center center fixed;
-  position: relative;
   padding: 0px;
   margin-bottom: 0px;
 }
@@ -70,6 +69,7 @@ h3{
   font-weight: 500;
   line-height: 1.2;
   color: #fff;
+  width: 80vw;
 }
 
 p {
@@ -79,6 +79,7 @@ p {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   color: #fff;
+  width: 80vw;
 }
 
 /*nav*/
