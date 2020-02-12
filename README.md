@@ -4,4 +4,4 @@ Recently gaming has become more popular as more people choose to become professi
 
 In this project, we used AngularJS as our basic frame work and a variety of tools including AngularJS(including Promise), Boot- strap, HTML 5, CSS/BOOTSTRAP, JS, JSON, JQuery, and a few APIs for the UI.(including the API to retrieve image and video from STEAM) We used Express and NodeJS for the server side function and OracleDB(hosted on AWS), MongoDB for the database. We used npm as the building tool and angular controller to control the DOM.
 
-Our raw dataset was taken from kaggle https://www.kaggle.com/trolukovich/steam-games-complete-dataset. We also used https://cors-anywhere.herokuapp.com/ as the proxy to access https://store.steampowered.com/, which is the api that provided real time image and videos for the detail page. 
+Our raw dataset was taken from kaggle https://www.kaggle.com/trolukovich/steam-games-complete-dataset. We also used https://cors-anywhere.herokuapp.com/ as the proxy to access https://store.steampowered.com/, which is the api that provided real time image and videos for our site. 
