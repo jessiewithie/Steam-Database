@@ -1,4 +1,4 @@
-# CIS550-FINAL-PROJ
+# Steam Database
 
 Recently gaming has become more popular as more people choose to become professional E-sport players and more people are able to pick up electronic devices, from phones/laptops to x-box and Nintendo switches. Yet with the uprising of the gaming industry, there are a lot options. As a result, the customers easily spend a lot of time trying out random games yet still not finding a game that they like. Thus we build the steam database to provide the most helpful game info like trailers, pictures, tage, and reviews, to help the users find their next favorite game!
 
